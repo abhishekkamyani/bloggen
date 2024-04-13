@@ -13,9 +13,6 @@ const uploadFileOnAzure = (file, previousFileUrl) => {
         blockBlobClient.uploadFile(path, options);
         const url = blockBlobClient.url;
         if (url) {
-            // setTimeout(() => {
-            //     resolve(url);
-            // }, 30000);
             resolve(url);
         }
         else {
@@ -30,7 +27,7 @@ const uploadFileOnAzure = (file, previousFileUrl) => {
                 }
                 console.log("File deleted successfully.");
             });
-        }, 0.3 * 60 * 1000);
+        }, 5 * 60 * 1000);
 
         if (previousFileUrl) {
             const prevName = previousFileUrl.substr(previousFileUrl.lastIndexOf("/") + 1);

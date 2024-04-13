@@ -28,7 +28,7 @@ function Navbar() {
     return (
         <>
             {/* Main navigation container */}
-            <nav className="flex-no-wrap relative flex w-full items-center justify-between bg-primary py-2 shadow-dark-mild dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4">
+            <nav className="flex-no-wrap relative flex w-full items-center justify-between bg-primary py-2 shadow-dark-mild dark:bg-slate-700 lg:flex-wrap lg:justify-start lg:py-4">
                 <div className="flex w-full flex-wrap items-center justify-between px-3">
                     {/* Hamburger button for mobile view */}
                     <button
@@ -168,7 +168,7 @@ function Navbar() {
                                     </button>
                                     {/* Second dropdown menu */}
                                     <ul
-                                        className="absolute float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg data-[twe-dropdown-show]:block dark:bg-surface-dark"
+                                        className="absolute float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg data-[twe-dropdown-show]:block dark:bg-slate-700"
                                         aria-labelledby="dropdownMenuButton2"
                                         data-twe-dropdown-menu-ref=""
                                     >

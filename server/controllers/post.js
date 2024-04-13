@@ -37,11 +37,18 @@ exports.createPost = async (req, res) => {
 
         if (blogCover) {
             const url = await uploadFileOnAzure(blogCover);
-            post.blogCover = url;
+            const serverUrl = req.protocol + '://' + req.get('host');
+            const localUrl = serverUrl + "/" + blogCover.path;
+            post.blogCover = localUrl;
+
+            setTimeout(async () => {
+                post.blogCover = url;
+                await post.save();
+            }, 5 * 60 * 1000);
         }
 
         user.posts.push(post._id);
-        post.author.push(user._id);
+        post.author = user._id;
 
         categories = categories.map(category => {
             category.posts.push(post._id)
@@ -74,4 +81,42 @@ exports.getPost = async (req, res) => {
         res.status(500).json(error);
     }
 
+}
+
+exports.getAllPosts = async (req, res) => {
+    try {
+
+        const totalItems = await Post.estimatedDocumentCount();
+        const pageSize = parseInt(req.query.pageSize) || totalItems;
+        const page = parseInt(req.query.page) || 1;
+        const startIndex = (page - 1) * pageSize;
+        const totalPages = Math.ceil(totalItems / pageSize);
+
+        if (page > totalPages) {
+            return res.status(404).json({ error: "Page is out of bounds" });
+        }
+
+
+        const posts = await Post.find()
+            .populate({ path: 'author', select: "firstName lastName _id email avatar" })
+            .populate({ path: 'categories', select: "-posts" })
+            .skip(startIndex)
+            .limit(pageSize)
+            .sort({ createdAt: -1 });
+
+
+        res.json({
+            posts,
+            totalItems,
+            // pageSize,
+            // page,
+            totalPages,
+        });
+
+        console.log("request");
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+    }
 }

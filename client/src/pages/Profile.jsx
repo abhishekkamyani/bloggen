@@ -14,6 +14,11 @@ export default function Profile() {
     const dateJoined = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
     useEffect(() => {
+
+        window.scrollTo({
+            top: 0
+        })
+
         let ignore = false;
         axios.get(`${SERVER_URL}/api/user/profile/${id}`)
             .then(response => {

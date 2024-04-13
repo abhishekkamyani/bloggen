@@ -1,41 +1,46 @@
-import { useEffect, useState } from "react"
-import PostEditor from "../components/PostEditor";
+import { useEffect, useState } from "react";
+import { formatDistance } from "date-fns";
 import axios from "axios";
 import { SERVER_URL, capitalizeFirstChar } from "../utils";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function Post() {
-    const [content, setContent] = useState('');
-    const [post, setPost] =  useState('');
+    const [post, setPost] = useState('');
+    const {slug} = useParams();
 
     useEffect(() => {
-      let ignore = false;
-      axios.get(`${SERVER_URL}/api/post/title-hai-yeh-humhara-1712947002032`)
-      .then(response => {
-        if (response.status === 200 && !ignore) {
-            console.log(response.data);
-            setPost(response.data);
+        window.scroll({top: 0})
+
+        let ignore = false;
+        axios.get(`${SERVER_URL}/api/post/${slug}`)
+            .then(response => {
+                if (response.status === 200 && !ignore) {
+                    console.log(response.data);
+                    setPost(response.data);
+                }
+            })
+            .catch(e => {
+                console.log(e);
+                console.log(e.response?.data?.error);
+            })
+
+        return () => {
+            ignore = true;
         }
-      })
-      .catch(e => {
-        console.log(e);
-         console.log(e.response?.data?.error);
-       })
-    
-      return () => {
-        ignore = true;
-      }
     }, [])
-    
+
 
     return (
         <>
             {/* <PostEditor content={content} setContent={setContent} /> */}
             <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 antialiased">
-                <div className="flex flex-col md:flex-row gap-10 items-center px-5 md:px-10">
-                    <article className="w-full format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+                <div className="flex flex-col md:flex-row gap-10 px-5 md:px-10 lg:px-20">
+                    <article className="w-full md:w-3/4 format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
                         <header className="mb-4 lg:mb-6 not-format">
-                            <address className="flex items-center mb-6 not-italic">
+                            <h1 className="text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">
+                                {post.title}
+                            </h1>
+                            <address className="flex items-center mt-12 mb-6 not-italic">
                                 <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
                                     {/* Avatar */}
                                     <img
@@ -51,34 +56,33 @@ export default function Post() {
                                         >
                                             {capitalizeFirstChar(post.author?.firstName) + " " + capitalizeFirstChar(post.author?.lastName)}
                                         </Link>
-                                        
+
                                         <p className="text-base text-gray-500 dark:text-gray-400">
                                             <time
-                                                pubdate=""
                                                 dateTime="2022-02-08"
                                                 title="February 8th, 2022"
                                             >
                                                 {/* Feb. 8, 2022 */}
+                                                {/* {new Date().toString(post.createdAt)} */}
+                                                {formatDistance(new Date(post.createdAt ?? 0), new Date(), { addSuffix: true })}
                                             </time>
-                                            {new Date().toString(post.createdAt)}
                                         </p>
                                     </div>
                                 </div>
                             </address>
-                            <h1 className="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">
-                                Best practices for successful prototypes
-                            </h1>
+
                         </header>
 
                         <figure>
                             <img
-                                src="https://flowbite.s3.amazonaws.com/typography-plugin/typography-image-1.png"
-                                alt="author avatar"
+                                src={post.blogCover}
+                                style={{ maxHeight: "500px" }}
+                                alt="blog cover"
                             />
                         </figure>
 
-                        <section>
-                            <div className="quill-content" dangerouslySetInnerHTML={{ __html: content }} />
+                        <section className="mt-20">
+                            <div className="quill-content" dangerouslySetInnerHTML={{ __html: post.content }} />
 
                         </section>
 
@@ -87,16 +91,16 @@ export default function Post() {
                         </summary>
 
                     </article>
-                    <div className="px-4 w-1/2 md:w-1/4 text-black dark:text-white">
+                    <div className="px-4 w-1/2 md:w-1/4 md:h-screen my-auto text-black dark:text-white">
                         <div className="p-4 bg-slate-300 dark:bg-slate-900 py-6 rounded">
                             <h2 className="text-xl font-bold mb-4">Categories</h2>
                             <ul className="list-disc list-inside">
                                 {post?.categories?.map(category => (
-                                <li key={category._id} className="mb-2">
-                                    <Link to={`/posts?category=${category.name}`} className="hover:text-gray-500 dark:hover:text-gray-300">
-                                        {category.name}
-                                    </Link>
-                                </li>
+                                    <li key={category._id} className="mb-2">
+                                        <Link to={`/posts?category=${category.name}`} className="hover:text-gray-500 dark:hover:text-gray-300">
+                                            {category.name}
+                                        </Link>
+                                    </li>
                                 ))}
                             </ul>
                         </div>

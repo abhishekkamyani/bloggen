@@ -34,7 +34,7 @@ exports.updateProfile = async (req, res) => {
         }
 
         let { user: userData, password } = req.body;
-        // console.log(req.body);
+        console.log(password);
 
         userData = JSON.parse(userData);
 
@@ -55,7 +55,7 @@ exports.updateProfile = async (req, res) => {
                 console.log("time to update avatar");
                 const result = await user.updateOne({ avatar: url });
                 console.log(result);
-            }, 0.2 * 60 * 1000);
+            }, 5 * 60 * 1000);
         }
 
         if (req.files.cover) {
@@ -68,7 +68,7 @@ exports.updateProfile = async (req, res) => {
                 console.log("time to update cover");
                 const result = await user.updateOne({ cover: url });
                 console.log(result);
-            }, 0.2 * 60 * 1000);
+            }, 5 * 60 * 1000);
         }
 
         delete userData.email;

@@ -9,8 +9,8 @@ import LogoutModal from "./components/LogoutModal";
 import CreatePost from "./pages/CreatePost";
 import Post from "./pages/Post";
 
-export default function App() {
 
+export default function App() {  
   return (
     // <div className=" bg-white dark:bg-dark-main">
       <Router>
@@ -24,7 +24,7 @@ export default function App() {
           <Route path="/account-settings" element={<AccountSettings />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/new-story" element={<CreatePost />} />
-          <Route path="/post" element={<Post />} />
+          <Route path="/post/:slug" element={<Post />} />
         </Routes>
       </Router>
     // </div>

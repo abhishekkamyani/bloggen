@@ -6,6 +6,7 @@ const upload = require("../middlewares/multer.middleware");
 
 router
 .post('/create',upload.single("blogCover"), postController.createPost)
-.get('/:slug', postController.getPost);
+.get('/all', postController.getAllPosts)
+.get('/:slug', postController.getPost)
 
 module.exports = router;

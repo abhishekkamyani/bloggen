@@ -210,27 +210,8 @@ export default function AccountSettings() {
                 </div>
                 <div className="w-full mb-4 lg:mt-2">
                   <label className="dark:text-gray-300 mb-2">Country</label>
-                  {/* <select
-                    className="w-full mt-2 text-grey border-2 rounded-lg p-4 pl-2 pr-2 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
-                    id="country"
-                    name="country"
-                    ref={selectedCountryRef}
-                  >
-                    <option disabled selected value="">
-                      Select Country
-                    </option>
-                    {countries.map((country, index) => (
-                      <option
-                        value={country}
-                        key={index}
-                        selected={country.toLowerCase() === user.country}
-                      >
-                        {country}
-                      </option>
-                    ))}
-                  </select> */}
                   <select
-                    className="w-full mt-2 text-grey border-2 rounded-lg p-4 pl-2 pr-2 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+                    className="w-full mt-2 text-grey border-2 rounded-lg p-4 pl-2 pr-2 bg-white dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
                     id="country"
                     name="country"
                     value={capitalizeFirstChar(user.country)}
@@ -255,7 +236,7 @@ export default function AccountSettings() {
                   Bio
                 </label>
                 <textarea
-                  className="mt-2 p-2 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+                  className="mt-2 p-2 w-full border-2 rounded-lg bg-white dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
                   rows={7}
                   placeholder="Bloggen Star ⭐❤️"
                   id="bio"
@@ -354,7 +335,7 @@ const Input = ({
       </label>
       <input
         type={type}
-        className="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+        className="mt-2 p-4 w-full border-2 rounded-lg bg-white dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
         placeholder={ph}
         required={required}
         disabled={disabled}
@@ -385,12 +366,11 @@ const ConfirmModal = forwardRef((props, ref) => {
     try {
       const formData = new FormData();
       console.log(user.avatar);
-      // const userData = {...user};
-      // delete userData.avatar; 
-      // delete userData.cover;
+  
       console.log(user);
       formData.append("user", JSON.stringify(user));
       formData.append("password", password);
+      console.log(password);
       formData.append("avatar", user.avatar);
       formData.append("cover", user.cover);
 
