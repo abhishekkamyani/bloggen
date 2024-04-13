@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@tailwind base;
+
+@layer base {
+  html {
+    @apply text-surface;
+    @apply bg-white;
+  }
+
+  html.dark {
+    @apply text-neutral-50;
+    @apply bg-body-dark;
+  }
+}
+
+@layer utilities {
+  .link {
+    @apply text-primary dark:text-white hover:text-primary-dark dark:hover:text-primary-light
+  }
+
+  .btn {
+    @apply text-white bg-primary hover:bg-primary-dark dark:bg-primary-dark hover:dark:bg-primary focus:outline-none
+  }
+
+  .profile-menu-item {
+    @apply block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-primary hover:text-white focus:outline-none dark:bg-surface-dark dark:text-white dark:hover:bg-neutral-800/25;
+  }
+}
+
+@tailwind components;
+@tailwind utilities;
+
+p {
+  @apply leading-[1.6];
+}
+
+/* Font for H tags */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Merriweather Sans", sans-serif;
+}
+
+/* Font for P, A, and other elements */
+p,
+a,
+span {
+  font-family: "Roboto", sans-serif;
+}
+
+
+/* Custom CSS */
+
+html,
+body {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+/* ########## Login Section ########## */
+#login-section {
+  background: url("/images/login.jpg") repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+#login-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.75));
+}
+
+
+/* ########## Registration Section ########## */
+#registration-section .side-image {
+  background: url("/images/registration.webp") no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Quill*/
+.ql-editor .ql-placeholder {
+  color: white; /* Replace with your desired color */
+}
+
+/* PrimeReact */
+.p-multiselect-filter{
+  padding-inline: 7px; 
+}

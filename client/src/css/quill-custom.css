@@ -1,0 +1,72 @@
+/* quill-content-view.css */
+
+.quill-content {
+    padding: 8px;
+    @apply text-black dark:text-white
+}
+
+.quill-content h1 {
+    font-size: 24px;
+    font-weight: bolder;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.quill-content h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.quill-content p {
+    margin-bottom: 8px;
+}
+
+.quill-content blockquote {
+    border-left: 2px solid #ccc;
+    margin: 0;
+    padding-left: 8px;
+}
+
+.quill-content ul,
+.quill-content ol {
+    margin-left: 24px;
+    padding-left: 24px;
+}
+
+.quill-content ul {
+    list-style-type: disc;
+}
+
+.quill-content ol {
+    list-style-type: decimal;
+}
+
+.quill-content pre {
+    @apply bg-black text-white dark:bg-white dark:text-black;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.quill-content a {
+    text-decoration: underline;
+}
+
+.quill-content img {
+    /* width: 50%; */
+    height: 400px;
+    margin-bottom: 8px;
+}
+
+.quill-content .ql-indent-1 {
+    margin-left: 24px !important;
+}
+
+.quill-content .ql-indent-2 {
+    margin-left: 48px !important;
+}
+
+.quill-content .ql-indent-3 {
+    margin-left: 72px !important;
+}
