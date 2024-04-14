@@ -91,6 +91,7 @@ exports.getAllPosts = async (req, res) => {
         const page = parseInt(req.query.page) || 1;
         const startIndex = (page - 1) * pageSize;
         const totalPages = Math.ceil(totalItems / pageSize);
+        const category = "mobile-app-development";
 
         if (page > totalPages) {
             return res.status(404).json({ error: "Page is out of bounds" });
@@ -99,7 +100,7 @@ exports.getAllPosts = async (req, res) => {
 
         const posts = await Post.find()
             .populate({ path: 'author', select: "firstName lastName _id email avatar" })
-            .populate({ path: 'categories', select: "-posts" })
+            .populate({ path: 'categories', select: "-posts", match: {slug: category} })
             .skip(startIndex)
             .limit(pageSize)
             .sort({ createdAt: -1 });
@@ -113,7 +114,7 @@ exports.getAllPosts = async (req, res) => {
             totalPages,
         });
 
-        console.log("request");
+        console.log(posts.length);
     }
     catch (error) {
         console.log(error);

@@ -90,10 +90,40 @@ body {
 
 /* Quill*/
 .ql-editor .ql-placeholder {
-  color: white; /* Replace with your desired color */
+  color: white;
+  /* Replace with your desired color */
 }
 
 /* PrimeReact */
-.p-multiselect-filter{
-  padding-inline: 7px; 
+.p-multiselect-filter {
+  padding-inline: 7px;
+}
+
+.p-highlight {
+  @apply bg-primary text-white dark:bg-slate-700;
+}
+
+.p-paginator-page {
+  margin-inline: -5px;
+}
+
+.p-paginator-first, .p-paginator-last{
+  margin-inline: -25px;
+}
+
+.p-paginator-page-start, .p-paginator-page-end{
+  @apply text-black font-bold dark:text-main;
+}  
+
+.p-paginator-last{
+  margin-right: 5px;
+}
+
+.p-dropdown {
+  @apply bg-primary dark:bg-slate-700 items-center;
+  margin-left: 0px;
+}
+
+.p-dropdown-item {
+  @apply bg-main text-black hover:bg-primary hover:text-main dark:bg-dark-main dark:text-main dark:hover:bg-slate-700
 }
