@@ -88,19 +88,19 @@ body {
   background-position: center;
 }
 
-/* Quill*/
+/* ########## Quill ########## */
 .ql-editor .ql-placeholder {
   color: white;
   /* Replace with your desired color */
 }
 
-/* PrimeReact */
+/* ########## PrimeReact ########## */
 .p-multiselect-filter {
   padding-inline: 7px;
 }
 
 .p-highlight {
-  @apply bg-primary text-white dark:bg-slate-700;
+  @apply bg-primary text-white dark:bg-slate-700 !important;
 }
 
 .p-paginator-page {

@@ -51,14 +51,14 @@ exports.createPost = async (req, res) => {
         post.author = user._id;
 
         categories = categories.map(category => {
-            category.posts.push(post._id)
+            // category.posts.push(post._id)
             post.categories.push(category._id);
             return category;
         });
 
         await post.save();
         await user.save();
-        await Category.bulkSave(categories);
+        // await Category.bulkSave(categories);
 
         res.status(201).json(post);
     } catch (error) {
@@ -85,38 +85,63 @@ exports.getPost = async (req, res) => {
 
 exports.getAllPosts = async (req, res) => {
     try {
+        
+        const slug = req.query.category;
+        const category = await Category.findOne({slug}, {_id: 1});
+        console.log(category);
+        // const totalItems = await Post.estimatedDocumentCount({slug: "title-hai-yeh-humhara-1712947002032"});
 
-        const totalItems = await Post.estimatedDocumentCount();
+        let totalItems = 0;
+
+        if (category) {
+            totalItems = await Post.countDocuments({categories: {$in: category._id}});
+        } else {
+            totalItems = await Post.estimatedDocumentCount();
+        }
+
+        // totalItems = await Post.countDocuments({categories: {$in: category.id}});
         const pageSize = parseInt(req.query.pageSize) || totalItems;
         const page = parseInt(req.query.page) || 1;
         const startIndex = (page - 1) * pageSize;
         const totalPages = Math.ceil(totalItems / pageSize);
-        const category = "mobile-app-development";
 
         if (page > totalPages) {
             return res.status(404).json({ error: "Page is out of bounds" });
         }
 
+        const filter = category && {categories: {$in: category._id}}
 
-        const posts = await Post.find()
+        const posts = await Post.find(filter)
             .populate({ path: 'author', select: "firstName lastName _id email avatar" })
-            .populate({ path: 'categories', select: "-posts", match: {slug: category} })
+            .populate({ path: 'categories', select: "-posts" })
             .skip(startIndex)
             .limit(pageSize)
             .sort({ createdAt: -1 });
 
 
         res.json({
-            posts,
             totalItems,
             // pageSize,
             // page,
             totalPages,
+            posts,
         });
 
-        console.log(posts.length);
     }
     catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+    }
+}
+
+exports.getCategoryPosts = async (req, res) => {
+    try {
+        const slug = req.query.category;
+        console.log(slug);
+        const category = await Category.findOne({ slug }, {posts: 1}).populate("posts").posts;
+        res.json(category);
+
+    } catch (error) {
         console.log(error);
         res.status(500).json(error);
     }
