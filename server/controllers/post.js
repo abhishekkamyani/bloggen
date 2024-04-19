@@ -88,7 +88,7 @@ exports.getAllPosts = async (req, res) => {
         
         const slug = req.query.category;
         const category = await Category.findOne({slug}, {_id: 1});
-        console.log(category);
+        // console.log(category);
         // const totalItems = await Post.estimatedDocumentCount({slug: "title-hai-yeh-humhara-1712947002032"});
 
         let totalItems = 0;

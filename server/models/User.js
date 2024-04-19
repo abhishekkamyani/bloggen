@@ -56,6 +56,10 @@ const userSchema = new Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Post',
         }],
+        categories: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Category',
+        }],
         dateJoined: {
             type: Date,
             default: Date.now,

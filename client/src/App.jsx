@@ -9,14 +9,16 @@ import LogoutModal from "./components/LogoutModal";
 import CreatePost from "./pages/CreatePost";
 import Post from "./pages/Post";
 import Temp from "./components/Temp";
+import Categories from "./components/Categories";
 
 
 export default function App() {  
   return (
-    // <div className=" bg-white dark:bg-dark-main">
+    // <div className="bg-white dark:bg-dark-main">
       <Router>
         <LogoutModal />
-        {/* <Navbar /> */}
+        <Categories />
+        <Navbar />
         <Temp/>
         <Routes>
           <Route exact path="/" element={<Home />} />

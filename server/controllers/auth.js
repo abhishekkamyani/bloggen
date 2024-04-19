@@ -103,7 +103,7 @@ exports.identity = async (req, res) => {
             return res.status(401).json({ error: "Unauthorized" });
         }
 
-        const user = await User.findById(auth.id, { _id: 1, email: 1, avatar: 1 });
+        const user = await User.findById(auth.id, { _id: 1, email: 1, avatar: 1, categories: 1 });
         // console.log(user);
 
         return res.json(user);

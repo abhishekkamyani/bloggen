@@ -13,7 +13,6 @@ export function UserContextProvider({ children }) {
         axios.get(`${SERVER_URL}/api/auth/identity`, { withCredentials: true })
             .then(response => {
                 if (!ignore) {
-                    // console.log(response.data);
                     setUserInfo(response.data);
                 }
             })
@@ -24,10 +23,21 @@ export function UserContextProvider({ children }) {
         return () => ignore = true;
     }, [])
 
+    useEffect(() => {
+        let ignore = false;
+
+        if(userInfo.categories?.length === 0 && !ignore) {
+            document.querySelector("#categoriesModalButton").click();
+        }
+
+        return () => ignore = true;
+
+    }, [userInfo._id])
+
     const resetUserInfo = () => {
         axios.get(`${SERVER_URL}/api/auth/identity`, { withCredentials: true })
             .then(response => {
-                    setUserInfo(response.data);
+                setUserInfo(response.data);
             })
             .catch(e => {
                 console.log(e.response?.data?.error);
