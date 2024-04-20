@@ -35,7 +35,8 @@ export default function CreatePost() {
     axios.get(`${SERVER_URL}/api/categories`)
       .then(response => {
         if (response.status === 200 && !ignore) {
-          console.log(response.data.categories.map(category => category.name));
+          console.log(categories);
+          // console.log(response.data.categories.map(category => category.name));
           setCategories(response.data.categories);
         }
       })
@@ -100,17 +101,6 @@ export default function CreatePost() {
         console.log(e.response?.data?.error);
       })
   }
-
-  const optionTemplate = (option) => {
-    if (post.categories_names.length === 3 && !post.categories_names.includes(option.value)) {
-      return <span className="p-disabled">{option.label}</span>;
-    }
-  }
-
-  const isOptionDisabled = (option) => {
-    return post.categories_names.length === 3 && !post.categories_names.length.includes(option.value);
-  };
-
 
   return (
     <div className='py-10 px-5 md:mx-20'>

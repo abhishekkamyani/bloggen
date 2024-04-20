@@ -92,3 +92,41 @@ exports.updateProfile = async (req, res) => {
         return res.status(500).json(error);
     }
 };
+
+exports.addCategories = async (req, res) => {
+    try {
+        const { token } = req.cookies;
+
+        if (!token) {
+            return res.status(401).json({ error: "Unauthorized access" });
+        }
+
+        const { id } = jwt.verify(token, publicKey);
+
+        if (!id) {
+            return res.status(401).json({ error: "Unauthorized access" });
+        }
+
+        const { categories } = req.body;
+
+        // const user = await User.findById(id);
+        // user.categories.addToSet(...categories);
+
+
+
+        // const updatedUserData = await user.save();
+
+
+        const updatedUserData = await User.findByIdAndUpdate(
+            id,
+            { $addToSet: { categories: {$each : categories}}},
+            { new: true, select: 'categories' }
+        );
+
+        res.json(updatedUserData);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+    }
+}

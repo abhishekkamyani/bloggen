@@ -8,8 +8,7 @@ import AccountSettings from "./pages/AccountSettings";
 import LogoutModal from "./components/LogoutModal";
 import CreatePost from "./pages/CreatePost";
 import Post from "./pages/Post";
-import Temp from "./components/Temp";
-import Categories from "./components/Categories";
+import CategoriesSelection from "./components/CategoriesSelection";
 
 
 export default function App() {  
@@ -17,9 +16,8 @@ export default function App() {
     // <div className="bg-white dark:bg-dark-main">
       <Router>
         <LogoutModal />
-        <Categories />
+        <CategoriesSelection />
         <Navbar />
-        <Temp/>
         <Routes>
           <Route exact path="/" element={<Home />} />
           {/* <Route exact path="/temp" element={<Temp />} /> */}

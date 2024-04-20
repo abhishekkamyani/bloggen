@@ -82,7 +82,7 @@ export default function PostPreview({ content, post, imageSrc, form }) {
                       <ul className="list-disc list-inside">
                         {post.categories_names.map(name => (
                           <li>
-                            <Link className="hover:text-gray-500 dark:hover:text-gray-300">
+                            <Link key={name} className="hover:text-gray-500 dark:hover:text-gray-300">
                               {name}
                             </Link>
                           </li>

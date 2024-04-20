@@ -2,16 +2,12 @@ import Posts from '../components/Posts'
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { SERVER_URL } from "../utils";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Button } from 'primereact/button';
+import { useLocation, useNavigate } from "react-router-dom";
 import { Paginator } from 'primereact/paginator';
 import { Ripple } from 'primereact/ripple';
-import { Divider } from 'primereact/divider';
 import { Dropdown } from 'primereact/dropdown';
-import { InputText } from 'primereact/inputtext';
-import { Slider } from 'primereact/slider';
-import { Tooltip } from 'primereact/tooltip';
 import { classNames } from 'primereact/utils';
+import CategoriesNavbar from '../components/CategoriesNavbar';
 
 export default function Home() {
     const location = useLocation();
@@ -30,10 +26,6 @@ export default function Home() {
     });
 
     // const [paginationData, setPaginationData] = useState({ page: 1, pageSize: 5 });
-
-
-
-
     useEffect(() => {
         let ignore = false;
 
@@ -115,6 +107,7 @@ export default function Home() {
     return (
         <div className='py-5' >
             <div className='d-flex w-full'>
+                <CategoriesNavbar />
                 {/* <Paginator className='bg-white text-black dark:bg-dark-main dark:text-main' first={first} totalPages={fetchedData.totalPages} totalRecords={fetchedData.totalItems} rowsPerPageOptions={[5, 10, 20, 30, 40]} onPageChange={onPageChange} /> */}
                 <Paginator
                     ref={paginatorRef}

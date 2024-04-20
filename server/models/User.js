@@ -59,6 +59,7 @@ const userSchema = new Schema(
         categories: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Category',
+            unique: true
         }],
         dateJoined: {
             type: Date,
@@ -68,7 +69,7 @@ const userSchema = new Schema(
     { versionKey: false } // Exclude the "__v" field
 );
 
-userSchema.index({ email: 1 }, { unique: true })
+userSchema.index({ email: 1, categories: 1, }, { unique: true })
 
 
 userSchema.pre('save', function (next) {

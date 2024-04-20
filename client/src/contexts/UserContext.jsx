@@ -5,8 +5,8 @@ import { SERVER_URL } from '../utils';
 const UserContext = createContext({});
 
 export function UserContextProvider({ children }) {
-    const [userInfo, setUserInfo] = useState({});
-    // console.log(userInfo);
+    const [userInfo, setUserInfo] = useState({_id: ""});
+    console.log(userInfo);
 
     useEffect(() => {
         let ignore = false;
@@ -25,7 +25,7 @@ export function UserContextProvider({ children }) {
 
     useEffect(() => {
         let ignore = false;
-
+        console.log("use-effect", userInfo._id);
         if(userInfo.categories?.length === 0 && !ignore) {
             document.querySelector("#categoriesModalButton").click();
         }

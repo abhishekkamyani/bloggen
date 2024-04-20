@@ -27,7 +27,8 @@ exports.registration = async (req, res) => {
             email: user.email,
             _id: user._id,
             firstName: user.firstName,
-            avatar: user.avatar
+            avatar: user.avatar,
+            categories: user.categories
         })
     } catch (error) {
         if (error.code === 11000) {
@@ -70,7 +71,8 @@ exports.login = async (req, res) => {
                 email: user.email,
                 _id: user._id,
                 firstName: user.firstName,
-                avatar: user.avatar
+                avatar: user.avatar,
+                categories: user.categories
             })
 
         // res.status(200).json({ message: "Login successfully" });
@@ -103,9 +105,7 @@ exports.identity = async (req, res) => {
             return res.status(401).json({ error: "Unauthorized" });
         }
 
-        const user = await User.findById(auth.id, { _id: 1, email: 1, avatar: 1, categories: 1 });
-        // console.log(user);
-
+        const user = await User.findById(auth.id, { _id: 1, email: 1, firstName: 1, avatar: 1, categories: 1 });
         return res.json(user);
 
     } catch (error) {
