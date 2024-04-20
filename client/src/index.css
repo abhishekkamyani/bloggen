@@ -107,15 +107,17 @@ body {
   margin-inline: -5px;
 }
 
-.p-paginator-first, .p-paginator-last{
+.p-paginator-first,
+.p-paginator-last {
   margin-inline: -25px;
 }
 
-.p-paginator-page-start, .p-paginator-page-end{
+.p-paginator-page-start,
+.p-paginator-page-end {
   @apply text-black font-bold dark:text-main;
-}  
+}
 
-.p-paginator-last{
+.p-paginator-last {
   margin-right: 5px;
 }
 
@@ -131,6 +133,6 @@ body {
 /* Select Button */
 /* p-button p-component p-highlight */
 
-.p-selectbutton .p-button{
-  @apply m-5 btn;
+.p-selectbutton .p-button {
+  @apply m-5;
 }

@@ -18,18 +18,18 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
-        // console.log(user);
+        // //console.log(user);
 
         try {
             const response = await axios.post(`${SERVER_URL}/api/auth/login`, user, { withCredentials: true });
 
-            console.log(response.status);
+            //console.log(response.status);
             if (response?.status === 200) {
                 setUserInfo(response.data);
                 navigate("/");
             }
         } catch (e) {
-            console.log(e.response?.data?.error);
+            //console.log(e.response?.data?.error);
         }
 
         setIsSubmitting(false);

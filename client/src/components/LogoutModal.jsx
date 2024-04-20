@@ -14,7 +14,7 @@ export default function LogoutModal() {
             .get(`${SERVER_URL}/api/auth/logout`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
-                    console.log(response.data?.message)
+                    //console.log(response.data?.message)
                     setUserInfo({});
                     navigate("/");
                 }

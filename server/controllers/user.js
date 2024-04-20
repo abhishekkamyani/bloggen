@@ -117,11 +117,20 @@ exports.addCategories = async (req, res) => {
         // const updatedUserData = await user.save();
 
 
+        // const updatedUserData = await User.findByIdAndUpdate(
+        //     id,
+        //     { $addToSet: { categories: {$each : categories}}},
+        //     { new: true, select: 'categories' }
+        // );
+
+        
         const updatedUserData = await User.findByIdAndUpdate(
             id,
-            { $addToSet: { categories: {$each : categories}}},
+            { categories: categories},
             { new: true, select: 'categories' }
         );
+
+        
 
         res.json(updatedUserData);
 

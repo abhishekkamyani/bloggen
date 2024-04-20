@@ -15,13 +15,13 @@ export default function Post() {
         axios.get(`${SERVER_URL}/api/post/${slug}`)
             .then(response => {
                 if (response.status === 200 && !ignore) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     setPost(response.data);
                 }
             })
             .catch(e => {
-                console.log(e);
-                console.log(e.response?.data?.error);
+                //console.log(e);
+                //console.log(e.response?.data?.error);
             })
 
         return () => {

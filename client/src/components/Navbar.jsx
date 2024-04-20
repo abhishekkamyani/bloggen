@@ -29,7 +29,7 @@ function Navbar() {
         <>
             {/* Main navigation container */}
             <nav className="flex-no-wrap relative flex w-full items-center justify-between bg-primary py-2 shadow-dark-mild dark:bg-slate-700 lg:flex-wrap lg:justify-start lg:py-4">
-                <div className="flex w-full flex-wrap items-center justify-between px-3">
+                <div className="flex w-full flex-wrap items-center px-3">
                     {/* Hamburger button for mobile view */}
                     <button
                         className="block border-0 bg-transparent px-2 text-white hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
@@ -54,29 +54,32 @@ function Navbar() {
                                 />
                             </svg>
                         </span>
+
                     </button>
+
+                    {/* Brand Logo */}
+                    <a
+                        className="lg:ms-2 flex items-center text-white text-2xl transition duration-200 hover:text-black/80 hover:ease-in-out motion-reduce:transition-none  dark:hover:text-white/80 lg:mb-0 lg:mt-0"
+                        href="/"
+                    >
+                        Bloggen
+                    </a>
                     {/* Collapsible navigation container */}
                     <div
-                        className="!visible hidden flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
+                        className="!visible hidden transition-all ease-linear flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
                         id="navbarSupportedContent1"
                         data-twe-collapse-item=""
                     >
                         {/* Logo */}
-                        <a
-                            className="mb-4 me-5 ms-1 lg:ms-2 mt-3 flex items-center text-white text-2xl max-md:text-xl transition duration-200 hover:text-black/80 hover:ease-in-out motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 lg:mb-0 lg:mt-0"
+                        {/* <a
+                            className="mb-4 me-5 ms-1 lg:ms-2 mt-3 flex items-center text-white text-2xl max-md:text-xl transition duration-200 hover:text-black/80 hover:ease-in-out motion-reduce:transition-none  dark:hover:text-white/80 lg:mb-0 lg:mt-0"
                             href="/"
                         >
-                            {/* <img
-                                src="https://tecdn.b-cdn.net/img/logo/te-transparent-noshadows.webp"
-                                style={{ height: 15 }}
-                                alt="TE Logo"
-                                loading="lazy"
-                            /> */}
                             Bloggen
-                        </a>
+                        </a> */}
                         {/* Left navigation links */}
                         <ul
-                            className="list-style-none ms-auto lg:me-2 max-md:mb-5 flex flex-col gap-y-2 ps-0 lg:flex-row"
+                            className="list-style-none ms-auto lg:me-2 max-lg:mb-5 flex flex-col gap-y-2 ps-0 lg:flex-row"
                             data-twe-navbar-nav-ref=""
                         >
                             {!Boolean(userInfo.email) ? (
@@ -125,22 +128,23 @@ function Navbar() {
                             )}
                         </ul>
 
-                        {/* Left links */}
                     </div>
+
                     {/* Right elements */}
-                    <div className="relative flex items-center gap-x-2 ">
+                    <div className="relative flex items-center ms-auto gap-x-2 ">
                         {/* Dark Mode */}
                         <button onClick={toggleDarkMode}>
                             <img
                                 src={
                                     isDarkMode
-                                        ? "https://img.icons8.com/color/35/moon-satellite.png"
-                                        : "https://img.icons8.com/fluency/35/sun.png"
+                                        ? "https://img.icons8.com/color/32/moon-satellite.png"
+                                        : "https://img.icons8.com/fluency/32/sun.png"
                                 }
                                 alt="theme mode"
                                 className="select-none"
                             />
                         </button>
+
                         {/* Profile */}
                         {Boolean(userInfo.email) && (
                             <>

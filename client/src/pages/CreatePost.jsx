@@ -35,13 +35,13 @@ export default function CreatePost() {
     axios.get(`${SERVER_URL}/api/categories`)
       .then(response => {
         if (response.status === 200 && !ignore) {
-          console.log(categories);
-          // console.log(response.data.categories.map(category => category.name));
+          //console.log(categories);
+          // //console.log(response.data.categories.map(category => category.name));
           setCategories(response.data.categories);
         }
       })
       .catch(e => {
-        console.log(e);
+        //console.log(e);
       })
 
     return () => {
@@ -79,7 +79,7 @@ export default function CreatePost() {
 
     // const data = { ...post, content };
     // const categories_names = post.categories_names.map(name => categories.find(category => category.name === name)).map(category => category._id);
-    // console.log(categories_names);
+    // //console.log(categories_names);
 
     const formData = new FormData();
     formData.append("data", JSON.stringify(post));
@@ -90,15 +90,15 @@ export default function CreatePost() {
       .post(`${SERVER_URL}/api/post/create`, formData, { withCredentials: true })
       .then(response => {
         if (response.status === 201) {
-          console.log(response.data);
+          //console.log(response.data);
           // setPost(initialPost);
           // setContent('');
           // setImage('');
         }
       })
       .catch(e => {
-        console.log(e);
-        console.log(e.response?.data?.error);
+        //console.log(e);
+        //console.log(e.response?.data?.error);
       })
   }
 

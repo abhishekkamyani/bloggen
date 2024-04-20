@@ -2,7 +2,7 @@ const Category = require("../models/Category");
 
 exports.categories = async (req, res) => {
     try {
-
+        // console.log("requesting categories");
         const totalItems = await Category.estimatedDocumentCount();
         const pageSize = req.query.pageSize || totalItems;
         const page = parseInt(req.query.page) || 1;
@@ -31,11 +31,11 @@ exports.categoriesInfo = async (req, res) => {
     try {
         const categoryIds = req.params.ids;
 
-        console.log(categoryIds.split(","));
+        // console.log(categoryIds.split(","));
         
         const categories = await Category.find({_id: {$in: categoryIds.split(",")}}, {posts: 0});
         
-        console.log(categories);
+        // console.log(categories);
         return res.json(categories); 
     } catch (error) {
         console.log(error);

@@ -6,14 +6,23 @@ import { useUserInfo } from '../contexts/UserContext';
 
 let pageSize = 20, page = 1;
 export default function CategoriesSelection() {
-    const categoryIds = useUserInfo()?.userInfo?.categories;
+    const categoryIds = useUserInfo()?.userInfo?.categories || [];
+    const {setUserInfo} = useUserInfo();
     const [categories, setCategories] = useState([]);
-    // console.log(categories);
-    const [selectedCategories, setSelectedCategories] = useState(categoryIds?.map(_id => ({ _id })));
+    const [selectedCategories, setSelectedCategories] = useState([]);
     const totalPages = useRef();
 
-    const arrayOfObjects = categoryIds?.map(_id => ({ _id }));
-    console.log(arrayOfObjects);
+    useEffect(() => {
+        let ignore = false;
+        if (categoryIds?.length > 0 && !ignore) {
+            setSelectedCategories(categoryIds);
+        }
+
+        return () => {
+            ignore = true;
+        }
+    }, [categoryIds])
+
 
 
     useEffect(() => {
@@ -22,7 +31,7 @@ export default function CategoriesSelection() {
         fetchCategories()
             .then(response => {
                 if (!ignore) {
-                    console.log(response);
+                    //console.log(response);
                     setCategories(response.categories);
                     totalPages.current = response.totalPages;
                 }
@@ -43,7 +52,7 @@ export default function CategoriesSelection() {
             .catch((e) => console.log(e));
     }
 
-    console.log(selectedCategories);
+    //console.log(selectedCategories);
 
     const fetchCategories = async () => {
         try {
@@ -58,10 +67,15 @@ export default function CategoriesSelection() {
     }
 
     const handleSubmit = () => {
-        axios.patch(`${SERVER_URL}/api/user/add-categories`, {categories: selectedCategories}, { withCredentials: true })
+        if (selectedCategories.length <= 0) {
+            return alert("Please select a category");
+        }
+        axios.patch(`${SERVER_URL}/api/user/add-categories`, { categories: selectedCategories }, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
-                    console.log(response.data);
+                    setUserInfo(prevData => ({...prevData, categories: response.data.categories}));
+                    console.log(response.data.categories);
+                    document.querySelector("#closeCategoriesModal").click();
                 }
             })
             .catch(e => {
@@ -110,6 +124,9 @@ export default function CategoriesSelection() {
                                 className="box-content rounded-none border-none text-neutral-500 hover:text-neutral-800 hover:no-underline focus:text-neutral-800 focus:opacity-100 focus:shadow-none focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-300 dark:focus:text-neutral-300"
                                 data-twe-modal-dismiss=""
                                 aria-label="Close"
+                                hidden={selectedCategories.length <= 0 || categoryIds?.length <= 0}
+                                id='closeCategoriesModal'
+                                onClick={() => setSelectedCategories(categoryIds)}
                             >
                                 <span className="[&>svg]:h-6 [&>svg]:w-6">
                                     <svg

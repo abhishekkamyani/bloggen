@@ -45,7 +45,7 @@ export default function PostEditor({ content, setContent }) {
   return (
     // <div className=''>
     <ReactQuill theme='snow' className='dark:bg-gray-900 text-black dark:text-white' value={content} onChange={setContent} modules={modules} placeholder='Write your blog content' formats={formats}  />
-        //  <button onClick={() => console.log(content)} className='bg-red-700 text-white p-5'> Create </button>
+        //  <button onClick={() => //console.log(content)} className='bg-red-700 text-white p-5'> Create </button>
     // {/* </div> */ }
 )
 }

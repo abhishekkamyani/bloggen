@@ -23,12 +23,12 @@ export default function Profile() {
         axios.get(`${SERVER_URL}/api/user/profile/${id}`)
             .then(response => {
                 if (!ignore) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     setUser(response.data);
                 }
             })
             .catch(e => {
-                console.log(e.response?.data?.error);
+                //console.log(e.response?.data?.error);
             })
 
         return () => {

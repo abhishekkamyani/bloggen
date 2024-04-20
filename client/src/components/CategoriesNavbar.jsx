@@ -4,7 +4,7 @@ import { useUserInfo } from '../contexts/UserContext';
 import axios from 'axios';
 import { SERVER_URL } from '../utils';
 
-export default function CategoriesNavbar() {
+export default function CategoriesNavbar({ page, pageSize }) {
 
     const [isRight, setIsRight] = useState(true);
     const [isLeft, setIsLeft] = useState(false);
@@ -15,10 +15,11 @@ export default function CategoriesNavbar() {
     const handleScroll = (e) => {
         const container = e.target;
 
-        if (container.scrollLeft === (container.scrollWidth - container.clientWidth)) {
-            setIsRight(false)
+        if (Math.ceil(container.scrollLeft) === (container.scrollWidth - container.clientWidth)) {
+            setIsRight(false);
         }
         else {
+            console.log("Scroll");
             setIsRight(true);
         }
 
@@ -35,7 +36,7 @@ export default function CategoriesNavbar() {
         const scrollLeft = container.scrollLeft;
 
         container.scrollTo({
-            left: scrollLeft + 100,
+            left: scrollLeft + 400,
             behavior: "smooth"
         })
     }
@@ -45,36 +46,53 @@ export default function CategoriesNavbar() {
         const scrollLeft = container.scrollLeft;
 
         container.scrollTo({
-            left: scrollLeft - 100,
+            left: scrollLeft - 400,
             behavior: "smooth"
         })
     }
 
     useEffect(() => {
         let ignore = false;
-        console.log(categoryIds);
+
         if (categoryIds?.length) {
             axios.get(`${SERVER_URL}/api/categories/${categoryIds}`)
                 .then(response => {
                     if (response.status === 200 && !ignore) {
-                        // alert(response.data);
+                        //console.log(response.data);
                         setCategories(response.data);
                     }
                 })
                 .catch(e => {
-                    console.log(e);
+                    //console.log(e);
                 })
         }
+
         return () => {
             ignore = true;
         }
     }, [categoryIds])
 
+    useEffect(() => {
+        let ignore = false;
+        const container = containerRef.current;
+        if (container.scrollWidth === container.clientWidth) {
+            !ignore && setIsRight(false);
+        }
+        else {
+            !ignore && setIsRight(true);
+        }
+
+        console.log("useEffect");
+
+        return () => {
+            ignore = true;
+        }
+    }, [categories])
 
 
     return (
-        <div className='relative mx-auto border-b-2 border-red-600 dark:text-white w-[75%]'>
-            <ul ref={containerRef} className='flex text-center items-center mx-10 overflow-x-scroll overflow-y-hidden py-5 text-nowrap' onScroll={handleScroll}>
+        <div className='relative mx-auto dark:text-white w-100 md:w-[90%]'>
+            <ul ref={containerRef} className='flex border-b-[2px] dark:border-slate-600 text-center items-center mx-10 overflow-x-scroll overflow-y-hidden my-5 pb-3 text-nowrap' onScroll={handleScroll}>
                 <button
                     title="Add New"
                     className="group mr-5 cursor-pointer outline-none hover:rotate-90 duration-300"
@@ -96,11 +114,22 @@ export default function CategoriesNavbar() {
                         <path d="M12 16V8" strokeWidth="1.5" />
                     </svg>
                 </button>
-
+                <li key={Math.random()} className='mr-10'>
+                    <NavLink
+                        to={`?page=${page}&pageSize=${pageSize}`}
+                        className={({ isActive }) => {
+                            return [
+                                isActive ? "font-bold" : "",
+                            ].join(" ")
+                        }}
+                    >
+                        For You
+                    </NavLink>
+                </li>
                 {categories?.map(category => (
                     <li key={category._id} className='mr-10'>
                         <NavLink
-                            to={`?category=${category.slug}`}
+                            to={`?page=${page}&pageSize=${pageSize}&category=${category.slug}`}
                             className={({ isActive }) => {
                                 return [
                                     isActive ? "font-bold" : "",

@@ -6,7 +6,7 @@ const UserContext = createContext({});
 
 export function UserContextProvider({ children }) {
     const [userInfo, setUserInfo] = useState({_id: ""});
-    console.log(userInfo);
+    //console.log(userInfo);
 
     useEffect(() => {
         let ignore = false;
@@ -17,7 +17,7 @@ export function UserContextProvider({ children }) {
                 }
             })
             .catch(e => {
-                console.log(e.response?.data?.error);
+                //console.log(e.response?.data?.error);
             });
 
         return () => ignore = true;
@@ -25,7 +25,7 @@ export function UserContextProvider({ children }) {
 
     useEffect(() => {
         let ignore = false;
-        console.log("use-effect", userInfo._id);
+        //console.log("use-effect", userInfo._id);
         if(userInfo.categories?.length === 0 && !ignore) {
             document.querySelector("#categoriesModalButton").click();
         }
@@ -40,7 +40,7 @@ export function UserContextProvider({ children }) {
                 setUserInfo(response.data);
             })
             .catch(e => {
-                console.log(e.response?.data?.error);
+                //console.log(e.response?.data?.error);
             });
     }
     return (

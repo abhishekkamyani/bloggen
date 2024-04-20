@@ -21,12 +21,12 @@ export default function Registration() {
         if (!ignore) {
           const countriesObj = response.data.data;
           const countries = countriesObj.map((country) => country.name);
-          //   console.log(countries);
+          //   //console.log(countries);
           setCountries(countries);
         }
       })
       .catch((e) => {
-        console.log(e);
+        //console.log(e);
       });
 
     return () => {
@@ -41,27 +41,27 @@ export default function Registration() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    console.log(user);
+    //console.log(user);
 
     if (user.password !== user.c_password) {
-      return console.log("Passwords do not match");
+      return //console.log("Passwords do not match");
     }
 
     register({...user, country: selectedCountryRef.current.value});
   }
 
   const register = async (user) => {
-    console.log("passwords match");
+    //console.log("passwords match");
 
     try {
       const response = await axios.post(`${SERVER_URL}/api/auth/register`, user, { withCredentials: true });
       if (response?.status === 201) {
-        console.log(response.data);
+        //console.log(response.data);
         setUserInfo(response.data);
         navigate("/");
       }
     } catch (e) {
-      console.log(e.response?.data?.error);
+      //console.log(e.response?.data?.error);
     }
     setIsSubmitting(false);
   }

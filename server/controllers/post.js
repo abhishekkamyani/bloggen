@@ -85,18 +85,22 @@ exports.getPost = async (req, res) => {
 
 exports.getAllPosts = async (req, res) => {
     try {
-        
+
         const slug = req.query.category;
-        const category = await Category.findOne({slug}, {_id: 1});
-        // console.log(category);
+        const category = await Category.findOne({ slug }, { _id: 1 });
+        console.log(category);
         // const totalItems = await Post.estimatedDocumentCount({slug: "title-hai-yeh-humhara-1712947002032"});
 
         let totalItems = 0;
 
         if (category) {
-            totalItems = await Post.countDocuments({categories: {$in: category._id}});
+            totalItems = await Post.countDocuments({ categories: { $in: category._id } });
         } else {
             totalItems = await Post.estimatedDocumentCount();
+        }
+
+        if (!totalItems) {
+            return res.status(404).json({error: "Blogs not found"});
         }
 
         // totalItems = await Post.countDocuments({categories: {$in: category.id}});
@@ -109,7 +113,7 @@ exports.getAllPosts = async (req, res) => {
             return res.status(404).json({ error: "Page is out of bounds" });
         }
 
-        const filter = category && {categories: {$in: category._id}}
+        const filter = category && { categories: { $in: category._id } }
 
         const posts = await Post.find(filter)
             .populate({ path: 'author', select: "firstName lastName _id email avatar" })
@@ -138,7 +142,7 @@ exports.getCategoryPosts = async (req, res) => {
     try {
         const slug = req.query.category;
         console.log(slug);
-        const category = await Category.findOne({ slug }, {posts: 1}).populate("posts").posts;
+        const category = await Category.findOne({ slug }, { posts: 1 }).populate("posts").posts;
         res.json(category);
 
     } catch (error) {

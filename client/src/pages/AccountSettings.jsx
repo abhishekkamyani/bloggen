@@ -17,13 +17,13 @@ export default function AccountSettings() {
       .get(`${SERVER_URL}/api/user/profile/${userInfo._id}`)
       .then((response) => {
         if (!ignore) {
-          console.log(response.data);
+          //console.log(response.data);
           setUser(response.data);
           avatar = response.data.avatar && `${SERVER_URL}/${user.cover}`;
         }
       })
       .catch((e) => {
-        console.log(e.response?.data?.error);
+        //console.log(e.response?.data?.error);
       });
 
     axios
@@ -36,7 +36,7 @@ export default function AccountSettings() {
         }
       })
       .catch((e) => {
-        console.log(e);
+        //console.log(e);
       });
 
     return () => {
@@ -59,13 +59,13 @@ export default function AccountSettings() {
 
     };
     setUser({ ...user, [e.target.name]: e.target.files[0] });
-    console.log("files ---- ", e.target.files[0]);
+    //console.log("files ---- ", e.target.files[0]);
     reader.readAsDataURL(file);
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user);
+    //console.log(user);
     modalButtonRef.current.click();
   };
 
@@ -353,7 +353,7 @@ const Input = ({
 
 const ConfirmModal = forwardRef((props, ref) => {
   const { user } = props;
-  console.log(user);
+  //console.log(user);
   const closeButtonRef = useRef();
   const [password, setPassword] = useState("Test123!");
   const { resetUserInfo } = useUserInfo();
@@ -365,18 +365,18 @@ const ConfirmModal = forwardRef((props, ref) => {
 
     try {
       const formData = new FormData();
-      console.log(user.avatar);
+      //console.log(user.avatar);
   
-      console.log(user);
+      //console.log(user);
       formData.append("user", JSON.stringify(user));
       formData.append("password", password);
-      console.log(password);
+      //console.log(password);
       formData.append("avatar", user.avatar);
       formData.append("cover", user.cover);
 
       const response = await axios.patch(`${SERVER_URL}/api/user/profile/update`, formData, { withCredentials: true });
       if (response.status === 200) {
-        console.log(user);
+        //console.log(user);
 
         window.scrollTo({ top: 0 });
         resetUserInfo();
@@ -384,8 +384,8 @@ const ConfirmModal = forwardRef((props, ref) => {
         window.location.reload();
       }
     } catch (e) {
-      console.log(e);
-      console.log(e.response?.data?.error);
+      //console.log(e);
+      //console.log(e.response?.data?.error);
     }
 
     closeButtonRef.current.click();

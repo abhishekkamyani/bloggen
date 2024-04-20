@@ -8,28 +8,31 @@ import { Ripple } from 'primereact/ripple';
 import { Dropdown } from 'primereact/dropdown';
 import { classNames } from 'primereact/utils';
 import CategoriesNavbar from '../components/CategoriesNavbar';
+import { useUserInfo } from '../contexts/UserContext';
 
+const initialFetched = {
+    posts: [],
+    totalItems: 0,
+    totalPages: 0
+}
 export default function Home() {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const page = queryParams.get('page') || 1;
     const pageSize = parseInt(queryParams.get('pageSize')) || 10;
-    console.log(page);
+    const category = queryParams.get('category') || "all";
+    const {userInfo} = useUserInfo();
     const navigate = useNavigate();
 
     const paginatorRef = useRef(null);
 
-    const [fetchedData, setFetchedData] = useState({
-        posts: [],
-        totalItems: 0,
-        totalPages: 0
-    });
+    const [fetchedData, setFetchedData] = useState(initialFetched);
 
     // const [paginationData, setPaginationData] = useState({ page: 1, pageSize: 5 });
     useEffect(() => {
         let ignore = false;
 
-        axios.get(`${SERVER_URL}/api/post/all?pageSize=${pageSize}&page=${page}`)
+        axios.get(`${SERVER_URL}/api/post/all?pageSize=${pageSize}&page=${page}&category=${category}`)
             .then(response => {
                 if (response.status === 200 && !ignore) {
                     console.log(response.data);
@@ -37,17 +40,18 @@ export default function Home() {
                 }
             })
             .catch(e => {
-                console.log(e);
-                console.log(e.response?.data?.error);
+                setFetchedData(initialFetched);
+                // console.log(e);
+                //console.log(e.response?.data?.error);
             });
 
         return () => {
             ignore = true;
         }
-    }, [page, pageSize])
+    }, [page, pageSize, category])
 
     const onPageChange = (event) => {
-        navigate(`?page=${event.page + 1}&pageSize=${event.rows}`);
+        navigate(`?page=${event.page + 1}&pageSize=${event.rows}&category=${category}`);
     };
 
 
@@ -105,9 +109,9 @@ export default function Home() {
     }
 
     return (
-        <div className='py-5' >
+        <div className='pb-5' >
             <div className='d-flex w-full'>
-                <CategoriesNavbar />
+                {userInfo.email && <CategoriesNavbar page={page} pageSize={pageSize} />}
                 {/* <Paginator className='bg-white text-black dark:bg-dark-main dark:text-main' first={first} totalPages={fetchedData.totalPages} totalRecords={fetchedData.totalItems} rowsPerPageOptions={[5, 10, 20, 30, 40]} onPageChange={onPageChange} /> */}
                 <Paginator
                     ref={paginatorRef}
