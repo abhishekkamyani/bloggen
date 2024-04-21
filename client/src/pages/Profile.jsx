@@ -5,13 +5,11 @@ import { SERVER_URL, capitalizeFirstChar, removeHTTP } from "../utils";
 import { capitalizeEveryFirstChar } from "../utils";
 import { FaFacebook, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
 import ImageLoader from "../loaders/ImageLoader";
+import { format } from "date-fns";
 
 export default function Profile() {    
     const {id} = useParams();
-    // const [user, setUser] = useState({firstName: "", lastName: "", email: "", country: "", avatar: "", cover: "", bio: ""});
     const [user, setUser] = useState({});
-    const date = new Date(user.dateJoined);
-    const dateJoined = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
     useEffect(() => {
 
@@ -59,7 +57,7 @@ export default function Profile() {
                         <h1 className="text-left lg:text-4xl md:text-3xl sm:text-3xl xs:text-xl">
                             {(user.firstName + " " + user.lastName).toUpperCase()}
                         </h1>
-                        <p className="my-3 text-sm">Member Since: {dateJoined}</p>
+                        <p className="my-3 text-sm">Member Since: {format(new Date(user?.dateJoined), "MMM d, y")}</p>
                     </div>
                 </div>
                 <div className="xl:w-[80%] lg:w-[90%] md:w-[90%] sm:w-[92%] xs:w-[90%] mx-auto flex flex-col gap-4 items-center relative lg:-top-8 md:-top-6 sm:-top-4 xs:-top-4">

@@ -73,7 +73,7 @@ exports.getPost = async (req, res) => {
         const post = await Post.findOne({ slug })
             .populate({ path: 'author', select: "firstName lastName _id email avatar" })
             .populate({ path: 'categories', select: "-posts" })
-        console.log(post);
+        // console.log(post);
         res.json(post);
 
     } catch (error) {
@@ -88,7 +88,7 @@ exports.getAllPosts = async (req, res) => {
 
         const slug = req.query.category;
         const category = await Category.findOne({ slug }, { _id: 1 });
-        console.log(category);
+        // console.log(category);
         // const totalItems = await Post.estimatedDocumentCount({slug: "title-hai-yeh-humhara-1712947002032"});
 
         let totalItems = 0;
@@ -100,7 +100,7 @@ exports.getAllPosts = async (req, res) => {
         }
 
         if (!totalItems) {
-            return res.status(404).json({error: "Blogs not found"});
+            return res.status(404).json({ error: "Blogs not found" });
         }
 
         // totalItems = await Post.countDocuments({categories: {$in: category.id}});
@@ -138,15 +138,76 @@ exports.getAllPosts = async (req, res) => {
     }
 }
 
-exports.getCategoryPosts = async (req, res) => {
+// exports.getCategoryPosts = async (req, res) => {
+//     try {
+//         const slug = req.query.category;
+//         console.log(slug);
+//         const category = await Category.findOne({ slug }, { posts: 1 }).populate("posts").posts;
+//         res.json(category);
+
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json(error);
+//     }
+// }
+
+exports.likePost = async (req, res) => {
     try {
-        const slug = req.query.category;
-        console.log(slug);
-        const category = await Category.findOne({ slug }, { posts: 1 }).populate("posts").posts;
-        res.json(category);
+        const { token } = req.cookies;
+
+        if (!token) {
+            return res.status(401).json({ error: "Unauthorized access" });
+        }
+
+        const auth = jwt.verify(token, publicKey);
+
+        if (!auth.id) {
+            return res.status(401).json({ error: "Unauthorized access" });
+        }
+
+        const postId = req.params.id;
+        // console.log(postId);
+        await User.findByIdAndUpdate(auth.id, { $addToSet: { likedPosts: postId } }, { new: true });
+        const post = await Post.findByIdAndUpdate(postId, { $addToSet: {likers: auth.id}}, {new : true, select: "likers" });
+
+        console.log(post);
+
+        return res.json({likers: post.likers});
 
     } catch (error) {
         console.log(error);
         res.status(500).json(error);
     }
+
+}
+
+exports.dislikePost = async (req, res) => {
+    try {
+        const { token } = req.cookies;
+
+        if (!token) {
+            return res.status(401).json({ error: "Unauthorized access" });
+        }
+
+        const auth = jwt.verify(token, publicKey);
+
+        if (!auth.id) {
+            return res.status(401).json({ error: "Unauthorized access" });
+        }
+
+        const postId = req.params.id;
+        const user = await User.findByIdAndUpdate(auth.id, { $pull: { likedPosts: postId } }, { new: true });
+        const post = await Post.findByIdAndUpdate(postId, { $pull: {likers: auth.id}}, {new : true, select: "likers" });
+
+
+        console.log(user);
+        console.log(post);
+
+        return res.json({likers: post.likers});
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+    }
+
 }

@@ -9,6 +9,7 @@ export function UserContextProvider({ children }) {
     //console.log(userInfo);
 
     useEffect(() => {
+        console.log("identity");
         let ignore = false;
         axios.get(`${SERVER_URL}/api/auth/identity`, { withCredentials: true })
             .then(response => {
@@ -25,7 +26,6 @@ export function UserContextProvider({ children }) {
 
     useEffect(() => {
         let ignore = false;
-        //console.log("use-effect", userInfo._id);
         if(userInfo.categories?.length === 0 && !ignore) {
             document.querySelector("#categoriesModalButton").click();
         }
