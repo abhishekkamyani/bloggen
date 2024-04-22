@@ -7,7 +7,7 @@ import { useUserInfo } from '../contexts/UserContext';
 let pageSize = 20, page = 1;
 export default function CategoriesSelection() {
     const categoryIds = useUserInfo()?.userInfo?.categories || [];
-    const {setUserInfo} = useUserInfo();
+    const { setUserInfo } = useUserInfo();
     const [categories, setCategories] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const totalPages = useRef();
@@ -73,7 +73,7 @@ export default function CategoriesSelection() {
         axios.patch(`${SERVER_URL}/api/user/add-categories`, { categories: selectedCategories }, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
-                    setUserInfo(prevData => ({...prevData, categories: response.data.categories}));
+                    setUserInfo(prevData => ({ ...prevData, categories: response.data.categories }));
                     console.log(response.data.categories);
                     document.querySelector("#closeCategoriesModal").click();
                 }
@@ -147,7 +147,7 @@ export default function CategoriesSelection() {
                         </div>
                         {/* Modal body */}
                         <div className="relative p-4 min-[0px]:overflow-y-auto">
-                            <p className="px-10 text-center leading-[3rem]">
+                            <div className="px-10 text-center leading-[3rem]">
                                 <SelectButton
                                     optionLabel="name"
                                     optionValue="_id"
@@ -168,15 +168,16 @@ export default function CategoriesSelection() {
                                 )}
 
 
-                            </p>
+                            </div>
                         </div>
                         {/* Modal footer */}
                         <div className="mt-auto flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 p-4 dark:border-white/10 min-[0px]:rounded-none">
                             <button
                                 type="button"
                                 onClick={handleSubmit}
-                                className="inline-block rounded btn px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal transition duration-150 ease-in-out"
-                            // data-twe-modal-dismiss=""
+                                className="inline-block btn disabled:bg-gray-300 disabled:text-gray-600 disabled:hover:bg-gray-300 rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal transition duration-150 ease-in-out"
+                                // data-twe-modal-dismiss=""
+                                disabled={selectedCategories.length <= 0}
                             >
                                 Done
                             </button>

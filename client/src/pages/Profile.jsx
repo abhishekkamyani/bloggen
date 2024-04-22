@@ -6,9 +6,10 @@ import { capitalizeEveryFirstChar } from "../utils";
 import { FaFacebook, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
 import ImageLoader from "../loaders/ImageLoader";
 import { format } from "date-fns";
+import Posts from "../components/Posts";
 
-export default function Profile() {    
-    const {id} = useParams();
+export default function Profile() {
+    const { id } = useParams();
     const [user, setUser] = useState({});
 
     useEffect(() => {
@@ -21,7 +22,7 @@ export default function Profile() {
         axios.get(`${SERVER_URL}/api/user/profile/${id}`)
             .then(response => {
                 if (!ignore) {
-                    //console.log(response.data);
+                    console.log(response.data);
                     setUser(response.data);
                 }
             })
@@ -57,7 +58,7 @@ export default function Profile() {
                         <h1 className="text-left lg:text-4xl md:text-3xl sm:text-3xl xs:text-xl">
                             {(user.firstName + " " + user.lastName).toUpperCase()}
                         </h1>
-                        <p className="my-3 text-sm">Member Since: {format(new Date(user?.dateJoined), "MMM d, y")}</p>
+                        <p className="my-3 text-sm">Member Since: {format(new Date(user?.dateJoined || 0), "MMM d, y")}</p>
                     </div>
                 </div>
                 <div className="xl:w-[80%] lg:w-[90%] md:w-[90%] sm:w-[92%] xs:w-[90%] mx-auto flex flex-col gap-4 items-center relative lg:-top-8 md:-top-6 sm:-top-4 xs:-top-4">
@@ -103,21 +104,16 @@ export default function Profile() {
                                 </dl>
                             </div>
                         </div>
-                        <div className="my-10 lg:w-[70%] md:h-[14rem] xs:w-full xs:h-[10rem]">
-                            {/*  */}
-                            <h1 className="w-fit font-serif my-4 pb-1 pr-2 rounded-b-md border-b-4 border-primary dark:border-b-4 dark:border-yellow-600 dark:text-white lg:text-4xl md:text-3xl xs:text-xl">
-                                Popular Posts
-                            </h1>
-                            {/* Location */}
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d252230.02028974562!2d38.613328040215286!3d8.963479542403238!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85cef5ab402d%3A0x8467b6b037a24d49!2sAddis%20Ababa!5e0!3m2!1sen!2set!4v1710567234587!5m2!1sen!2set"
-                                className="rounded-lg w-full h-full"
-                                style={{ border: 0 }}
-                                allowFullScreen=""
-                                loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                            />
-                        </div>
+                        {user.posts?.length > 0 && (
+                            <div className="mt-10">
+                                {/*  */}
+                                <h1 className="w-fit font-serif my-4 pb-1 pr-2 rounded-b-md border-b-4 border-primary dark:border-b-4 dark:border-primary-light dark:text-white lg:text-4xl md:text-3xl xs:text-xl">
+                                    Popular Posts
+                                </h1>
+                                <Posts posts={user?.posts || []} />
+                            </div>
+                        )}
+
                     </div>
                     {/* Social Links */}
                     <div className="fixed right-2 bottom-20 flex flex-col rounded-sm bg-gray-200 text-gray-500 dark:bg-gray-200/80 dark:text-gray-700 hover:text-gray-600 hover:dark:text-gray-400">

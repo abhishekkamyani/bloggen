@@ -4,10 +4,12 @@ import axios from "axios";
 import { SERVER_URL, capitalizeFirstChar } from "../utils";
 import { Link, useParams } from "react-router-dom";
 import "../css/like-button.css";
+import '../css/quill-custom.css';
 import { useUserInfo } from "../contexts/UserContext";
 
 export default function Post() {
     const [post, setPost] = useState('');
+    const [relatedPosts, setRelatedPosts] = useState([]);
     const { slug } = useParams();
     const { userInfo } = useUserInfo();
     const [liked, setLiked] = useState(false);
@@ -19,14 +21,16 @@ export default function Post() {
         axios.get(`${SERVER_URL}/api/post/${slug}`)
             .then(response => {
                 if (response.status === 200 && !ignore) {
-                    console.log(response.data);
-                    setPost(response.data);
+                    console.log(response.data.relatedPosts);
+                    setPost(response.data.post);
                 }
             })
             .catch(e => {
                 //console.log(e);
                 //console.log(e.response?.data?.error);
             })
+
+        // axios.get
 
         return () => {
             ignore = true;
@@ -83,7 +87,7 @@ export default function Post() {
                             <h1 className="text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">
                                 {post.title}
                             </h1>
-                            <address className="flex items-center justify-between mt-12 mb-6 not-italic">
+                            <address className="flex items-center justify-center sm:justify-between flex-wrap gap-y-3 mt-12 mb-6 not-italic">
                                 <div className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
                                     {/* Avatar */}
                                     <img
@@ -162,13 +166,13 @@ export default function Post() {
                         </summary>
 
                     </article>
-                    <div className="px-4 w-1/2 md:w-1/4 md:h-screen my-auto text-black dark:text-white">
+                    <div className="px-4 w-full sm:w-1/2 md:w-1/4 md:h-screen my-auto text-black dark:text-white">
                         <div className="p-4 bg-slate-300 dark:bg-slate-900 py-6 rounded">
                             <h2 className="text-xl font-bold mb-4">Categories</h2>
                             <ul className="list-disc list-inside">
                                 {post?.categories?.map(category => (
                                     <li key={category._id} className="mb-2">
-                                        <Link to={`/posts?category=${category.name}`} className="hover:text-gray-500 dark:hover:text-gray-300">
+                                        <Link to={`..?category=${category.slug}`} className="hover:text-gray-500 dark:hover:text-gray-300">
                                             {category.name}
                                         </Link>
                                     </li>
@@ -180,102 +184,13 @@ export default function Post() {
             </main>
             <aside
                 aria-label="Related articles"
-                className="py-8 lg:py-24 bg-gray-50 dark:bg-gray-800"
+                className="py-8 lg:py-24 border-t border-gray-200 dark:border-gray-600"
             >
                 <div className="px-4 mx-auto max-w-screen-xl">
                     <h2 className="mb-8 text-2xl font-bold text-gray-900 dark:text-white">
                         Related articles
                     </h2>
-                    <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
-                        <article className="max-w-xs">
-                            <a href="#">
-                                <img
-                                    src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-1.png"
-                                    className="mb-5 rounded-lg"
-                                    alt="Image 1"
-                                />
-                            </a>
-                            <h2 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                                <a href="#">Our first office</a>
-                            </h2>
-                            <p className="mb-4 text-gray-500 dark:text-gray-400">
-                                Over the past year, Volosoft has undergone many changes! After
-                                months of preparation.
-                            </p>
-                            <a
-                                href="#"
-                                className="inline-flex items-center font-medium underline underline-offset-4 text-primary-600 dark:text-primary-500 hover:no-underline"
-                            >
-                                Read in 2 minutes
-                            </a>
-                        </article>
-                        <article className="max-w-xs">
-                            <a href="#">
-                                <img
-                                    src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-2.png"
-                                    className="mb-5 rounded-lg"
-                                    alt="Image 2"
-                                />
-                            </a>
-                            <h2 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                                <a href="#">Enterprise design tips</a>
-                            </h2>
-                            <p className="mb-4  text-gray-500 dark:text-gray-400">
-                                Over the past year, Volosoft has undergone many changes! After
-                                months of preparation.
-                            </p>
-                            <a
-                                href="#"
-                                className="inline-flex items-center font-medium underline underline-offset-4 text-primary-600 dark:text-primary-500 hover:no-underline"
-                            >
-                                Read in 12 minutes
-                            </a>
-                        </article>
-                        <article className="max-w-xs">
-                            <a href="#">
-                                <img
-                                    src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-3.png"
-                                    className="mb-5 rounded-lg"
-                                    alt="Image 3"
-                                />
-                            </a>
-                            <h2 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                                <a href="#">We partnered with Google</a>
-                            </h2>
-                            <p className="mb-4  text-gray-500 dark:text-gray-400">
-                                Over the past year, Volosoft has undergone many changes! After
-                                months of preparation.
-                            </p>
-                            <a
-                                href="#"
-                                className="inline-flex items-center font-medium underline underline-offset-4 text-primary-600 dark:text-primary-500 hover:no-underline"
-                            >
-                                Read in 8 minutes
-                            </a>
-                        </article>
-                        <article className="max-w-xs">
-                            <a href="#">
-                                <img
-                                    src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/article/blog-4.png"
-                                    className="mb-5 rounded-lg"
-                                    alt="Image 4"
-                                />
-                            </a>
-                            <h2 className="mb-2 text-xl font-bold leading-tight text-gray-900 dark:text-white">
-                                <a href="#">Our first project with React</a>
-                            </h2>
-                            <p className="mb-4  text-gray-500 dark:text-gray-400">
-                                Over the past year, Volosoft has undergone many changes! After
-                                months of preparation.
-                            </p>
-                            <a
-                                href="#"
-                                className="inline-flex items-center font-medium underline underline-offset-4 text-primary-600 dark:text-primary-500 hover:no-underline"
-                            >
-                                Read in 4 minutes
-                            </a>
-                        </article>
-                    </div>
+                    
                 </div>
             </aside>
         </>

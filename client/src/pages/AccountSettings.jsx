@@ -2,15 +2,13 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserInfo } from "../contexts/UserContext";
 import axios from "axios";
-import { SERVER_URL, avatarDefault, capitalizeEveryFirstChar, capitalizeFirstChar, coverDefault } from "../utils";
+import { SERVER_URL, capitalizeEveryFirstChar, capitalizeFirstChar } from "../utils";
 
 export default function AccountSettings() {
   const [user, setUser] = useState({});
   const { userInfo } = useUserInfo();
   const [countries, setCountries] = useState([]);
   const modalButtonRef = useRef();
-  // let avatar = defaultAvatar;
-  // let avatar = defaultAvatar;
   useEffect(() => {
     let ignore = false;
     axios
@@ -19,7 +17,6 @@ export default function AccountSettings() {
         if (!ignore) {
           //console.log(response.data);
           setUser(response.data);
-          avatar = response.data.avatar && `${SERVER_URL}/${user.cover}`;
         }
       })
       .catch((e) => {

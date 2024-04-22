@@ -111,7 +111,7 @@ export default function Home() {
     return (
         <div className='pb-5' >
             <div className='d-flex w-full'>
-                {userInfo.email && <CategoriesNavbar page={page} pageSize={pageSize} />}
+                {userInfo.email && <CategoriesNavbar page={page} pageSize={pageSize} selectedCategory={category} />}
                 {/* <Paginator className='bg-white text-black dark:bg-dark-main dark:text-main' first={first} totalPages={fetchedData.totalPages} totalRecords={fetchedData.totalItems} rowsPerPageOptions={[5, 10, 20, 30, 40]} onPageChange={onPageChange} /> */}
                 <Paginator
                     ref={paginatorRef}

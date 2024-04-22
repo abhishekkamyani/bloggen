@@ -134,5 +134,9 @@ body {
 /* p-button p-component p-highlight */
 
 .p-selectbutton .p-button {
-  @apply m-5;
+  @apply m-5 bg-slate-700 transition-all ease-out duration-300;
+}
+
+.p-component .p-highlight{
+  @apply bg-primary-dark !important;
 }

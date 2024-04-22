@@ -6,12 +6,15 @@ const fs = require("fs");
 const path = require("path");
 const publicKey = fs.readFileSync(path.join(__dirname, "../keys/public.key"), "utf8");
 const uploadFileOnAzure = require("../utils/uploadFileOnAzure");
-// const deleteFile = require("../utils/deleteFile");
-// const path = require("path");
 exports.profile = async (req, res) => {
     try {
         const id = req.params.id;
-        const user = await User.findById(id, { password: 0, likedPosts: 0 });
+        const user = await User.findById(id, { password: 0, likedPosts: 0 })
+        .populate({
+            path: "posts",
+            options: {sort: {likers: -1}, limit: 3},
+            select: "title slug blogCover summary createdAt _id"
+        })
         res.json(user);
     } catch (error) {
         // console.log("profile", error);
@@ -123,14 +126,14 @@ exports.addCategories = async (req, res) => {
         //     { new: true, select: 'categories' }
         // );
 
-        
+
         const updatedUserData = await User.findByIdAndUpdate(
             id,
-            { categories: categories},
+            { categories: categories },
             { new: true, select: 'categories' }
         );
 
-        
+
 
         res.json(updatedUserData);
 

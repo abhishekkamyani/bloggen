@@ -73,14 +73,18 @@ exports.getPost = async (req, res) => {
         const post = await Post.findOne({ slug })
             .populate({ path: 'author', select: "firstName lastName _id email avatar" })
             .populate({ path: 'categories', select: "-posts" })
-        // console.log(post);
-        res.json(post);
+
+        const posts = await Post.find(
+            { categories: { $in: post.categories } },
+            { categories: 1, title: 1, slug: 1, summary: 1, blogCover: 1, author: 1, createdAt: 1 }
+        ).limit(3);
+        // console.log(posts);
+        res.json({ post, relatedPosts: posts });
 
     } catch (error) {
         console.log(error);
         res.status(500).json(error);
     }
-
 }
 
 exports.getAllPosts = async (req, res) => {
@@ -115,8 +119,8 @@ exports.getAllPosts = async (req, res) => {
 
         const filter = category && { categories: { $in: category._id } }
 
-        const posts = await Post.find(filter)
-            .populate({ path: 'author', select: "firstName lastName _id email avatar" })
+        const posts = await Post.find(filter, { title: 1, slug: 1, summary: 1, blogCover: 1, author: 1, createdAt: 1 })
+            .populate({ path: 'author', select: "firstName lastName _id avatar" })
             .populate({ path: 'categories', select: "-posts" })
             .skip(startIndex)
             .limit(pageSize)
@@ -168,11 +172,11 @@ exports.likePost = async (req, res) => {
         const postId = req.params.id;
         // console.log(postId);
         await User.findByIdAndUpdate(auth.id, { $addToSet: { likedPosts: postId } }, { new: true });
-        const post = await Post.findByIdAndUpdate(postId, { $addToSet: {likers: auth.id}}, {new : true, select: "likers" });
+        const post = await Post.findByIdAndUpdate(postId, { $addToSet: { likers: auth.id } }, { new: true, select: "likers" });
 
         console.log(post);
 
-        return res.json({likers: post.likers});
+        return res.json({ likers: post.likers });
 
     } catch (error) {
         console.log(error);
@@ -197,13 +201,13 @@ exports.dislikePost = async (req, res) => {
 
         const postId = req.params.id;
         const user = await User.findByIdAndUpdate(auth.id, { $pull: { likedPosts: postId } }, { new: true });
-        const post = await Post.findByIdAndUpdate(postId, { $pull: {likers: auth.id}}, {new : true, select: "likers" });
+        const post = await Post.findByIdAndUpdate(postId, { $pull: { likers: auth.id } }, { new: true, select: "likers" });
 
 
         console.log(user);
         console.log(post);
 
-        return res.json({likers: post.likers});
+        return res.json({ likers: post.likers });
 
     } catch (error) {
         console.log(error);
@@ -211,3 +215,5 @@ exports.dislikePost = async (req, res) => {
     }
 
 }
+
+// exports.getRelatedPosts = 

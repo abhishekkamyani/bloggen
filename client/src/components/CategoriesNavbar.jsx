@@ -4,7 +4,7 @@ import { useUserInfo } from '../contexts/UserContext';
 import axios from 'axios';
 import { SERVER_URL } from '../utils';
 
-export default function CategoriesNavbar({ page, pageSize }) {
+export default function CategoriesNavbar({ page, pageSize, selectedCategory }) {
 
     const [isRight, setIsRight] = useState(true);
     const [isLeft, setIsLeft] = useState(false);
@@ -115,29 +115,21 @@ export default function CategoriesNavbar({ page, pageSize }) {
                     </svg>
                 </button>
                 <li key={Math.random()} className='mr-10'>
-                    <NavLink
+                    <Link
                         to={`?page=${page}&pageSize=${pageSize}`}
-                        className={({ isActive }) => {
-                            return [
-                                isActive ? "font-bold" : "",
-                            ].join(" ")
-                        }}
+                        className={`${!selectedCategory || selectedCategory==="all" && "font-extrabold"}`}
                     >
                         For You
-                    </NavLink>
+                    </Link>
                 </li>
                 {categories?.map(category => (
                     <li key={category._id} className='mr-10'>
-                        <NavLink
+                        <Link
                             to={`?page=${page}&pageSize=${pageSize}&category=${category.slug}`}
-                            className={({ isActive }) => {
-                                return [
-                                    isActive ? "font-bold" : "",
-                                ].join(" ")
-                            }}
+                            className={`${selectedCategory === category.slug && "font-extrabold"}`}                            
                         >
                             {category.name}
-                        </NavLink>
+                        </Link>
                     </li>
                 ))}
 
