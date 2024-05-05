@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useUserInfo } from "../contexts/UserContext";
 import axios from "axios";
 import { SERVER_URL, capitalizeEveryFirstChar, capitalizeFirstChar } from "../utils";
+import { toast } from "react-toastify";
 
 export default function AccountSettings() {
   const [user, setUser] = useState({});
@@ -15,12 +16,10 @@ export default function AccountSettings() {
       .get(`${SERVER_URL}/api/user/profile/${userInfo._id}`)
       .then((response) => {
         if (!ignore) {
-          //console.log(response.data);
           setUser(response.data);
         }
       })
       .catch((e) => {
-        //console.log(e.response?.data?.error);
       });
 
     axios
@@ -33,7 +32,7 @@ export default function AccountSettings() {
         }
       })
       .catch((e) => {
-        //console.log(e);
+        console.log(e);
       });
 
     return () => {
@@ -51,18 +50,15 @@ export default function AccountSettings() {
 
     reader.onload = (event) => {
       const imageSrc = event.target.result;
-      // document.getElementById(id).style.backgroundImage = `url('${imageSrc}')`;
       document.getElementById(id).src = imageSrc;
 
     };
     setUser({ ...user, [e.target.name]: e.target.files[0] });
-    //console.log("files ---- ", e.target.files[0]);
     reader.readAsDataURL(file);
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //console.log(user);
     modalButtonRef.current.click();
   };
 
@@ -325,7 +321,6 @@ const Input = ({
   pattern,
 }) => {
   return (
-    // <div className="w-full mb-4 mt-6">
     <>
       <label htmlFor={name} className="mb-2 dark:text-gray-300">
         {label}
@@ -343,14 +338,12 @@ const Input = ({
         pattern={pattern}
       />
     </>
-    // </div >
   );
 };
 
 
 const ConfirmModal = forwardRef((props, ref) => {
   const { user } = props;
-  //console.log(user);
   const closeButtonRef = useRef();
   const [password, setPassword] = useState("Test123!");
   const { resetUserInfo } = useUserInfo();
@@ -358,31 +351,32 @@ const ConfirmModal = forwardRef((props, ref) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // setPassword("");
 
     try {
       const formData = new FormData();
-      //console.log(user.avatar);
   
-      //console.log(user);
       formData.append("user", JSON.stringify(user));
       formData.append("password", password);
-      //console.log(password);
       formData.append("avatar", user.avatar);
       formData.append("cover", user.cover);
 
-      const response = await axios.patch(`${SERVER_URL}/api/user/profile/update`, formData, { withCredentials: true });
+      const response = await toast.promise(
+        axios.patch(`${SERVER_URL}/api/user/profile/update`, formData, { withCredentials: true }),
+        {
+          pending: "Profile update in progress"
+        }
+      ) 
       if (response.status === 200) {
-        //console.log(user);
 
+        toast.success(response.data?.message);
         window.scrollTo({ top: 0 });
         resetUserInfo();
         navigate(`/profile/${user._id}`);
-        window.location.reload();
+        // window.location.reload();
       }
     } catch (e) {
       //console.log(e);
-      //console.log(e.response?.data?.error);
+      toast.error(e.response?.data?.error || "Something went wrong, please try again later.");
     }
 
     closeButtonRef.current.click();

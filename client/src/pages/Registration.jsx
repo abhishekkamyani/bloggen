@@ -83,7 +83,8 @@ export default function Registration() {
       }
     } catch (e) {
       //console.log(e.response?.data?.error);
-      toastId = toast.error(e.response?.data?.error);
+
+      toastId = toast.error(e.response?.data?.error || "Something went wrong, please try again later.");
     }
     setIsSubmitting(false);
   };
