@@ -1,8 +1,10 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {SERVER_URL} from '../utils';
 import { useUserInfo } from '../contexts/UserContext';
+import { Toast } from 'primereact/toast';
+ 
 
 function Login() {
     const [user, setUser] = useState({ email: '', password: '' });
@@ -10,6 +12,7 @@ function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const { setUserInfo } = useUserInfo();
     const navigate = useNavigate();
+    const toast = useRef(null);
 
     const handleChange = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
@@ -18,18 +21,27 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
-        // //console.log(user);
+        //console.log(user);
 
         try {
             const response = await axios.post(`${SERVER_URL}/api/auth/login`, user, { withCredentials: true });
-
             //console.log(response.status);
             if (response?.status === 200) {
+                toast.current.show({severity:'success', summary: 'Welcome!..', detail:'You have logged in', life: 1000});
                 setUserInfo(response.data);
-                navigate("/");
+                setTimeout(() => {
+                    navigate("/");
+                }, 1000);
             }
         } catch (e) {
-            //console.log(e.response?.data?.error);
+            console.log(e.response?.status);
+            if (e.response?.status === 404) {
+                toast.current.show({severity:'error', summary: 'Uff! 🙊', detail:e.response?.data?.error, life: 3000});
+            }
+            else{
+                toast.current.show({severity:'info', summary: 'Oh no! 😥', detail:e.response?.data?.error || "Server Error", life: 3000});
+            }
+                
         }
 
         setIsSubmitting(false);
@@ -37,6 +49,7 @@ function Login() {
 
     return (
         <section id='login-section' className="bg-gray-50 dark:bg-gray-900">
+            <Toast ref={toast} />
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <div className="w-full bg-white z-10 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">

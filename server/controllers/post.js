@@ -1,26 +1,12 @@
 const Post = require('../models/Post');
 const { User } = require('../models/User');
 const Category = require('../models/Category');
-const jwt = require("jsonwebtoken");
-const fs = require("fs");
-const path = require("path");
 const slugify = require("slugify");
 const uploadFileOnAzure = require('../utils/uploadFileOnAzure');
-const publicKey = fs.readFileSync(path.join(__dirname, "../keys/public.key"), "utf8");
 
 exports.createPost = async (req, res) => {
     try {
-        const { token } = req.cookies;
-
-        if (!token) {
-            return res.status(401).json({ error: "Unauthorized access" });
-        }
-
-        const { id } = jwt.verify(token, publicKey);
-
-        if (!id) {
-            return res.status(401).json({ error: "Unauthorized access" });
-        }
+        const userId = req.userId;
 
         const data = JSON.parse(req.body.data);
         const blogCover = req.file;
@@ -28,7 +14,7 @@ exports.createPost = async (req, res) => {
 
         delete data.blogCover;
 
-        const user = await User.findById(id);
+        const user = await User.findById(userId);
         let categories = await Category.find({ name: { $in: data.categories_names } });
         const post = new Post(data);
 
@@ -76,10 +62,12 @@ exports.getPost = async (req, res) => {
 
         const posts = await Post.find(
             { categories: { $in: post.categories } },
-            { categories: 1, title: 1, slug: 1, summary: 1, blogCover: 1, author: 1, createdAt: 1 }
-        ).limit(3);
-        // console.log(posts);
-        res.json({ post, relatedPosts: posts });
+            { categories: 1, title: 1, slug: 1, summary: 1, blogCover: 1, createdAt: 1, author: 1 }
+        )
+        .populate({ path: 'author', select: "firstName lastName _id avatar" })
+        .limit(4);
+
+        res.json({ post, relatedPosts: posts.filter(relatedPost => relatedPost.slug !== post.slug) });
 
     } catch (error) {
         console.log(error);
@@ -157,22 +145,11 @@ exports.getAllPosts = async (req, res) => {
 
 exports.likePost = async (req, res) => {
     try {
-        const { token } = req.cookies;
-
-        if (!token) {
-            return res.status(401).json({ error: "Unauthorized access" });
-        }
-
-        const auth = jwt.verify(token, publicKey);
-
-        if (!auth.id) {
-            return res.status(401).json({ error: "Unauthorized access" });
-        }
-
+        const userId = req.userId;
         const postId = req.params.id;
-        // console.log(postId);
-        await User.findByIdAndUpdate(auth.id, { $addToSet: { likedPosts: postId } }, { new: true });
-        const post = await Post.findByIdAndUpdate(postId, { $addToSet: { likers: auth.id } }, { new: true, select: "likers" });
+
+        await User.findByIdAndUpdate(userId, { $addToSet: { likedPosts: postId } }, { new: true });
+        const post = await Post.findByIdAndUpdate(postId, { $addToSet: { likers: userId } }, { new: true, select: "likers" });
 
         console.log(post);
 
@@ -187,21 +164,11 @@ exports.likePost = async (req, res) => {
 
 exports.dislikePost = async (req, res) => {
     try {
-        const { token } = req.cookies;
-
-        if (!token) {
-            return res.status(401).json({ error: "Unauthorized access" });
-        }
-
-        const auth = jwt.verify(token, publicKey);
-
-        if (!auth.id) {
-            return res.status(401).json({ error: "Unauthorized access" });
-        }
-
+        const userId = req.userId;
         const postId = req.params.id;
-        const user = await User.findByIdAndUpdate(auth.id, { $pull: { likedPosts: postId } }, { new: true });
-        const post = await Post.findByIdAndUpdate(postId, { $pull: { likers: auth.id } }, { new: true, select: "likers" });
+
+        const user = await User.findByIdAndUpdate(userId, { $pull: { likedPosts: postId } }, { new: true });
+        const post = await Post.findByIdAndUpdate(postId, { $pull: { likers: userId } }, { new: true, select: "likers" });
 
 
         console.log(user);

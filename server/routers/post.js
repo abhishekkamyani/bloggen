@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
+
 const postController = require('../controllers/post');
-// const upload = require("../middlewares/multer.middleware");
+const authMiddleware = require('../middlewares/auth.middleware');
 const upload = require("../middlewares/multer.middleware");
 
 router
 // .get('', postController.getCategoryPosts)
-.post('/create',upload.single("blogCover"), postController.createPost)
+.post('/create', authMiddleware, upload.single("blogCover"), postController.createPost)
 .get('/all', postController.getAllPosts)
 .get('/:slug', postController.getPost)
-.patch('/:id/like', postController.likePost)
-.patch('/:id/dislike', postController.dislikePost)
+.patch('/:id/like', authMiddleware, postController.likePost)
+.patch('/:id/dislike', authMiddleware, postController.dislikePost)
 
 module.exports = router;

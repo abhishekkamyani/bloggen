@@ -5,6 +5,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const bodyParser = require('body-parser');
+const errorMiddleware = require('./middlewares/error.middleware');
 const authRouter = require('./routers/auth');
 const userRouter = require('./routers/user');
 const categoryRouter = require('./routers/category');
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.json());
+
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app
@@ -30,6 +32,7 @@ app
     .use("/api/post", postRouter)
 
 
+app.use(errorMiddleware);
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
 });

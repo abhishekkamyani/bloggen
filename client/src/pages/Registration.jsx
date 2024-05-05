@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SERVER_URL } from '../utils';
 import { useUserInfo } from "../contexts/UserContext";
+import { FaRegCircleXmark } from "react-icons/fa6";
+import { FaCheckCircle } from "react-icons/fa";
 
 export default function Registration() {
   const [user, setUser] = useState({ firstName: "", lastName: "", email: "", password: "", c_password: "" });
@@ -44,10 +46,11 @@ export default function Registration() {
     //console.log(user);
 
     if (user.password !== user.c_password) {
-      return //console.log("Passwords do not match");
+      setIsSubmitting(false);
+      return console.log("Passwords do not match");
     }
 
-    register({...user, country: selectedCountryRef.current.value});
+    register({ ...user, country: selectedCountryRef.current.value });
   }
 
   const register = async (user) => {
@@ -66,8 +69,23 @@ export default function Registration() {
     setIsSubmitting(false);
   }
 
+  const requirements = [
+    { label: 'At least one lowercase letter (a-z)', regex: /[a-z]/ },
+    { label: 'At least one uppercase letter (A-Z)', regex: /[A-Z]/ },
+    { label: 'At least one digit (0-9)', regex: /\d/ },
+    { label: 'At least one special character', regex: /[^a-zA-Z0-9]/ }, // Adjusted regex
+    { label: 'Minimum length of 8 characters', regex: /.{8,}/ },
+  ];
+
+  const checkRequirements = (value) => {
+    return requirements.map(({ label, regex }) => (
+      <li key={label} className='flex items-center gap-x-2'>{value.match(regex) ? <FaCheckCircle className="text-green-800" /> : <FaRegCircleXmark />} {label}</li>
+    ));
+  };
+
+
   return (
-    <section id="registration-section" className="h-full bg-gray-400 dark:bg-dark-main">
+    <section id="registration-section" className="h-full bg-main dark:bg-dark-main">
       {/* Container */}
       <div className="mx-auto">
         <div className="flex justify-center px-6 py-12">
@@ -82,7 +100,7 @@ export default function Registration() {
               <h3 className="py-4 text-2xl text-center text-gray-800 dark:text-white">
                 Create an Account!
               </h3>
-              <form className="px-8 pt-6 pb-8 mb-4 bg-white dark:bg-gray-800 rounded" onSubmit={handleSubmit}>
+              <form className="px-8 pt-6 bg-white dark:bg-gray-800 rounded" onSubmit={handleSubmit}>
                 <div className="mb-4 md:flex md:justify-between">
                   <div className="mb-4 md:mr-2 md:w-1/2 md:mb-0">
                     <label
@@ -92,9 +110,10 @@ export default function Registration() {
                       First Name <span className="text-red-500">*</span>
                     </label>
                     <input
-                      className="w-full px-3 py-2 text-sm leading-tight text-gray-700 dark:bg-dark-main dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                      className="w-full px-3 py-2 text-sm leading-tight bg-white dark:bg-gray-700 dark:text-main border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                       id="firstName"
                       name="firstName"
+                      value={user.firstName}
                       onChange={handleChange}
                       type="text"
                       placeholder="First Name"
@@ -109,9 +128,10 @@ export default function Registration() {
                       Last Name <span className="text-red-500">*</span>
                     </label>
                     <input
-                      className="w-full px-3 py-2 text-sm leading-tight text-gray-700 dark:bg-dark-main dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                      className="w-full px-3 py-2 text-sm leading-tight bg-white dark:bg-gray-700 dark:text-main border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                       id="lastName"
                       name="lastName"
+                      value={user.lastName}
                       onChange={handleChange}
                       type="text"
                       placeholder="Last Name"
@@ -128,9 +148,10 @@ export default function Registration() {
                       Email <span className="text-red-500">*</span>
                     </label>
                     <input
-                      className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:bg-dark-main dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                      className="w-full px-3 py-2 mb-3 text-sm leading-tight bg-white dark:bg-gray-700 dark:text-main border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                       id="email"
                       name="email"
+                      value={user.email}
                       onChange={handleChange}
                       type="email"
                       placeholder="Email"
@@ -145,7 +166,7 @@ export default function Registration() {
                       Country <span className="text-red-500">*</span>
                     </label>
                     <select
-                      className="w-full px-3 py-2 text-sm leading-tight text-gray-700 dark:bg-dark-main dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                      className="w-full px-3 py-2 text-sm leading-tight bg-white dark:bg-gray-700 dark:text-main border rounded shadow appearance-none"
                       id="country"
                       name="country"
                       ref={selectedCountryRef}
@@ -165,8 +186,8 @@ export default function Registration() {
                     </select>
                   </div>
                 </div>
-                <div className="mb-4 md:flex md:justify-between">
-                  <div className="mb-4 md:mr-2 md:w-1/2 md:mb-0">
+                <div className="mb-4 ">
+                  <div className="mb-4 md:mb-0">
                     <label
                       className="block mb-2 text-sm font-bold text-gray-700 dark:text-white"
                       htmlFor="password"
@@ -174,19 +195,22 @@ export default function Registration() {
                       Password <span className="text-red-500">*</span>
                     </label>
                     <input
-                      className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:bg-dark-main dark:text-white border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                      className="w-full px-3 py-2 mb-3 text-sm leading-tight bg-white dark:bg-gray-700 dark:text-main border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                       id="password"
                       name="password"
+                      value={user.password}
                       onChange={handleChange}
                       type="password"
                       placeholder="******************"
+                      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                      title="Please fulfill all password requirements."
                       required
                     />
-                    <p className="text-xs italic text-red-500">
-                      Please choose a password.
-                    </p>
+                    <ul className="mb-4">
+                      {checkRequirements(user.password)}
+                    </ul>
                   </div>
-                  <div className="md:ml-2 md:w-1/2">
+                  <div className="">
                     <label
                       className="block mb-2 text-sm font-bold text-gray-700 dark:text-white"
                       htmlFor="c_password"
@@ -194,15 +218,26 @@ export default function Registration() {
                       Confirm Password <span className="text-red-500">*</span>
                     </label>
                     <input
-                      className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 dark:bg-dark-main dark:text-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                      className="w-full px-3 py-2 mb-3 text-sm leading-tight bg-white dark:bg-gray-700 dark:text-main border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                       id="c_password"
                       name="c_password"
+                      value={user.c_password}
                       onChange={handleChange}
                       type="password"
                       placeholder="******************"
                       required
                     />
                   </div>
+                  {user.password !== user.c_password && user.c_password && (
+                    <p className="text-xs italic text-red-500">
+                      Passwords do not match
+                    </p>
+                  )}
+                  {user.password === user.c_password && user.c_password && (
+                    <p className="text-xs italic text-green-800">
+                      Passwords match
+                    </p>
+                  )}
                 </div>
                 <div className="mb-6 text-center">
                   <button

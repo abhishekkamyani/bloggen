@@ -24,28 +24,17 @@ exports.profile = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
     try {
-        const { token } = req.cookies;
-
-        if (!token) {
-            return res.status(401).json({ error: "Unauthorized -> token" });
-        }
-
-        const { id } = jwt.verify(token, publicKey);
-
-        if (!id) {
-            return res.status(401).json({ error: "Unauthorized -> auth" });
-        }
+        const userId = req.userId;
 
         let { user: userData, password } = req.body;
-        console.log(password);
-
         userData = JSON.parse(userData);
 
-        const user = await User.findById(id);
+        const user = await User.findById(userId);
 
         if (!bcrypt.compareSync(password, user.password)) {
             return res.status(401).json({ error: "Unauthorized -> password" });
         }
+        delete user.password;
         const serverUrl = req.protocol + '://' + req.get('host');
 
         if (req.files.avatar) {
@@ -98,17 +87,8 @@ exports.updateProfile = async (req, res) => {
 
 exports.addCategories = async (req, res) => {
     try {
-        const { token } = req.cookies;
 
-        if (!token) {
-            return res.status(401).json({ error: "Unauthorized access" });
-        }
-
-        const { id } = jwt.verify(token, publicKey);
-
-        if (!id) {
-            return res.status(401).json({ error: "Unauthorized access" });
-        }
+        const userId = req.userId;
 
         const { categories } = req.body;
 
@@ -128,7 +108,7 @@ exports.addCategories = async (req, res) => {
 
 
         const updatedUserData = await User.findByIdAndUpdate(
-            id,
+            userId,
             { categories: categories },
             { new: true, select: 'categories' }
         );

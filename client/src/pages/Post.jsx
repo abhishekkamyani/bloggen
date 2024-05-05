@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import "../css/like-button.css";
 import '../css/quill-custom.css';
 import { useUserInfo } from "../contexts/UserContext";
+import Posts from "../components/Posts";
 
 export default function Post() {
     const [post, setPost] = useState('');
@@ -21,21 +22,21 @@ export default function Post() {
         axios.get(`${SERVER_URL}/api/post/${slug}`)
             .then(response => {
                 if (response.status === 200 && !ignore) {
+                    console.log(response.data);
                     console.log(response.data.relatedPosts);
-                    setPost(response.data.post);
+                    setPost(response.data?.post);
+                    setRelatedPosts(response.data?.relatedPosts);
                 }
             })
             .catch(e => {
-                //console.log(e);
-                //console.log(e.response?.data?.error);
+                console.log(e);
+                console.log(e.response?.data?.error);
             })
-
-        // axios.get
 
         return () => {
             ignore = true;
         }
-    }, [])
+    }, [slug])
 
     useEffect(() => {
         let ignore = false;
@@ -161,8 +162,8 @@ export default function Post() {
 
                         </section>
 
-                        <summary>
-
+                        <summary className="text-black dark:text-white italic pt-20 text-center list-none">
+                            {post.summary}
                         </summary>
 
                     </article>
@@ -181,18 +182,106 @@ export default function Post() {
                         </div>
                     </div>
                 </div>
+
+                <section className="not-format mt-20 px-0 xs:px-10 md:px-20">
+                    <div className="flex justify-between items-center mb-6">
+                        <h2 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
+                            Comments (20)
+                        </h2>
+                    </div>
+                    <form className="mb-6 flex flex-col">
+                        <div className="my-2 mb-4">
+                            <label htmlFor="comment" className="sr-only">
+                                Your comment
+                            </label>
+                            <textarea
+                                id="comment"
+                                rows={6}
+                                className="w-full text-sm text-gray-900 p-2 focus:ring-0 dark:text-white bg-white dark:bg-slate-700 outline-none dark:placeholder-gray-400 rounded-lg rounded-t-lg border border-gray-200 dark:border-gray-700"
+                                placeholder="Write a comment..."
+                                required
+                                defaultValue={""}
+                            />
+                        </div>
+                        <button
+                            type="submit"
+                            className="ms-auto py-2.5 px-4 text-xs font-medium btn rounded-lg"
+                        >
+                            Post comment
+                        </button>
+                    </form>
+                    <div className="outline outline-offset-8 outline-gray-200 dark:outline-gray-700">
+                    <article className="py-4 px-3 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+                        <footer className="flex justify-between items-center mb-2">
+                            <div className="flex items-center">
+                                <p className="inline-flex items-center mr-3 font-semibold text-sm text-gray-900 dark:text-white">
+                                    <img
+                                        className="mr-2 w-6 h-6 rounded-full"
+                                        src="https://flowbite.com/docs/images/people/profile-picture-4.jpg"
+                                        alt="Helene Engels"
+                                    />
+                                    Helene Engels
+                                </p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                    <time
+                                        dateTime="2022-06-23"
+                                        title="June 23rd, 2022"
+                                    >
+                                        Jun. 23, 2022
+                                    </time>
+                                </p>
+                            </div>
+                        </footer>
+                        <p className="text-black dark:text-main">
+                            Thanks for sharing this. I do came from the Backend development
+                            and explored some of the tools to design my Side Projects.
+                        </p>
+                    </article>
+                    <article className="py-4 px-3 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+                        <footer className="flex justify-between items-center mb-2">
+                            <div className="flex items-center">
+                                <p className="inline-flex items-center mr-3 font-semibold text-sm text-gray-900 dark:text-white">
+                                    <img
+                                        className="mr-2 w-6 h-6 rounded-full"
+                                        src="https://flowbite.com/docs/images/people/profile-picture-4.jpg"
+                                        alt="Helene Engels"
+                                    />
+                                    Helene Engels
+                                </p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                    <time
+                                        dateTime="2022-06-23"
+                                        title="June 23rd, 2022"
+                                    >
+                                        Jun. 23, 2022
+                                    </time>
+                                </p>
+                            </div>
+                        </footer>
+                        <p className="text-black dark:text-main">
+                            Thanks for sharing this. I do came from the Backend development
+                            and explored some of the tools to design my Side Projects.
+                        </p>
+                    </article>
+                    </div>
+
+
+                </section>
             </main>
+
+            {relatedPosts.length > 0 && (
             <aside
                 aria-label="Related articles"
                 className="py-8 lg:py-24 border-t border-gray-200 dark:border-gray-600"
             >
                 <div className="px-4 mx-auto max-w-screen-xl">
                     <h2 className="mb-8 text-2xl font-bold text-gray-900 dark:text-white">
-                        Related articles
+                        Related Posts
                     </h2>
-                    
+                    <Posts posts={relatedPosts || []} />
                 </div>
             </aside>
+            )}
         </>
     )
 }
