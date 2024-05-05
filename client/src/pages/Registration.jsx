@@ -1,13 +1,20 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { SERVER_URL } from '../utils';
+import { SERVER_URL } from "../utils";
 import { useUserInfo } from "../contexts/UserContext";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { FaCheckCircle } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 export default function Registration() {
-  const [user, setUser] = useState({ firstName: "", lastName: "", email: "", password: "", c_password: "" });
+  const [user, setUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    c_password: "",
+  });
   const [countries, setCountries] = useState([]);
   const selectedCountryRef = useRef(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,26 +45,37 @@ export default function Registration() {
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
-  }
+  };
 
+  let toastId = null;
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    toast.dismiss();
     //console.log(user);
 
     if (user.password !== user.c_password) {
-      setIsSubmitting(false);
-      return console.log("Passwords do not match");
+      toastId = toast.error("Passwords do not match");
+      return setIsSubmitting(false);
     }
 
     register({ ...user, country: selectedCountryRef.current.value });
-  }
+  };
 
   const register = async (user) => {
     //console.log("passwords match");
 
     try {
-      const response = await axios.post(`${SERVER_URL}/api/auth/register`, user, { withCredentials: true });
+      const response = await toast.promise(
+        axios.post(`${SERVER_URL}/api/auth/register`, user, {
+          withCredentials: true,
+        }),
+        {
+          pending: "Your account creation in progress",
+          success: "You're welcome 😊! Account successfully created.",
+        }
+      );
+
       if (response?.status === 201) {
         //console.log(response.data);
         setUserInfo(response.data);
@@ -65,42 +83,55 @@ export default function Registration() {
       }
     } catch (e) {
       //console.log(e.response?.data?.error);
+      toastId = toast.error(e.response?.data?.error);
     }
     setIsSubmitting(false);
-  }
+  };
 
   const requirements = [
-    { label: 'At least one lowercase letter (a-z)', regex: /[a-z]/ },
-    { label: 'At least one uppercase letter (A-Z)', regex: /[A-Z]/ },
-    { label: 'At least one digit (0-9)', regex: /\d/ },
-    { label: 'At least one special character', regex: /[^a-zA-Z0-9]/ }, // Adjusted regex
-    { label: 'Minimum length of 8 characters', regex: /.{8,}/ },
+    { label: "At least one lowercase letter (a-z)", regex: /[a-z]/ },
+    { label: "At least one uppercase letter (A-Z)", regex: /[A-Z]/ },
+    { label: "At least one digit (0-9)", regex: /\d/ },
+    { label: "At least one special character", regex: /[^a-zA-Z0-9]/ }, // Adjusted regex
+    { label: "Minimum length of 8 characters", regex: /.{8,}/ },
   ];
 
   const checkRequirements = (value) => {
     return requirements.map(({ label, regex }) => (
-      <li key={label} className='flex items-center gap-x-2'>{value.match(regex) ? <FaCheckCircle className="text-green-800" /> : <FaRegCircleXmark />} {label}</li>
+      <li key={label} className="flex items-center gap-x-2">
+        <FaCheckCircle
+          className={
+            value.match(regex)
+              ? "text-green-600 dark:text-green-500"
+              : "text-gray-300 dark:text-gray-700"
+          }
+        />
+        {label}
+      </li>
     ));
   };
 
-
   return (
-    <section id="registration-section" className="h-full bg-main dark:bg-dark-main">
+    <section
+      id="registration-section"
+      className="h-full bg-main dark:bg-dark-main"
+    >
       {/* Container */}
       <div className="mx-auto">
         <div className="flex justify-center px-6 py-12">
           {/* Row */}
           <div className="w-full xl:w-3/4 lg:w-11/12 flex">
             {/* Col */}
-            <div
-              className="side-image w-full h-auto bg-gray-400 dark:bg-gray-800 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
-            />
+            <div className="side-image w-full h-auto bg-gray-400 dark:bg-gray-800 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg" />
             {/* Col */}
             <div className="w-full lg:w-7/12 bg-white dark:bg-gray-700 p-5 rounded-lg lg:rounded-l-none">
               <h3 className="py-4 text-2xl text-center text-gray-800 dark:text-white">
                 Create an Account!
               </h3>
-              <form className="px-8 pt-6 bg-white dark:bg-gray-800 rounded" onSubmit={handleSubmit}>
+              <form
+                className="px-8 pt-6 pb-8 bg-white dark:bg-gray-800 rounded"
+                onSubmit={handleSubmit}
+              >
                 <div className="mb-4 md:flex md:justify-between">
                   <div className="mb-4 md:mr-2 md:w-1/2 md:mb-0">
                     <label
@@ -206,7 +237,7 @@ export default function Registration() {
                       title="Please fulfill all password requirements."
                       required
                     />
-                    <ul className="mb-4">
+                    <ul className="mb-4 dark:text-gray-400">
                       {checkRequirements(user.password)}
                     </ul>
                   </div>
@@ -241,7 +272,9 @@ export default function Registration() {
                 </div>
                 <div className="mb-6 text-center">
                   <button
-                    className={`w-full ${!isSubmitting && "btn"} px-4 py-2 font-bold rounded-full`}
+                    className={`w-full ${
+                      !isSubmitting && "btn"
+                    } px-4 py-2 font-bold rounded-full`}
                     type="submit"
                   >
                     Register Account
@@ -249,7 +282,8 @@ export default function Registration() {
                 </div>
                 <hr className="mb-6 border-t" />
                 <div className="text-center">
-                  <Link to="/login"
+                  <Link
+                    to="/login"
                     className="inline-block text-sm align-baseline link"
                   >
                     Already have an account? Login!
@@ -261,5 +295,5 @@ export default function Registration() {
         </div>
       </div>
     </section>
-  )
+  );
 }
