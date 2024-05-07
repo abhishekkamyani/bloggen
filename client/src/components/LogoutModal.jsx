@@ -4,6 +4,7 @@ import { useUserInfo } from '../contexts/UserContext';
 import axios from 'axios';
 import { SERVER_URL } from '../utils';
 import {useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 export default function LogoutModal() {
     const { setUserInfo } = useUserInfo();
@@ -14,12 +15,14 @@ export default function LogoutModal() {
             .get(`${SERVER_URL}/api/auth/logout`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
-                    //console.log(response.data?.message)
                     setUserInfo({});
                     navigate("/");
+                    toast.success("Logout successful.")
                 }
             })
-            .catch(e => console.error(e))
+            .catch(e => {
+                // console.error(e)
+            })
     }
 
     useEffect(() => {

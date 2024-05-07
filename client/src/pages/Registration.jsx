@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SERVER_URL } from "../utils";
 import { useUserInfo } from "../contexts/UserContext";
-import { FaRegCircleXmark } from "react-icons/fa6";
 import { FaCheckCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
 
@@ -30,7 +29,6 @@ export default function Registration() {
         if (!ignore) {
           const countriesObj = response.data.data;
           const countries = countriesObj.map((country) => country.name);
-          //   //console.log(countries);
           setCountries(countries);
         }
       })
@@ -47,7 +45,6 @@ export default function Registration() {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  let toastId = null;
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -55,7 +52,7 @@ export default function Registration() {
     //console.log(user);
 
     if (user.password !== user.c_password) {
-      toastId = toast.error("Passwords do not match");
+      toast.error("Passwords do not match");
       return setIsSubmitting(false);
     }
 
@@ -84,7 +81,7 @@ export default function Registration() {
     } catch (e) {
       //console.log(e.response?.data?.error);
 
-      toastId = toast.error(e.response?.data?.error || "Something went wrong, please try again later.");
+      toast.error(e.response?.data?.error || "Something went wrong, please try again later.");
     }
     setIsSubmitting(false);
   };
@@ -277,6 +274,7 @@ export default function Registration() {
                       !isSubmitting && "btn"
                     } px-4 py-2 font-bold rounded-full`}
                     type="submit"
+                    disabled={isSubmitting}
                   >
                     Register Account
                   </button>

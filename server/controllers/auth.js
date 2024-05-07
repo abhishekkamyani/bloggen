@@ -80,7 +80,7 @@ exports.login = async (req, res, next) => {
   }
 };
 
-exports.logout = (req, res) => {
+exports.logout = (req, res, next) => {
   try {
     res.clearCookie("token").json({ message: "Logout successfully" });
   } catch (error) {
@@ -88,20 +88,8 @@ exports.logout = (req, res) => {
   }
 };
 
-exports.identity = async (req, res) => {
+exports.identity = async (req, res, next) => {
   try {
-    // const { token } = req.cookies;
-
-    // if (!token) {
-    //     return res.status(401).json({ error: "Unauthorized" });
-    // }
-
-    // const auth = jwt.verify(token, publicKey);
-
-    // if (!auth) {
-    //     return res.status(401).json({ error: "Unauthorized" });
-    // }
-
     const userId = req.userId;
 
     const user = await User.findById(userId, {
@@ -111,8 +99,22 @@ exports.identity = async (req, res) => {
       avatar: 1,
       categories: 1,
     });
-    return res.json(user);
+
+    const token = jwt.sign({ email: user.email, id: user._id }, secret, {
+      algorithm: "RS256",
+      expiresIn: expiresInMinutes * 60,
+    });
+
+    return res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        expires: new Date(Date.now() + expiresInMinutes * 60 * 1000),
+      })
+      .json(user);
   } catch (error) {
+    console.log(error);
     next({});
   }
 };

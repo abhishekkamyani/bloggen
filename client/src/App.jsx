@@ -9,6 +9,7 @@ import LogoutModal from "./components/LogoutModal";
 import CreatePost from "./pages/CreatePost";
 import Post from "./pages/Post";
 import CategoriesSelection from "./components/CategoriesSelection";
+import MyBlogs from "./pages/MyBlogs";
 
 
 export default function App() {  
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="/registration" element={<Registration />} />
           <Route path="/new-story" element={<CreatePost />} />
           <Route path="/post/:slug" element={<Post />} />
+          <Route path="/blogs" element={<MyBlogs />} />
         </Routes>
       </Router>
     // </div>

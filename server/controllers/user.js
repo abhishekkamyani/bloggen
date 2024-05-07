@@ -27,7 +27,7 @@ exports.profile = async (req, res, next) => {
   }
 };
 
-exports.updateProfile = async (req, res) => {
+exports.updateProfile = async (req, res, next) => {
   try {
     const userId = req.userId;
 
@@ -37,7 +37,7 @@ exports.updateProfile = async (req, res) => {
     const user = await User.findById(userId);
 
     if (!bcrypt.compareSync(password, user.password)) {
-      return res.status(401).json({ error: "Incorrect Password 😥" });
+      return next({ status: 401, error: "Incorrect Password 😥" });
     }
     delete user.password;
     const serverUrl = req.protocol + "://" + req.get("host");
@@ -86,11 +86,11 @@ exports.updateProfile = async (req, res) => {
     // }
   } catch (error) {
     console.log(error);
-    return res.status(500).json(error);
+    return next({});
   }
 };
 
-exports.addCategories = async (req, res) => {
+exports.addCategories = async (req, res, next) => {
   try {
     const userId = req.userId;
 
@@ -116,6 +116,6 @@ exports.addCategories = async (req, res) => {
     res.json(updatedUserData);
   } catch (error) {
     console.log(error);
-    res.status(500).json(error);
+    next({});
   }
 };

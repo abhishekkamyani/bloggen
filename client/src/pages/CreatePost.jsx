@@ -1,58 +1,58 @@
-import { useEffect, useState } from 'react';
-import PostEditor from '../components/PostEditor';
+import { useEffect, useRef, useState } from "react";
+import PostEditor from "../components/PostEditor";
 import { Ripple, Input, Modal, initTWE } from "tw-elements";
-import '../css/quill-custom.css';
-import { MultiSelect } from 'primereact/multiselect';
-import { FloatLabel } from 'primereact/floatlabel';
-import '../css/multiselect.css';
-// import 'primereact/resources/themes/saga-blue/theme.css';
-// import 'primereact/resources/themes/md-dark-indigo/theme.css';
-// import "primereact/resources/themes/md-dark-indigo/theme.css";
+import "../css/quill-custom.css";
+import { MultiSelect } from "primereact/multiselect";
+import { FloatLabel } from "primereact/floatlabel";
+import "../css/multiselect.css";
 import "primereact/resources/themes/mdc-dark-indigo/theme.css";
-// import "primereact/resources/themes/nova/theme.css";
+import PostPreview from "../components/PostPreview";
+import axios from "axios";
+import { SERVER_URL } from "../utils";
+import { toast } from "react-toastify";
+import { Toast } from "primereact/toast";
 
-// import 'primereact/resources/primereact.min.css';
-// import 'primeicons/primeicons.css';
-import PostPreview from '../components/PostPreview';
-import axios from 'axios';
-import { SERVER_URL } from '../utils';
-
-const initialPost = { title: "title hai yeh", summary: "summary hai yeh", blogCover: "", categories_names: [] };
+const initialPost = {
+  title: "title hai yeh",
+  summary: "summary hai yeh",
+  blogCover: "",
+  categories_names: [],
+};
 
 export default function CreatePost() {
   useEffect(() => {
     initTWE({ Ripple, Input, Modal });
-  })
+  });
 
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
   const [post, setPost] = useState(initialPost);
   const [image, setImage] = useState("");
   const [categories, setCategories] = useState([]);
-
+  const primeToast = useRef(null);
 
   useEffect(() => {
     let ignore = false;
-    axios.get(`${SERVER_URL}/api/categories`)
-      .then(response => {
+    axios
+      .get(`${SERVER_URL}/api/categories`)
+      .then((response) => {
         if (response.status === 200 && !ignore) {
           //console.log(categories);
           // //console.log(response.data.categories.map(category => category.name));
           setCategories(response.data.categories);
         }
       })
-      .catch(e => {
+      .catch((e) => {
         //console.log(e);
-      })
+      });
 
     return () => {
       ignore = true;
-    }
-  }, [])
-
+    };
+  }, []);
 
   const handleChangeText = (e) => {
     setPost({ ...post, [e.target.name]: e.target.value });
-  }
+  };
 
   const handleChangeFile = (e) => {
     const file = e.target.files[0];
@@ -65,16 +65,26 @@ export default function CreatePost() {
     reader.readAsDataURL(file);
 
     setPost({ ...post, [e.target.name]: e.target.files[0] });
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (post.categories_names.length <=  0) {
-      alert('Please select a category');
-      return;
+    toast.dismiss();
+    if (post.categories_names.length <= 0) {
+      return primeToast.current.show({
+        severity: "info",
+        summary: "",
+        detail: "Please select a category for your blog.",
+        life: 3000,
+      });
     }
     if (content.length <= 0) {
-      alert('Please write content');
+      return primeToast.current.show({
+        severity: "info",
+        summary: "",
+        detail: "Please write content for your blog.",
+        life: 3000,
+      });
     }
 
     // const data = { ...post, content };
@@ -86,34 +96,49 @@ export default function CreatePost() {
     formData.append("content", content);
     formData.append("blogCover", post.blogCover);
 
-    axios
-      .post(`${SERVER_URL}/api/post/create`, formData, { withCredentials: true })
-      .then(response => {
+    const promise = axios
+      .post(`${SERVER_URL}/api/post/create`, formData, {
+        withCredentials: true,
+      })
+      .then((response) => {
         if (response.status === 201) {
-          //console.log(response.data);
           // setPost(initialPost);
           // setContent('');
           // setImage('');
+          primeToast.current.show({
+            severity: "success",
+            summary: "Hurray 🥳",
+            detail: "Your blog has been successfully created.",
+            life: 5000,
+          });
         }
       })
-      .catch(e => {
-        //console.log(e);
-        //console.log(e.response?.data?.error);
-      })
-  }
+      .catch((e) => {
+        console.log(e);
+        toast.error(
+          e.response?.data?.error ||
+            "Something went wrong, please try again later."
+        );
+      });
+
+    toast.promise(promise, { pending: "Your blog upload is in progress" });
+  };
 
   return (
-    <div className='py-10 px-5 md:mx-20'>
-      <h1 className='text-center text-black dark:text-white text-xl sm:text-2xl md:text-3xl font-bold'>Create Your New Story</h1>
+    <div className="py-10 px-5 md:mx-20">
+      <Toast ref={primeToast} />
+      <h1 className="text-center text-black dark:text-white text-xl sm:text-2xl md:text-3xl font-bold">
+        Create Your New Story
+      </h1>
       <div className="mx-auto block rounded-lg p-6 shadow-4">
-        <form onSubmit={handleSubmit} id='create-post'>
+        <form onSubmit={handleSubmit} id="create-post">
           {/*Name input*/}
           <div className="relative mb-6" data-twe-input-wrapper-init="">
             <input
               type="text"
               className="peer block text-black font-bold min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.75rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
               id="title"
-              name='title'
+              name="title"
               value={post.title}
               onChange={handleChangeText}
               placeholder="title"
@@ -162,34 +187,33 @@ export default function CreatePost() {
             </label>
           </div>
 
-          <div className="mb-6" >
-            <span
-              className="text-neutral-500 dark:text-neutral-300 inline-block mb-3"
-            >
-              Select ({post.categories_names.length} / 3)
+          <div className="mb-6">
+            <span className="text-neutral-500 dark:text-neutral-300 inline-block mb-3">
+              Selected ({post.categories_names.length} / 3)
             </span>
             <br />
             <FloatLabel>
               <MultiSelect
-                id='categories_names'
-                name='categories_names'
+                id="categories_names"
+                name="categories_names"
                 value={post.categories_names}
                 onChange={handleChangeText}
-                options={categories.map(category => category.name)}
-                placeholder='Categories'
+                options={categories.map((category) => category.name)}
+                placeholder="Categories"
                 maxLength={3}
-                itemClassName={`${post.categories_names.length >= 3 && "pointer-events-none"}`}
+                itemClassName={`${
+                  post.categories_names.length >= 3 && "pointer-events-none"
+                }`}
                 showSelectAll={false}
                 display="chip"
                 filter={true}
                 filterPlaceholder="Search categories"
                 emptyFilterMessage="No categories found"
-                className='px-5'
+                className="px-5"
               />
               <label htmlFor="categories_names">Categories</label>
             </FloatLabel>
           </div>
-
 
           <PostEditor content={content} setContent={setContent} />
           {/*Submit button*/}
@@ -201,9 +225,14 @@ export default function CreatePost() {
           >
             Preview
           </button> */}
-          <PostPreview content={content} post={post} imageSrc={image} form="create-post" />
+          <PostPreview
+            content={content}
+            post={post}
+            imageSrc={image}
+            form="create-post"
+          />
         </form>
       </div>
     </div>
-  )
+  );
 }

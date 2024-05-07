@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default function PostPreview({ content, post, imageSrc, form }) {
   return (
@@ -7,7 +7,7 @@ export default function PostPreview({ content, post, imageSrc, form }) {
       {/* Button trigger modal */}
       <button
         type="button"
-        className="inline-block font-bold btn mt-10 w-full rounded px-6 py-4 text-xs uppercase leading-normal  shadow-primary-3 transition duration-150 ease-in-out"
+        className="inline-block font-bold btn mt-10 w-full rounded px-6 py-4 text-xs uppercase leading-normal  transition duration-150 ease-in-out"
         data-twe-toggle="modal"
         data-twe-target="#exampleModalFullscreen"
         data-twe-ripple-init=""
@@ -72,17 +72,25 @@ export default function PostPreview({ content, post, imageSrc, form }) {
                       alt="Featured Image"
                       className="w-full h-full rounded"
                     />
-                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-4 mb-2">{post.title}</h2>
-                    <div className="quill-content" dangerouslySetInnerHTML={{ __html: content }} />
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mt-4 mb-2">
+                      {post.title}
+                    </h2>
+                    <div
+                      className="quill-content"
+                      dangerouslySetInnerHTML={{ __html: content }}
+                    />
                   </div>
 
                   <div className="w-full md:w-4/12 px-4 mb-8">
                     <div className="px-4 bg-slate-300 dark:bg-slate-900 py-6 rounded">
                       <h3 className="text-lg font-bold mb-2">Categories</h3>
                       <ul className="list-disc list-inside">
-                        {post.categories_names.map(name => (
+                        {post.categories_names.map((name) => (
                           <li>
-                            <Link key={name} className="hover:text-gray-500 dark:hover:text-gray-300">
+                            <Link
+                              key={name}
+                              className="hover:text-gray-500 dark:hover:text-gray-300"
+                            >
                               {name}
                             </Link>
                           </li>
@@ -115,5 +123,5 @@ export default function PostPreview({ content, post, imageSrc, form }) {
         </div>
       </div>
     </>
-  )
+  );
 }
