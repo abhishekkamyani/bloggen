@@ -22,15 +22,15 @@ exports.createPost = async (req, res, next) => {
     post.content = content;
 
     if (blogCover) {
-      const url = await uploadFileOnAzure(blogCover);
+      // const url = await uploadFileOnAzure(blogCover);
       const serverUrl = req.protocol + "://" + req.get("host");
       const localUrl = serverUrl + "/" + blogCover.path;
       post.blogCover = localUrl;
 
-      setTimeout(async () => {
-        post.blogCover = url;
-        await post.save();
-      }, 5 * 60 * 1000);
+      // setTimeout(async () => {
+      //   post.blogCover = url;
+      //   await post.save();
+      // }, 5 * 60 * 1000);
     }
 
     categories = categories.map((category) => {

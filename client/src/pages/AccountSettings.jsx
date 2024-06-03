@@ -345,7 +345,7 @@ const Input = ({
 const ConfirmModal = forwardRef((props, ref) => {
   const { user } = props;
   const closeButtonRef = useRef();
-  const [password, setPassword] = useState("Test123!");
+  const [password, setPassword] = useState("");
   const { resetUserInfo } = useUserInfo();
   const navigate = useNavigate();
 

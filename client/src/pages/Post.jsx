@@ -183,7 +183,7 @@ export default function Post() {
                     </div>
                 </div>
 
-                <section className="not-format mt-20 px-0 xs:px-10 md:px-20">
+                {/* <section className="not-format mt-20 px-0 xs:px-10 md:px-20">
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
                             Comments (20)
@@ -266,7 +266,7 @@ export default function Post() {
                     </div>
 
 
-                </section>
+                </section> */}
             </main>
 
             {relatedPosts.length > 0 && (

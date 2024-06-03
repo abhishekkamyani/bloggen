@@ -92,12 +92,20 @@ function Navbar() {
               ) : (
                 <>
                   <Link
-                    to="/post"
+                    to="/"
                     type="button"
                     data-twe-ripple-color="light"
                     className="me-3 inline-block rounded px-2 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white hover:text-black dark:text-white dark:hover:bg-dark-main transition duration-150 ease-in-out"
                   >
-                    Post
+                    Home
+                  </Link>
+                  <Link
+                    to="/liked-posts"
+                    type="button"
+                    data-twe-ripple-color="light"
+                    className="me-3 inline-block rounded px-2 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white hover:text-black dark:text-white dark:hover:bg-dark-main transition duration-150 ease-in-out"
+                  >
+                    Favorites
                   </Link>
 
                   <Link

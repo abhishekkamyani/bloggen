@@ -107,7 +107,7 @@ export default function Profile() {
                         {user.posts?.length > 0 && (
                             <div className="mt-10">
                                 {/*  */}
-                                <h1 className="w-fit font-serif my-4 pb-1 pr-2 rounded-b-md border-b-4 border-primary dark:border-b-4 dark:border-primary-light dark:text-white lg:text-4xl md:text-3xl xs:text-xl">
+                                <h1 className="w-fit mb-10 font-serif my-4 pb-1 pr-2 rounded-b-md border-b-4 border-primary dark:border-b-4 dark:border-primary-light dark:text-white lg:text-4xl md:text-3xl xs:text-xl">
                                     Popular Posts
                                 </h1>
                                 <Posts posts={user?.posts || []} />

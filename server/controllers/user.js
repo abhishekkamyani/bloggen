@@ -44,28 +44,28 @@ exports.updateProfile = async (req, res, next) => {
 
     if (req.files.avatar) {
       const file = req.files.avatar[0];
-      const url = await uploadFileOnAzure(file, user.avatar);
+      // const url = await uploadFileOnAzure(file, user.avatar);
       const avatar = serverUrl + "/" + file.path;
       userData.avatar = avatar;
 
-      setTimeout(async () => {
-        console.log("time to update avatar");
-        const result = await user.updateOne({ avatar: url });
-        console.log(result);
-      }, 5 * 60 * 1000);
+      // setTimeout(async () => {
+      //   console.log("time to update avatar");
+      //   const result = await user.updateOne({ avatar: url });
+      //   console.log(result);
+      // }, 5 * 60 * 1000);
     }
 
     if (req.files.cover) {
       const file = req.files.cover[0];
-      const url = await uploadFileOnAzure(file, user.cover);
+      // const url = await uploadFileOnAzure(file, user.cover);
       const cover = serverUrl + "/" + file.path;
       userData.cover = cover;
 
-      setTimeout(async () => {
-        console.log("time to update cover");
-        const result = await user.updateOne({ cover: url });
-        console.log(result);
-      }, 5 * 60 * 1000);
+      // setTimeout(async () => {
+      //   console.log("time to update cover");
+      //   const result = await user.updateOne({ cover: url });
+      //   console.log(result);
+      // }, 5 * 60 * 1000);
     }
 
     delete userData.email;

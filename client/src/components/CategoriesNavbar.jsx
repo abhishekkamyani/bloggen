@@ -15,7 +15,7 @@ export default function CategoriesNavbar({ page, pageSize, selectedCategory }) {
     const handleScroll = (e) => {
         const container = e.target;
 
-        if (Math.ceil(container.scrollLeft) === (container.scrollWidth - container.clientWidth)) {
+        if (Math.ceil(container.scrollLeft) >= (container.scrollWidth - container.clientWidth)) {
             setIsRight(false);
         }
         else {
@@ -117,7 +117,7 @@ export default function CategoriesNavbar({ page, pageSize, selectedCategory }) {
                 <li key={Math.random()} className='mr-10'>
                     <Link
                         to={`?page=${page}&pageSize=${pageSize}`}
-                        className={`${!selectedCategory || selectedCategory==="all" && "font-extrabold"}`}
+                        className={`${!selectedCategory || selectedCategory === "all" && "font-extrabold"}`}
                     >
                         For You
                     </Link>
@@ -126,7 +126,7 @@ export default function CategoriesNavbar({ page, pageSize, selectedCategory }) {
                     <li key={category._id} className='mr-10'>
                         <Link
                             to={`?page=${page}&pageSize=${pageSize}&category=${category.slug}`}
-                            className={`${selectedCategory === category.slug && "font-extrabold"}`}                            
+                            className={`${selectedCategory === category.slug && "font-extrabold"}`}
                         >
                             {category.name}
                         </Link>

@@ -13,8 +13,8 @@ import { toast } from "react-toastify";
 import { Toast } from "primereact/toast";
 
 const initialPost = {
-  title: "title hai yeh",
-  summary: "summary hai yeh",
+  title: "",
+  summary: "",
   blogCover: "",
   categories_names: [],
 };

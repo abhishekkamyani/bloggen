@@ -4,10 +4,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import {SERVER_URL} from '../utils';
 import { useUserInfo } from '../contexts/UserContext';
 import { Toast } from 'primereact/toast';
- 
 
+const initialUser = { email: '', password: '' };
 function Login() {
-    const [user, setUser] = useState({ email: '', password: '' });
+    const [user, setUser] = useState(initialUser);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const { setUserInfo } = useUserInfo();
@@ -29,6 +29,7 @@ function Login() {
             if (response?.status === 200) {
                 toast.current.show({severity:'success', summary: 'Welcome!..', detail:'You have logged in', life: 1000});
                 setUserInfo(response.data);
+                setUser(initialUser);
                 setTimeout(() => {
                     navigate("/");
                 }, 1000);
