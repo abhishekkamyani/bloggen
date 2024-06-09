@@ -11,6 +11,7 @@ import Post from "./pages/Post";
 import CategoriesSelection from "./components/CategoriesSelection";
 import MyBlogs from "./pages/MyBlogs";
 import FavoritesPosts from "./pages/FavoritesPosts";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="/blogs" element={<MyBlogs />} />
         <Route path="/my-favorite-blogs" element={<FavoritesPosts />} />
       </Routes>
+      <Footer />
     </Router>
     // </div>
   );

@@ -25,6 +25,12 @@ export default {
           main: "#2f3640",
           accent: "#dcdde1",
         },
+        linkedIn: "#0A66C2",
+        facebook: "#1877F2",
+        youtube: "#FF0000",
+        twitter: "#1DA1F2",
+        gitHub: "#24292e",
+        whatsApp: "#25D366",
       },
       fontFamily: {
         merriWeather: "Merriweather Sans",

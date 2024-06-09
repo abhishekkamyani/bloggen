@@ -143,22 +143,22 @@ export default function Profile() {
           <div className="fixed right-2 bottom-20 flex flex-col rounded-sm bg-gray-200 text-gray-500 dark:bg-gray-200/80 dark:text-gray-700 hover:text-gray-600 hover:dark:text-gray-400">
             {user.linkedIn && (
               <SocialMedia url={user.linkedIn}>
-                <FaLinkedin className="lg:w-6 lg:h-6 xs:w-4 xs:h-4 text-[#0A66C2]" />
+                <FaLinkedin className="lg:w-6 lg:h-6 xs:w-4 xs:h-4 text-linkedIn" />
               </SocialMedia>
             )}
             {user.youtube && (
               <SocialMedia url={user.youtube}>
-                <FaYoutube className="lg:w-6 lg:h-6 xs:w-4 xs:h-4 text-[#FF0000]" />
+                <FaYoutube className="lg:w-6 lg:h-6 xs:w-4 xs:h-4 text-youtube" />
               </SocialMedia>
             )}
             {user.facebook && (
               <SocialMedia url={user.facebook}>
-                <FaFacebook className="lg:w-6 lg:h-6 xs:w-4 xs:h-4 text-[#1877F2]" />
+                <FaFacebook className="lg:w-6 lg:h-6 xs:w-4 xs:h-4 text-facebook" />
               </SocialMedia>
             )}
             {user.twitter && (
               <SocialMedia url={user.twitter}>
-                <FaTwitter className="lg:w-6 lg:h-6 xs:w-4 xs:h-4 text-[#1DA1F2]" />
+                <FaTwitter className="lg:w-6 lg:h-6 xs:w-4 xs:h-4 text-twitter" />
               </SocialMedia>
             )}
           </div>

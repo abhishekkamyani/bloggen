@@ -25,6 +25,10 @@
   .profile-menu-item {
     @apply block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal text-slate-700 hover:bg-primary hover:text-white focus:outline-none dark:bg-slate-700 dark:text-white dark:hover:bg-slate-800/25;
   }
+
+  .social-icon{
+    @apply text-2xl rounded-lg py-1 hover:scale-125 transition-all ease-in duration-100;
+  }
 }
 
 @tailwind components;
