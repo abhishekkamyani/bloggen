@@ -244,7 +244,7 @@ exports.likedPosts = async (req, res, next) => {
       path: "likedPosts",
       select: "title blogCover slug summary createdAt",
     });
-    return res.json(posts);
+    return res.json(posts.likedPosts);
   } catch (error) {
     console.log(error);
     next({});

@@ -12,12 +12,15 @@ export default function MyBlogs() {
 
   useEffect(() => {
     let ignore = false;
-    axios.get(`${SERVER_URL}/api/post/?user=${user}`).then((response) => {
-      if (response.status === 200 && !ignore) {
-        setAuthor(response.data);
-        console.log(response.data);
-      }
-    });
+    axios
+      .get(`${SERVER_URL}/api/post/?user=${user}`)
+      .then((response) => {
+        if (response.status === 200 && !ignore) {
+          setAuthor(response.data);
+          console.log(response.data);
+        }
+      })
+      .catch((err) => console.log(err));
 
     return () => {
       ignore = true;
@@ -28,8 +31,11 @@ export default function MyBlogs() {
     <section className="py-10">
       <h2 className="text-center mb-7 text-2xl text-black dark:text-main capitalize">
         Read the blogs of <span> </span>
-        <Link to={`/profile/${author._id}`} className="underline font-merriWeather">
-         {author.firstName + "-" + author.lastName}
+        <Link
+          to={`/profile/${author._id}`}
+          className="underline font-merriWeather"
+        >
+          {author.firstName + "-" + author.lastName}
         </Link>
       </h2>
       <Posts posts={author.posts} />
