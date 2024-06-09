@@ -77,6 +77,7 @@ exports.login = async (req, res, next) => {
       });
   } catch (error) {
     next({});
+    console.log(error);
   }
 };
 

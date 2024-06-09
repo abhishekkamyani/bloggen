@@ -225,9 +225,26 @@ exports.userPosts = async (req, res, next) => {
       lastName: 1,
       avatar: 1,
       posts: 1,
-    }).populate({path:"posts", select: "title slug summary createdAt"});
+    }).populate({
+      path: "posts",
+      select: "title blogCover slug summary createdAt",
+    });
 
     res.json(posts);
+  } catch (error) {
+    console.log(error);
+    next({});
+  }
+};
+
+exports.likedPosts = async (req, res, next) => {
+  try {
+    const userId = req.userId;
+    const posts = await User.findById(userId, { likedPosts: 1 }).populate({
+      path: "likedPosts",
+      select: "title blogCover slug summary createdAt",
+    });
+    return res.json(posts);
   } catch (error) {
     console.log(error);
     next({});
