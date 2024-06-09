@@ -19,7 +19,7 @@ export default function Footer() {
               className="h-8"
               alt="Flowbite Logo"
             /> */}
-              <span className="self-center text-2xl font-semibold whitespace-nowrap text-black dark:text-white">
+              <span className="self-center text-2xl select-none font-semibold whitespace-nowrap text-black dark:text-white">
                 Bloggen
               </span>
             </a>
@@ -30,7 +30,7 @@ export default function Footer() {
               ))}
             </ul>
           </section>
-          <ul className="flex flex-wrap items-center justify-center max-sm:mt-6 mb-6 text-sm font-medium text-black sm:mb-0 dark:text-main">
+          <ul className="flex select-none flex-wrap items-center justify-center max-sm:mt-6 mb-6 text-sm font-medium text-black sm:mb-0 dark:text-main">
             <li>
               <Link to="/" className="hover:underline me-4 md:me-6">
                 Home

@@ -12,6 +12,7 @@ import CategoriesSelection from "./components/CategoriesSelection";
 import MyBlogs from "./pages/MyBlogs";
 import FavoritesPosts from "./pages/FavoritesPosts";
 import Footer from "./components/Footer";
+import Contact from "./pages/Contact";
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="/post/:slug" element={<Post />} />
         <Route path="/blogs" element={<MyBlogs />} />
         <Route path="/my-favorite-blogs" element={<FavoritesPosts />} />
+        <Route path="/contact-us" element={<Contact />} />
       </Routes>
       <Footer />
     </Router>

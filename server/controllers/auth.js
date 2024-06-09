@@ -27,6 +27,7 @@ exports.registration = async (req, res, next) => {
         email: user.email,
         _id: user._id,
         firstName: user.firstName,
+        lastName: user.lastName,
         avatar: user.avatar,
         categories: user.categories,
       });
@@ -72,6 +73,7 @@ exports.login = async (req, res, next) => {
         email: user.email,
         _id: user._id,
         firstName: user.firstName,
+        lastName: user.lastName,
         avatar: user.avatar,
         categories: user.categories,
       });
@@ -97,6 +99,7 @@ exports.identity = async (req, res, next) => {
       _id: 1,
       email: 1,
       firstName: 1,
+      lastName: 1,
       avatar: 1,
       categories: 1,
     });
