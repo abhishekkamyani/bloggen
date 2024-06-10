@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { SERVER_URL, capitalizeFirstChar, removeHTTP } from "../utils";
 import { capitalizeEveryFirstChar } from "../utils";
 import { FaFacebook, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
-import ImageLoader from "../loaders/ImageLoader";
+import ImageLoader from "../components/loaders/ImageLoader";
 import { format } from "date-fns";
 import Posts from "../components/Posts";
 

@@ -1,14 +1,14 @@
 import Post from "./Post";
+import PostLoader from "./loaders/PostLoader";
 
-export default function Posts({posts}) {
- 
-    return (
-        <div className="relative px-6 lg:px-8">
-            <div className="absolute inset-0">
-                <div className="h-1/3 sm:h-2/3" />
-            </div>
-            <div className="relative mx-auto max-w-7xl">
-                {/* <div className="text-center">
+export default function Posts({ posts }) {
+  return (
+    <div className="relative px-6 lg:px-8">
+      <div className="absolute inset-0">
+        <div className="h-1/3 sm:h-2/3" />
+      </div>
+      <div className="relative mx-auto max-w-7xl">
+        {/* <div className="text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-main sm:text-4xl">
                         Column me neatly.
                     </h2>
@@ -16,14 +16,20 @@ export default function Posts({posts}) {
                         This is your life and it's ending one minute @ a time...
                     </p>
                 </div> */}
-                <div className="mx-auto grid max-w-lg gap-10 lg:max-w-none lg:grid-cols-3 2xl:grid-cols-4">
-                    {posts.map(post => (
-                        <Post key={post._id} post={post} />
-                    ))}
-                </div>
-            </div>
+        <div className="mx-auto grid max-w-lg gap-10 lg:max-w-none lg:grid-cols-3 2xl:grid-cols-4">
+          {posts.length === 0
+            ? Array(10)
+                .fill(null)
+                .map((_, index) => <PostLoader key={index} />)
+            : posts.map((post) => <Post key={post._id} post={post} />)}
+          {/* <PostLoader />
+          {posts.map((post) => (
+            <Post key={post._id} post={post} />
+          ))} */}
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 // <section className='grid grid-cols-1 mx-5 lg:mx-10 my-5 md:grid-cols-2 lg:grid-cols-4 gap-4 '>

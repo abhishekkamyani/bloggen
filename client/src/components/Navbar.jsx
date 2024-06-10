@@ -14,7 +14,7 @@ function Navbar() {
   return (
     <>
       {/* Main navigation container */}
-      <nav className="flex-no-wrap relative flex w-full items-center justify-between bg-primary py-2 shadow-dark-mild dark:bg-slate-700 lg:flex-wrap lg:justify-start lg:py-4">
+      <nav className="flex-no-wrap select-none relative flex w-full items-center justify-between bg-primary py-2 shadow-dark-mild dark:bg-slate-700 lg:flex-wrap lg:justify-start lg:py-4">
         <div className="flex w-full flex-wrap items-center px-3">
           {/* Hamburger button for mobile view */}
           <button

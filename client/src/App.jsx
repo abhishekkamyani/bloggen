@@ -21,21 +21,24 @@ export default function App() {
       <LogoutModal />
       <CategoriesSelection />
       <Navbar />
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        {/* <Route exact path="/temp" element={<Temp />} /> */}
-        <Route path="/login/" element={<Login />} />
-        <Route path="/profile/:id" element={<Profile />} />
-        <Route path="/account-settings" element={<AccountSettings />} />
-        <Route path="/registration" element={<Registration />} />
-        <Route path="/new-story" element={<CreatePost />} />
-        <Route path="/post/:slug" element={<Post />} />
-        <Route path="/blogs" element={<MyBlogs />} />
-        <Route path="/my-favorite-blogs" element={<FavoritesPosts />} />
-        <Route path="/contact-us" element={<Contact />} />
-      </Routes>
+      <main className="min-h-screen">
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          {/* <Route exact path="/temp" element={<Temp />} /> */}
+          <Route path="/login/" element={<Login />} />
+          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/account-settings" element={<AccountSettings />} />
+          <Route path="/registration" element={<Registration />} />
+          <Route path="/new-story" element={<CreatePost />} />
+          <Route path="/post/:slug" element={<Post />} />
+          <Route path="/blogs" element={<MyBlogs />} />
+          <Route path="/my-favorite-blogs" element={<FavoritesPosts />} />
+          <Route path="/contact-us" element={<Contact />} />
+        </Routes>
+      </main>
       <Footer />
     </Router>
+
     // </div>
   );
 }
