@@ -15,9 +15,9 @@ export default function LogoutModal() {
             .get(`${SERVER_URL}/api/auth/logout`, { withCredentials: true })
             .then(response => {
                 if (response.status === 200) {
+                    toast.success("Logout successful.")
                     setUserInfo({});
                     navigate("/");
-                    toast.success("Logout successful.")
                 }
             })
             .catch(e => {

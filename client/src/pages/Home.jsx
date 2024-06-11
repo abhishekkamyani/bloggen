@@ -1,5 +1,5 @@
 import Posts from '../components/Posts'
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { SERVER_URL } from "../utils";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -28,6 +28,11 @@ export default function Home() {
 
     const [fetchedData, setFetchedData] = useState(initialFetched);
 
+    useEffect(() => {
+      window.scrollTo({top: 0});
+    }, [])
+    
+
     // const [paginationData, setPaginationData] = useState({ page: 1, pageSize: 5 });
     useEffect(() => {
         let ignore = false;
@@ -51,6 +56,7 @@ export default function Home() {
     }, [page, pageSize, category])
 
     const onPageChange = (event) => {
+        // setFetchedData({...fetchedData, posts:[]});
         navigate(`?page=${event.page + 1}&pageSize=${event.rows}&category=${category}`);
     };
 
