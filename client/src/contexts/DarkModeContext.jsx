@@ -2,8 +2,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 const DarkModeContext = createContext();
 
-import React from "react";
-
 function DarkModeProvider({ children }) {
   const isDark = localStorage.getItem("isDarkMode") === "true" ? true : false;
   const [isDarkMode, setIsDarkMode] = useState(isDark);

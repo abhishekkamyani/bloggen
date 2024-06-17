@@ -3,23 +3,36 @@ import { useUserInfo } from "../contexts/UserContext";
 import axios from "axios";
 import { SERVER_URL } from "../utils";
 import Posts from "../components/Posts";
+import { toast } from "react-toastify";
+import { useLoadingBarProgress } from "../contexts/LoadingBarContext";
 
 export default function FavoritesPosts() {
   const [posts, setPosts] = useState([]);
   const { userInfo } = useUserInfo();
+  const [isFetched, setIsFetched] = useState(false);
+  const { setProgress } = useLoadingBarProgress();
 
   useEffect(() => {
+    setProgress(30);
     let ignore = false;
-    console.log(userInfo);
     axios
       .get(`${SERVER_URL}/api/post/likedPosts`, { withCredentials: true })
       .then((response) => {
+        setProgress(60);
         if (response.status === 200 && !ignore) {
           console.log(response.data);
           setPosts(response.data);
+
+          !response.data.length &&
+            toast.error("You haven't liked any post yet");
+          setProgress(100);
         }
+        setIsFetched(true);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setProgress(100);
+        setIsFetched(true);
+      });
 
     return () => {
       ignore = true;
@@ -31,7 +44,7 @@ export default function FavoritesPosts() {
       <h2 className="text-center mb-7 text-2xl text-black dark:text-main capitalize border-b-2 border-primary rounded-md px-2 w-fit mx-auto">
         My Favorite Blogs
       </h2>
-      <Posts posts={posts} />
+      <Posts posts={posts} isFetched={isFetched} />
     </section>
   );
 }

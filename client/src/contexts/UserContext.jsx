@@ -1,60 +1,71 @@
-import axios from 'axios';
+import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
-import { SERVER_URL } from '../utils';
+import { SERVER_URL } from "../utils";
 
 const UserContext = createContext({});
 
-export function UserContextProvider({ children }) {
-    const [userInfo, setUserInfo] = useState({_id: ""});
-    //console.log(userInfo);
+export function UserProvider({ children }) {
+  const [userInfo, setUserInfo] = useState({ _id: "" });
+  const isAuthenticated = userInfo.email ? true : false;
 
-    useEffect(() => {
-        console.log("identity");
-        let ignore = false;
-        axios.get(`${SERVER_URL}/api/auth/identity`, { withCredentials: true })
-            .then(response => {
-                if (!ignore) {
-                    setUserInfo(response.data);
-                }
-            })
-            .catch(e => {
-                //console.log(e.response?.data?.error);
-            });
+  const [isFetched, setIsFetched] = useState(false);
+  //console.log(userInfo);
 
-        return () => ignore = true;
-    }, [])
-
-    useEffect(() => {
-        let ignore = false;
-        if(userInfo.categories?.length === 0 && !ignore) {
-            document.querySelector("#categoriesModalButton").click();
+  useEffect(() => {
+    console.log("identity");
+    let ignore = false;
+    axios
+      .get(`${SERVER_URL}/api/auth/identity`, { withCredentials: true })
+      .then((response) => {
+        if (!ignore) {
+          setUserInfo(response.data);
+          setIsFetched(true);
         }
+      })
+      .catch((e) => {
+        setIsFetched(true);
+        //console.log(e.response?.data?.error);
+      });
 
-        return () => ignore = true;
+    return () => (ignore = true);
+  }, []);
 
-    }, [userInfo._id])
-
-    const resetUserInfo = () => {
-        axios.get(`${SERVER_URL}/api/auth/identity`, { withCredentials: true })
-            .then(response => {
-                setUserInfo(response.data);
-            })
-            .catch(e => {
-                //console.log(e.response?.data?.error);
-            });
+  useEffect(() => {
+    let ignore = false;
+    if (userInfo.categories?.length === 0 && !ignore) {
+      document.querySelector("#categoriesModalButton").click();
     }
-    return (
-        <UserContext.Provider value={{ userInfo, setUserInfo, resetUserInfo }}>
-            {children}
-        </UserContext.Provider>
-    );
+
+    return () => (ignore = true);
+  }, [userInfo._id]);
+
+  const resetUserInfo = () => {
+    axios
+      .get(`${SERVER_URL}/api/auth/identity`, { withCredentials: true })
+      .then((response) => {
+        setUserInfo(response.data);
+      })
+      .catch((e) => {
+        //console.log(e.response?.data?.error);
+      });
+  };
+
+  if (!isFetched) {
+    return <div></div>;
+  }
+
+  return (
+    <UserContext.Provider value={{ userInfo, setUserInfo, resetUserInfo, isAuthenticated }}>
+      {children}
+    </UserContext.Provider>
+  );
 }
 
 export const useUserInfo = () => {
-    const user = useContext(UserContext);
+  const user = useContext(UserContext);
 
-    if (!user) {
-        throw new Error("useUserInfo must be used within an UserContextProvider");
-    }
-    return user;
-}
+  if (!user) {
+    throw new Error("useUserInfo must be used within an UserContextProvider");
+  }
+  return user;
+};

@@ -21,6 +21,7 @@ export default function Registration() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
     let ignore = false;
 
     axios
@@ -81,7 +82,10 @@ export default function Registration() {
     } catch (e) {
       //console.log(e.response?.data?.error);
 
-      toast.error(e.response?.data?.error || "Something went wrong, please try again later.");
+      toast.error(
+        e.response?.data?.error ||
+          "Something went wrong, please try again later."
+      );
     }
     setIsSubmitting(false);
   };
@@ -206,6 +210,7 @@ export default function Registration() {
                       </option>
                       {countries.map((country) => (
                         <option
+                        key={country}
                           value={country}
                           selected={country === user.country}
                         >
@@ -281,12 +286,9 @@ export default function Registration() {
                 </div>
                 <hr className="mb-6 border-t" />
                 <div className="text-center">
-                  <Link
-                    to="/login"
-                    className="inline-block text-sm align-baseline link"
-                  >
-                    Already have an account? Login!
-                  </Link>
+                  <p className="inline-block text-sm align-baseline font-semibold dark:text-main">
+                    Already have an account? <Link className="link" to="/login">Login!</Link>
+                  </p>
                 </div>
               </form>
             </div>

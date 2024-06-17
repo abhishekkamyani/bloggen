@@ -1,7 +1,10 @@
 import Post from "./Post";
 import PostLoader from "./loaders/PostLoader";
 
-export default function Posts({ posts }) {
+export default function Posts({ posts, isFetched }) {
+  // if (isFetched &&) {
+    
+  // }
   return (
     <div className="relative px-6 lg:px-8">
       <div className="absolute inset-0">
@@ -17,15 +20,11 @@ export default function Posts({ posts }) {
                     </p>
                 </div> */}
         <div className="mx-auto grid max-w-lg gap-10 lg:max-w-none lg:grid-cols-3 2xl:grid-cols-4">
-          {posts.length === 0
-            ? Array(10)
+          {isFetched
+            ? posts.map((post) => <Post key={post._id} post={post} />)
+            : Array(10)
                 .fill(null)
-                .map((_, index) => <PostLoader key={index} />)
-            : posts.map((post) => <Post key={post._id} post={post} />)}
-          {/* <PostLoader />
-          {posts.map((post) => (
-            <Post key={post._id} post={post} />
-          ))} */}
+                .map((_, index) => <PostLoader key={index} />)}
         </div>
       </div>
     </div>

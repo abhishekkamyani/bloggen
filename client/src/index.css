@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 @tailwind base;
 
 @layer base {
@@ -15,18 +15,18 @@
 
 @layer utilities {
   .link {
-    @apply text-primary dark:text-white hover:text-primary-dark dark:hover:text-primary-light
+    @apply text-primary dark:text-white hover:text-primary-dark dark:hover:text-primary-light;
   }
 
   .btn {
-    @apply text-white bg-primary hover:bg-primary-dark dark:bg-primary-dark hover:dark:bg-primary focus:outline-none
+    @apply text-white bg-primary hover:bg-primary-dark dark:bg-primary-dark hover:dark:bg-primary focus:outline-none;
   }
 
   .profile-menu-item {
     @apply block w-full whitespace-nowrap bg-white px-4 py-2 text-sm font-normal text-slate-700 hover:bg-primary hover:text-white focus:outline-none dark:bg-slate-700 dark:text-white dark:hover:bg-slate-800/25;
   }
 
-  .social-icon{
+  .social-icon {
     @apply text-2xl rounded-lg py-1 hover:scale-125 transition-all ease-in duration-100;
   }
 }
@@ -55,16 +55,15 @@ span {
   font-family: "Roboto", sans-serif;
 }
 
-
 /* Custom CSS */
 
 html,
 body {
   ::-webkit-scrollbar {
     display: none;
-  }
+    }
+  scroll-behavior: smooth;
 }
-
 
 /* ########## Login Section ########## */
 #login-section {
@@ -81,9 +80,12 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.75));
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.5),
+    rgba(0, 0, 0, 0.75)
+  );
 }
-
 
 /* ########## Registration Section ########## */
 #registration-section .side-image {
@@ -131,7 +133,7 @@ body {
 }
 
 .p-dropdown-item {
-  @apply bg-main text-black hover:bg-primary hover:text-main dark:bg-dark-main dark:text-main dark:hover:bg-slate-700
+  @apply bg-main text-black hover:bg-primary hover:text-main dark:bg-dark-main dark:text-main dark:hover:bg-slate-700;
 }
 
 /* Select Button */
@@ -141,6 +143,6 @@ body {
   @apply m-5 bg-slate-700 transition-all ease-out duration-300;
 }
 
-.p-component .p-highlight{
+.p-component .p-highlight {
   @apply bg-primary-dark !important;
 }

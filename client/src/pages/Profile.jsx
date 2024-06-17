@@ -7,26 +7,35 @@ import { FaFacebook, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
 import ImageLoader from "../components/loaders/ImageLoader";
 import { format } from "date-fns";
 import Posts from "../components/Posts";
+import { useLoadingBarProgress } from "../contexts/LoadingBarContext";
 
 export default function Profile() {
   const { id } = useParams();
   const [user, setUser] = useState({});
+  const [isFetched, setIsFetched] = useState(false);
+  const { setProgress } = useLoadingBarProgress();
 
+  
   useEffect(() => {
+    setProgress(30);
     window.scrollTo({
       top: 0,
     });
-
     let ignore = false;
     axios
       .get(`${SERVER_URL}/api/user/profile/${id}`)
       .then((response) => {
+        setProgress(60);
         if (!ignore) {
           console.log(response.data);
           setUser(response.data);
+          setProgress(100);
         }
+        setIsFetched(true);
       })
       .catch((e) => {
+        setIsFetched(true);
+        setProgress(100);
         //console.log(e.response?.data?.error);
       });
 
@@ -135,7 +144,7 @@ export default function Profile() {
                     All Post
                   </Link>
                 </div>
-                <Posts posts={user?.posts || []} />
+                <Posts posts={user?.posts || []} isFetched={isFetched} />
               </div>
             )}
           </div>
@@ -176,17 +185,6 @@ const SocialMedia = ({ url, children }) => {
   return (
     <a href={updatedUrl} target="_blank">
       <div className="p-2 hover:text-primary hover:dark:text-primary">
-        {/* <svg
-                    className="lg:w-6 lg:h-6 xs:w-4 xs:h-4 text-gray-900"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={24}
-                    height={24}
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path d="M13.795 10.533 20.68 2h-3.073l-5.255 6.517L7.69 2H1l7.806 10.91L1.47 22h3.074l5.705-7.07L15.31 22H22l-8.205-11.467Zm-2.38 2.95L9.97 11.464 4.36 3.627h2.31l4.528 6.317 1.443 2.02 6.018 8.409h-2.31l-4.934-6.89Z" />
-                </svg> */}
         {children}
       </div>
     </a>

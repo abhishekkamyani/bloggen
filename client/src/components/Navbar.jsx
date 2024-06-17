@@ -4,7 +4,7 @@ import { Collapse, initTWE, Dropdown } from "tw-elements";
 import { useUserInfo } from "../contexts/UserContext";
 import { useDarkMode } from "../contexts/DarkModeContext";
 function Navbar() {
-  const { userInfo } = useUserInfo();
+  const { userInfo, isAuthenticated } = useUserInfo();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
@@ -67,7 +67,15 @@ function Navbar() {
               className="list-style-none ms-auto lg:me-2 max-lg:mb-5 flex flex-col gap-y-2 ps-0 lg:flex-row"
               data-twe-navbar-nav-ref=""
             >
-              {!Boolean(userInfo.email) ? (
+              <Link
+                to="/"
+                type="button"
+                data-twe-ripple-color="light"
+                className="me-3 inline-block rounded px-2 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white hover:text-black dark:text-white dark:hover:bg-dark-main transition duration-150 ease-in-out"
+              >
+                Home
+              </Link>
+              {!isAuthenticated ? (
                 <>
                   <Link
                     to="/login"
@@ -80,7 +88,7 @@ function Navbar() {
                   </Link>
 
                   <Link
-                    to="/registration"
+                    to="/register"
                     type="button"
                     data-twe-ripple-init=""
                     data-twe-ripple-color="light"
@@ -91,14 +99,6 @@ function Navbar() {
                 </>
               ) : (
                 <>
-                  <Link
-                    to="/"
-                    type="button"
-                    data-twe-ripple-color="light"
-                    className="me-3 inline-block rounded px-2 pb-2 pt-2.5 text-sm font-medium uppercase leading-normal text-white hover:text-black dark:text-white dark:hover:bg-dark-main transition duration-150 ease-in-out"
-                  >
-                    Home
-                  </Link>
                   <Link
                     to="/my-favorite-blogs"
                     type="button"
@@ -138,7 +138,7 @@ function Navbar() {
             </button>
 
             {/* Profile */}
-            {Boolean(userInfo.email) && (
+            {isAuthenticated && (
               <>
                 <div
                   className="relative select-none z-20"

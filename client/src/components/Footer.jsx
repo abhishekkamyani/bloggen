@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useUserInfo } from "../contexts/UserContext";
 
 export default function Footer() {
-    const {userInfo} = useUserInfo();
+  const { userInfo, isAuthenticated } = useUserInfo();
   return (
     <footer className="bg-primary py-2 shadow-dark-mild dark:bg-slate-700">
       <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
@@ -37,25 +37,58 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <a href="https://abhishek-kamyani.vercel.app/" target="_blank" className="hover:underline me-4 md:me-6">
+              <a
+                href="https://abhishek-kamyani.vercel.app/"
+                target="_blank"
+                className="hover:underline me-4 md:me-6"
+              >
                 About
               </a>
             </li>
-            <li>
-              <Link to="/contact-us" className="hover:underline me-4 md:me-6">
-                Contact
-              </Link>
-            </li>
-            <li>
-              <Link to={`/profile/${userInfo._id}`} className="hover:underline">
-                Profile
-              </Link>
-            </li>
+            {isAuthenticated ? (
+              <>
+                <li>
+                  <Link
+                    to="/contact-us"
+                    className="hover:underline me-4 md:me-6"
+                  >
+                    Contact
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={`/profile/${userInfo._id}`}
+                    className="hover:underline"
+                  >
+                    Profile
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link
+                    to="/login"
+                    className="hover:underline me-4 md:me-6"
+                  >
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/register"
+                    className="hover:underline"
+                  >
+                    Sign up
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-500 lg:my-8" />
         <span className="block text-sm text-black sm:text-center dark:text-main text-center">
-          © {new Date().getFullYear()} {" "}
+          © {new Date().getFullYear()}{" "}
           <a href="/" className="hover:underline">
             Bloggen™
           </a>
