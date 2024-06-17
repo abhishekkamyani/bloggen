@@ -20,10 +20,8 @@ const initialPost = {
 };
 
 export default function CreatePost() {
-  useEffect(() => {
-    initTWE({ Ripple, Input, Modal });
-  });
-
+  initTWE({ Ripple, Input, Modal });
+  
   const [content, setContent] = useState("");
   const [post, setPost] = useState(initialPost);
   const [image, setImage] = useState("");

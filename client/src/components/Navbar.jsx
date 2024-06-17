@@ -43,12 +43,12 @@ function Navbar() {
           </button>
 
           {/* Brand Logo */}
-          <a
+          {/* <a
             className="lg:ms-2 flex items-center text-white text-2xl transition duration-200 hover:text-black/80 hover:ease-in-out motion-reduce:transition-none  dark:hover:text-white/80 lg:mb-0 lg:mt-0"
             href="/"
           >
             Bloggen
-          </a>
+          </a> */}
           {/* Collapsible navigation container */}
           <div
             className="!visible hidden transition-all ease-linear flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
@@ -56,12 +56,9 @@ function Navbar() {
             data-twe-collapse-item=""
           >
             {/* Logo */}
-            {/* <a
-                            className="mb-4 me-5 ms-1 lg:ms-2 mt-3 flex items-center text-white text-2xl max-md:text-xl transition duration-200 hover:text-black/80 hover:ease-in-out motion-reduce:transition-none  dark:hover:text-white/80 lg:mb-0 lg:mt-0"
-                            href="/"
-                        >
-                            Bloggen
-                        </a> */}
+            <a href="/">
+              <img className="w-36" src="/images/logo.png" />
+            </a>
             {/* Left navigation links */}
             <ul
               className="list-style-none ms-auto lg:me-2 max-lg:mb-5 flex flex-col gap-y-2 ps-0 lg:flex-row"

@@ -22,7 +22,7 @@ export default function Home() {
   const page = queryParams.get("page") || 1;
   const pageSize = parseInt(queryParams.get("pageSize")) || 10;
   const category = queryParams.get("category") || "all";
-  const { userInfo, isAuthenticated } = useUserInfo();
+  const { isAuthenticated } = useUserInfo();
   const navigate = useNavigate();
 
   const paginatorRef = useRef(null);
@@ -37,7 +37,7 @@ export default function Home() {
   // const [paginationData, setPaginationData] = useState({ page: 1, pageSize: 5 });
   useEffect(() => {
     let ignore = false;
-
+    toast.dismiss();
     axios
       .get(
         `${SERVER_URL}/api/post/all?pageSize=${pageSize}&page=${page}&category=${category}`

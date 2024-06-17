@@ -13,8 +13,8 @@ export default function LoadingBarProvider({ children }) {
     >
       {children}
       <LoadingBar
-        color={isDarkMode ? "#b3622c" : "black" }
-        height={isDarkMode ? 2 : 3}
+        color={isDarkMode ? "#b3622c" : "white" }
+        height={isDarkMode ? 2 : 2}
         progress={progress}
         onLoaderFinished={() => setProgress(0)}
       />

@@ -20,7 +20,7 @@
   "description": "This is backend server of Bloggen Website",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "dev": "nodemon index.js"
   },
   "author": "Abhishek Kumar",
   "license": "ISC"

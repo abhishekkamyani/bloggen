@@ -59,10 +59,22 @@ span {
 
 html,
 body {
-  ::-webkit-scrollbar {
+  /* ::-webkit-scrollbar {
     display: none;
-    }
+    } */
   scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: peru;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-track{
+  @apply bg-[#f4e8d1] dark:bg-slate-700;
 }
 
 /* ########## Login Section ########## */
@@ -145,4 +157,11 @@ body {
 
 .p-component .p-highlight {
   @apply bg-primary-dark !important;
+}
+
+/* categories-navbar */
+.categories-nav{
+   ::-webkit-scrollbar {
+    display: none;
+    }
 }

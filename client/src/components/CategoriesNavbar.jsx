@@ -91,8 +91,8 @@ export default function CategoriesNavbar({ page, pageSize, selectedCategory }) {
 
 
     return (
-        <div className='relative mx-auto dark:text-white w-100 md:w-[90%]'>
-            <ul ref={containerRef} className='flex border-b-[2px] dark:border-slate-600 text-center items-center mx-10 overflow-x-scroll overflow-y-hidden my-5 pb-3 text-nowrap' onScroll={handleScroll}>
+        <div className='relative mx-auto categories-nav dark:text-white w-100 md:w-[90%]'>
+            <ul ref={containerRef} className='flex border-b-[2px] dark:border-slate-600 text-center items-center mx-10 overflow-y-hidden my-5 pb-3 text-nowrap' onScroll={handleScroll}>
                 <button
                     title="Add New"
                     className="group mr-5 cursor-pointer outline-none hover:rotate-90 duration-300"
