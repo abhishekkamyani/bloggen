@@ -166,6 +166,7 @@ exports.likePost = async (req, res, next) => {
   try {
     const userId = req.userId;
     const postId = req.params.id;
+    console.log(userId);
 
     await User.findByIdAndUpdate(
       userId,
@@ -230,6 +231,7 @@ exports.userPosts = async (req, res, next) => {
       select: "title blogCover slug summary createdAt",
     });
 
+    console.log(posts);
     res.json(posts);
   } catch (error) {
     console.log(error);
