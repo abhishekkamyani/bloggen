@@ -2,7 +2,11 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserInfo } from "../contexts/UserContext";
 import axios from "axios";
-import { SERVER_URL, capitalizeEveryFirstChar, capitalizeFirstChar } from "../utils";
+import {
+  SERVER_URL,
+  capitalizeEveryFirstChar,
+  capitalizeFirstChar,
+} from "../utils";
 import { toast } from "react-toastify";
 import CustomHelmet from "../SEO/CustomHelmet";
 
@@ -20,8 +24,7 @@ export default function AccountSettings() {
           setUser(response.data);
         }
       })
-      .catch((e) => {
-      });
+      .catch((e) => {});
 
     axios
       .get("https://countriesnow.space/api/v0.1/countries/iso")
@@ -52,11 +55,10 @@ export default function AccountSettings() {
     reader.onload = (event) => {
       const imageSrc = event.target.result;
       document.getElementById(id).src = imageSrc;
-
     };
     setUser({ ...user, [e.target.name]: e.target.files[0] });
     reader.readAsDataURL(file);
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,12 +82,23 @@ export default function AccountSettings() {
               {/* <div className="w-full rounded-sm bg-cover bg-center bg-no-repeat items-center" style={{ background: `url('${user.cover}')` }}> */}
               <div
                 className="w-full h-[312px] xl:h-[20rem] lg:h-[18rem] md:h-[16rem] sm:h-[14rem] xs:h-[11rem] relative rounded-sm z-0 items-center"
-              // style={{ backgroundImage: `url(${SERVER_URL}/${user.cover})` }}
+                // style={{ backgroundImage: `url(${SERVER_URL}/${user.cover})` }}
               >
-                <img src={`${user.cover}`} id="coverView" style={{ zIndex: "-1" }} className="absolute object-cover object-center w-full h-full rounded-sm  bg-center bg-no-repeat" alt="cover img" />
+                <img
+                  src={`${user.cover}`}
+                  id="coverView"
+                  style={{ zIndex: "-1" }}
+                  className="absolute object-cover object-center w-full h-full rounded-sm  bg-center bg-no-repeat"
+                  alt="cover img"
+                />
                 {/* Profile Image */}
                 <div className="mx-auto flex justify-center w-[141px] absolute bottom-5  rounded-full right-[50%] translate-x-[50%] h-[141px] border border-gray-600">
-                  <img src={`${user.avatar}`} id="avatarView" className="absolute -z-10 rounded-full h-full w-full object-cover object-center" alt="avatar" />
+                  <img
+                    src={`${user.avatar}`}
+                    id="avatarView"
+                    className="absolute -z-10 rounded-full h-full w-full object-cover object-center"
+                    alt="avatar"
+                  />
                   <div className="bg-white/90 rounded-full w-6 h-6 text-center ml-28 mt-4">
                     <input
                       type="file"
@@ -96,7 +109,7 @@ export default function AccountSettings() {
                       onChange={(e) => handleChangeFile(e, "avatarView")}
                       pattern="^(?=.*\.(jpg|jpeg|png)$)"
                     />
-                    <label htmlFor="avatar" >
+                    <label htmlFor="avatar">
                       <svg
                         data-slot="icon"
                         className="w-6 h-5 z-20 text-primary"
@@ -211,7 +224,7 @@ export default function AccountSettings() {
                     value={capitalizeFirstChar(user.country)}
                     // ref={selectedCountryRef}
                     onChange={handleChangeUser}
-                  // defaultValue={user.country}
+                    // defaultValue={user.country}
                   >
                     <option disabled value="">
                       Select Country
@@ -297,16 +310,16 @@ export default function AccountSettings() {
               </div>
 
               <div className="w-full rounded-lg btn white text-lg font-semibold mt-10">
-                <button type="submit" className="w-full p-4" >
+                <button type="submit" className="w-full p-4">
                   Submit
                 </button>
               </div>
             </form>
           </div>
         </div>
-      </div >
+      </div>
       <ConfirmModal ref={modalButtonRef} user={user} />
-    </section >
+    </section>
   );
 }
 
@@ -342,58 +355,66 @@ const Input = ({
   );
 };
 
-
 const ConfirmModal = forwardRef((props, ref) => {
   const { user } = props;
   const closeButtonRef = useRef();
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("Test123!");
   const { resetUserInfo } = useUserInfo();
   const navigate = useNavigate();
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsUpdating(true);
 
     try {
       const formData = new FormData();
-  
+
       formData.append("user", JSON.stringify(user));
       formData.append("password", password);
       formData.append("avatar", user.avatar);
       formData.append("cover", user.cover);
 
       const response = await toast.promise(
-        axios.patch(`${SERVER_URL}/api/user/profile/update`, formData, { withCredentials: true }),
+        axios.patch(`${SERVER_URL}/api/user/profile/update`, formData, {
+          withCredentials: true,
+        }),
         {
-          pending: "Profile update in progress"
+          pending: "Profile update in progress",
         }
-      ) 
+      );
       if (response.status === 200) {
-
         toast.success(response.data?.message);
         window.scrollTo({ top: 0 });
         resetUserInfo();
         navigate(`/profile/${user._id}`);
         // window.location.reload();
       }
+      setIsUpdating(false);
     } catch (e) {
       //console.log(e);
-      toast.error(e.response?.data?.error || "Something went wrong, please try again later.");
+      toast.error(
+        e.response?.data?.error ||
+          "Something went wrong, please try again later."
+      );
+      setIsUpdating(false);
     }
 
     closeButtonRef.current.click();
-  }
-
+  };
 
   return (
     <div>
       <CustomHelmet title="Account Settings" />
       {/* Button trigger vertically centered modal*/}
-      <button className="hidden"
+      <button
+        className="hidden"
         ref={ref}
         data-twe-toggle="modal"
         data-twe-target="#confirmModal"
         data-twe-ripple-init=""
-        data-twe-ripple-color="light"></button>
+        data-twe-ripple-color="light"
+      ></button>
       {/*Vertically centered modal*/}
       <div
         data-twe-modal-init=""
@@ -443,7 +464,12 @@ const ConfirmModal = forwardRef((props, ref) => {
               </button>
             </div>
             {/* Modal body */}
-            <form id="passwordForm" onSubmit={handleSubmit} encType="multipart/form-data" className="relative p-4 text-dark-main dark:text-white">
+            <form
+              id="passwordForm"
+              onSubmit={handleSubmit}
+              encType="multipart/form-data"
+              className="relative p-4 text-dark-main dark:text-white"
+            >
               <input
                 type="password"
                 className="peer block min-h-[auto] w-full rounded bg-transparent border border-black mt-5 px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
@@ -452,11 +478,13 @@ const ConfirmModal = forwardRef((props, ref) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                placeholder="********" />
+                placeholder="********"
+              />
               <label
                 htmlFor="password"
                 className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:text-primary peer-data-[twe-input-state-active]:-translate-y-[0.9rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-primary"
-              >Password input
+              >
+                Password input
               </label>
             </form>
             {/* Modal footer */}
@@ -464,8 +492,11 @@ const ConfirmModal = forwardRef((props, ref) => {
               <button
                 type="submit"
                 form="passwordForm"
-                className="ms-1 inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal btn"
+                className={`ms-1 inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal bg-gray-500 ${
+                  isUpdating ? "cursor-wait" : "btn"
+                } `}
                 data-twe-ripple-color="light"
+                disabled={isUpdating}
               >
                 Update
               </button>
