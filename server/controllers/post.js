@@ -62,6 +62,10 @@ exports.getPost = async (req, res, next) => {
       })
       .populate({ path: "categories", select: "-posts" });
 
+    if (!post) {
+      return next({ error: "No post found", status: 404 });
+    }
+
     const posts = await Post.find(
       { categories: { $in: post.categories } },
       {
@@ -84,7 +88,6 @@ exports.getPost = async (req, res, next) => {
       ),
     });
   } catch (error) {
-    console.log(error);
     next({});
   }
 };

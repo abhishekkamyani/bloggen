@@ -7,6 +7,7 @@ import { UserProvider } from "./contexts/UserContext.jsx";
 import { DarkModeProvider } from "./contexts/DarkModeContext.jsx";
 import ReactToastistyContainer from "./components/loaders/ReactToastistyContainer.jsx";
 import LoadingBarProvider from "./contexts/LoadingBarContext.jsx";
+import CustomHelmet from "./SEO/CustomHelmet.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </LoadingBarProvider>
       </UserProvider>
     </DarkModeProvider>
+    <CustomHelmet />
     <ReactToastistyContainer />
   </React.StrictMode>
 );

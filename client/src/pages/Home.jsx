@@ -159,7 +159,7 @@ export default function Home() {
         {/* <Paginator className='bg-white text-black dark:bg-dark-main dark:text-main' first={first} totalPages={fetchedData.totalPages} totalRecords={fetchedData.totalItems} rowsPerPageOptions={[5, 10, 20, 30, 40]} onPageChange={onPageChange} /> */}
         <Paginator
           ref={paginatorRef}
-          className="justify-end px-0 pr-1 text-xs w-full bg-white text-black dark:bg-dark-main dark:text-main"
+          className="justify-end theme-switch-transition px-0 pr-1 text-xs w-full bg-inherit text-black dark:text-main"
           first={page * pageSize - pageSize}
           rows={pageSize}
           totalRecords={fetchedData.totalItems}
@@ -170,7 +170,7 @@ export default function Home() {
       <Posts posts={fetchedData.posts} isFetched={isFetched} />
       <Paginator
         ref={paginatorRef}
-        className="justify-end px-0 pr-1 text-xs w-full bg-white text-black dark:bg-dark-main dark:text-main"
+        className="justify-end theme-switch-transition px-0 pr-1 text-xs w-full bg-inherit text-black dark:text-main"
         first={page * pageSize - pageSize}
         rows={pageSize}
         totalRecords={fetchedData.totalItems}

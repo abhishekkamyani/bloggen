@@ -6,7 +6,7 @@ export default function Posts({ posts, isFetched }) {
     
   // }
   return (
-    <div className="relative px-6 lg:px-8">
+    <div className="relative px-6 lg:px-8 theme-switch-transition">
       <div className="absolute inset-0">
         <div className="h-1/3 sm:h-2/3" />
       </div>

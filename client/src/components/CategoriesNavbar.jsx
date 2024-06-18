@@ -91,7 +91,7 @@ export default function CategoriesNavbar({ page, pageSize, selectedCategory }) {
 
 
     return (
-        <div className='relative mx-auto categories-nav dark:text-white w-100 md:w-[90%]'>
+        <div className='relative theme-switch-transition mx-auto categories-nav dark:text-white w-100 md:w-[90%]'>
             <ul ref={containerRef} className='flex border-b-[2px] dark:border-slate-600 text-center items-center mx-10 overflow-y-hidden my-5 pb-3 text-nowrap' onScroll={handleScroll}>
                 <button
                     title="Add New"

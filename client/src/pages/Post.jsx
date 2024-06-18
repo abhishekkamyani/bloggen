@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { formatDistance } from "date-fns";
 import axios from "axios";
 import { SERVER_URL, capitalizeFirstChar } from "../utils";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "../css/like-button.css";
 import "../css/quill-custom.css";
 import { useUserInfo } from "../contexts/UserContext";
 import Posts from "../components/Posts";
 import { toast } from "react-toastify";
 import { useLoadingBarProgress } from "../contexts/LoadingBarContext";
+import { Helmet } from "react-helmet";
+import CustomHelmet from "../SEO/CustomHelmet";
 
 export default function Post() {
   const [post, setPost] = useState("");
@@ -18,6 +20,7 @@ export default function Post() {
   const [liked, setLiked] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
   const { setProgress } = useLoadingBarProgress();
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.scroll({ top: 0 });
@@ -44,6 +47,7 @@ export default function Post() {
         setProgress(100);
         setIsFetched(true);
         console.log(e.response?.data?.error);
+        e.response?.status === 404 && navigate("../notfound");
       });
 
     return () => {
@@ -91,8 +95,17 @@ export default function Post() {
 
   return (
     <>
-      {/* <PostEditor content={content} setContent={setContent} /> */}
       <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 antialiased">
+        <CustomHelmet
+          title={post.title}
+          description={post.summary}
+          author={`${post.author?.firstName} ${post.author?.lastName}`}
+          image={post.blogCover}
+          url={window.location.href}
+          keywords={post.categories
+            ?.map((category) => category.name)
+            .join(", ")}
+        />
         <div className="flex flex-col md:flex-row gap-10 px-5 md:px-10 lg:px-20">
           <article className="w-full md:w-3/4 format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
             <header className="mb-4 lg:mb-6 not-format">

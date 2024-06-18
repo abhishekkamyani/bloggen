@@ -29,6 +29,10 @@
   .social-icon {
     @apply text-2xl rounded-lg py-1 hover:scale-125 transition-all ease-in duration-100;
   }
+
+  .theme-switch-transition {
+    @apply ease-linear duration-300;
+  }
 }
 
 @tailwind components;

@@ -6,7 +6,7 @@ import { useUserInfo } from "../contexts/UserContext";
 export default function Footer() {
   const { userInfo, isAuthenticated } = useUserInfo();
   return (
-    <footer className="bg-primary py-2 shadow-dark-mild dark:bg-slate-700">
+    <footer className="bg-primary theme-switch-transition py-2 shadow-dark-mild dark:bg-slate-700">
       <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
         <div className="sm:flex sm:items-center sm:justify-between">
           <section className="flex md:flex-col md:gap-y-5 justify-between max-sm:items-center">
