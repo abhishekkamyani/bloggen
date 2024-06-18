@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { SERVER_URL } from "../utils";
 import { useUserInfo } from "../contexts/UserContext";
 import { Toast } from "primereact/toast";
+import CustomHelmet from "../SEO/CustomHelmet";
 
 const initialUser = { email: "", password: "" };
 function Login() {
@@ -69,6 +70,7 @@ function Login() {
 
   return (
     <section id="login-section" className="bg-gray-50 dark:bg-gray-900">
+      <CustomHelmet  title="Login - Bloggen"/>
       <Toast ref={toast} />
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="w-full bg-white z-10 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">

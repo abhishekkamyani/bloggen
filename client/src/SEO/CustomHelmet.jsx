@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 const defaultProps = {
   title: 'Bloggen - The Blog Website', 
@@ -21,6 +21,7 @@ const CustomHelmet = ({
   // ...other props if needed
 }) => {
   return (
+    <HelmetProvider>
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
@@ -28,7 +29,7 @@ const CustomHelmet = ({
       <meta name="author" content={author} />
       <meta name="date" content={date} />
 
-      {/* Open Graph Meta Tags */}
+      {/* Open Graph Meta Tags -> for sharing on social-media */}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
@@ -41,6 +42,7 @@ const CustomHelmet = ({
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
     </Helmet>
+    </HelmetProvider>
   );
 };
 

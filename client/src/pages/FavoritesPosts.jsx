@@ -5,10 +5,10 @@ import { SERVER_URL } from "../utils";
 import Posts from "../components/Posts";
 import { toast } from "react-toastify";
 import { useLoadingBarProgress } from "../contexts/LoadingBarContext";
+import CustomHelmet from "../SEO/CustomHelmet";
 
 export default function FavoritesPosts() {
   const [posts, setPosts] = useState([]);
-  const { userInfo } = useUserInfo();
   const [isFetched, setIsFetched] = useState(false);
   const { setProgress } = useLoadingBarProgress();
 
@@ -37,10 +37,11 @@ export default function FavoritesPosts() {
     return () => {
       ignore = true;
     };
-  }, ["jnjnscj"]);
+  }, []);
 
   return (
     <section className="py-10">
+      <CustomHelmet title="Favorite Blog Posts" />
       <h2 className="text-center mb-7 text-2xl text-black dark:text-main capitalize border-b-2 border-primary rounded-md px-2 w-fit mx-auto">
         My Favorite Blogs
       </h2>

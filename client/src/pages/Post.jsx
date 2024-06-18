@@ -9,7 +9,6 @@ import { useUserInfo } from "../contexts/UserContext";
 import Posts from "../components/Posts";
 import { toast } from "react-toastify";
 import { useLoadingBarProgress } from "../contexts/LoadingBarContext";
-import { Helmet } from "react-helmet";
 import CustomHelmet from "../SEO/CustomHelmet";
 
 export default function Post() {

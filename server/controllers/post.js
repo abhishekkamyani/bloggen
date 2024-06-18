@@ -152,19 +152,6 @@ exports.getAllPosts = async (req, res, next) => {
   }
 };
 
-// exports.getCategoryPosts = async (req, res) => {
-//     try {
-//         const slug = req.query.category;
-//         console.log(slug);
-//         const category = await Category.findOne({ slug }, { posts: 1 }).populate("posts").posts;
-//         res.json(category);
-
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).json(error);
-//     }
-// }
-
 exports.likePost = async (req, res, next) => {
   try {
     const userId = req.userId;
@@ -228,13 +215,13 @@ exports.userPosts = async (req, res, next) => {
       firstName: 1,
       lastName: 1,
       avatar: 1,
+      bio: 1,
       posts: 1,
     }).populate({
       path: "posts",
       select: "title blogCover slug summary createdAt",
     });
 
-    console.log(posts);
     res.json(posts);
   } catch (error) {
     console.log(error);

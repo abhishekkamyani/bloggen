@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import CustomHelmet from "../SEO/CustomHelmet";
 
 export default function NotFoundPage() {
   return (
     <section className="flex items-center h-full p-16 ">
+      <CustomHelmet title="Page not found" />
       <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
         <div className="max-w-md text-center">
           <h2 className="mb-8 font-extrabold text-9xl dark:text-gray-200">

@@ -8,6 +8,7 @@ import ImageLoader from "../components/loaders/ImageLoader";
 import { format } from "date-fns";
 import Posts from "../components/Posts";
 import { useLoadingBarProgress } from "../contexts/LoadingBarContext";
+import CustomHelmet from "../SEO/CustomHelmet";
 
 export default function Profile() {
   const { id } = useParams();
@@ -15,7 +16,7 @@ export default function Profile() {
   const [isFetched, setIsFetched] = useState(false);
   const { setProgress } = useLoadingBarProgress();
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     setProgress(30);
     window.scrollTo({
@@ -47,6 +48,13 @@ export default function Profile() {
 
   return (
     <section className="w-full overflow-hidden bg-main dark:bg-dark-main">
+      <CustomHelmet
+        title={`Meet ${capitalizeEveryFirstChar(user.firstName + " " + user.lastName)} on Bloggen`}
+        description={user.bio}
+        author={`${user.firstName} ${user.lastName}`}
+        image={user.avatar}
+        url={window.location.href}
+      />
       <div className="flex flex-col">
         {/* Cover Image */}
         <ImageLoader

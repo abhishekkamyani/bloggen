@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useUserInfo } from "../contexts/UserContext";
 import { toast } from "react-toastify";
 import axios from "axios";
+import CustomHelmet from "../SEO/CustomHelmet";
 
 export default function Contact() {
   const { userInfo } = useUserInfo();
@@ -55,6 +56,7 @@ export default function Contact() {
 
   return (
     <section className="bg-blue-50 dark:bg-slate-800" id="contact">
+      <CustomHelmet title="Contact Us - Bloggen" />
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-4">
           <div className="mb-6 max-w-3xl text-center sm:text-center md:mx-auto md:mb-12">

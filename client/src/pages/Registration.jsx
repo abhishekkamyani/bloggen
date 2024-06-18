@@ -5,6 +5,7 @@ import { SERVER_URL } from "../utils";
 import { useUserInfo } from "../contexts/UserContext";
 import { FaCheckCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
+import CustomHelmet from "../SEO/CustomHelmet";
 
 export default function Registration() {
   const [user, setUser] = useState({
@@ -118,6 +119,7 @@ export default function Registration() {
       id="registration-section"
       className="h-full bg-main dark:bg-dark-main"
     >
+      <CustomHelmet  title="Create an account - Bloggen"/>
       {/* Container */}
       <div className="mx-auto">
         <div className="flex justify-center px-6 py-12">

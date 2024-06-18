@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { SERVER_URL } from "../utils";
+import { SERVER_URL, capitalizeEveryFirstChar } from "../utils";
 import axios from "axios";
 import Posts from "../components/Posts";
 import { toast } from "react-toastify";
 import { useLoadingBarProgress } from "../contexts/LoadingBarContext";
+import CustomHelmet from "../SEO/CustomHelmet";
 
 export default function MyBlogs() {
   const [author, setAuthor] = useState({ posts: [] });
@@ -16,6 +17,9 @@ export default function MyBlogs() {
 
   useEffect(() => {
     setProgress(30);
+    window.scrollTo({
+      top: 0,
+    });
     let ignore = false;
     axios
       .get(`${SERVER_URL}/api/post/?user=${user}`)
@@ -44,6 +48,15 @@ export default function MyBlogs() {
 
   return (
     <section className="py-10">
+      <CustomHelmet
+        title={`Read the blogs of ${capitalizeEveryFirstChar(
+          author.firstName + " " + author.lastName
+        )} on Bloggen`}
+        description={author.bio}
+        author={`${author.firstName} ${author.lastName}`}
+        image={author.avatar}
+        url={window.location.href}
+      />
       <h2 className="text-center mb-7 text-2xl text-black dark:text-main capitalize">
         Read the blogs of <span> </span>
         <Link

@@ -4,6 +4,7 @@ import { useUserInfo } from "../contexts/UserContext";
 import axios from "axios";
 import { SERVER_URL, capitalizeEveryFirstChar, capitalizeFirstChar } from "../utils";
 import { toast } from "react-toastify";
+import CustomHelmet from "../SEO/CustomHelmet";
 
 export default function AccountSettings() {
   const [user, setUser] = useState({});
@@ -74,7 +75,7 @@ export default function AccountSettings() {
             <h2 className="text-grey text-sm mb-4 dark:text-gray-400">
               Update Profile
             </h2>
-            <form onSubmit={handleSubmit} enctype="multipart/form-data">
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
               {/* Cover Image */}
               {/* <div className="w-full rounded-sm bg-cover bg-center bg-no-repeat items-center" style={{ background: `url('${user.cover}')` }}> */}
               <div
@@ -384,7 +385,8 @@ const ConfirmModal = forwardRef((props, ref) => {
 
 
   return (
-    <div className="">
+    <div>
+      <CustomHelmet title="Account Settings" />
       {/* Button trigger vertically centered modal*/}
       <button className="hidden"
         ref={ref}
