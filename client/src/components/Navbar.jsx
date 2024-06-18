@@ -41,15 +41,6 @@ function Navbar() {
               </svg>
             </span>
           </button>
-
-          {/* Brand Logo */}
-          {/* <a
-            className="lg:ms-2 flex items-center text-white text-2xl transition duration-200 hover:text-black/80 hover:ease-in-out motion-reduce:transition-none  dark:hover:text-white/80 lg:mb-0 lg:mt-0"
-            href="/"
-          >
-            Bloggen
-          </a> */}
-          {/* Collapsible navigation container */}
           <div
             className="!visible hidden transition-all ease-linear flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
             id="navbarSupportedContent1"
@@ -57,7 +48,7 @@ function Navbar() {
           >
             {/* Logo */}
             <a href="/">
-              <img className="w-36" src="/images/logo.png" />
+              <img className="h-7 hover:scale-110 transition-all ease-linear max-lg:my-5 mx-auto" src="/images/logo.png" />
             </a>
             {/* Left navigation links */}
             <ul

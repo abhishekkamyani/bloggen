@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { SERVER_URL, capitalizeFirstChar, removeHTTP } from "../utils";
 import { capitalizeEveryFirstChar } from "../utils";
 import { FaFacebook, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
@@ -14,7 +14,7 @@ export default function Profile() {
   const [user, setUser] = useState({});
   const [isFetched, setIsFetched] = useState(false);
   const { setProgress } = useLoadingBarProgress();
-
+  const navigate = useNavigate();
   
   useEffect(() => {
     setProgress(30);
@@ -26,17 +26,18 @@ export default function Profile() {
       .get(`${SERVER_URL}/api/user/profile/${id}`)
       .then((response) => {
         setProgress(60);
-        if (!ignore) {
+        if (!ignore && response.status === 200) {
           console.log(response.data);
           setUser(response.data);
           setProgress(100);
         }
+
         setIsFetched(true);
       })
       .catch((e) => {
         setIsFetched(true);
         setProgress(100);
-        //console.log(e.response?.data?.error);
+        e.response?.status === 404 && navigate("../not-found");
       });
 
     return () => {

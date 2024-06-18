@@ -30,12 +30,9 @@ export default function Home() {
   const [fetchedData, setFetchedData] = useState(initialFetched);
   const [isFetched, setIsFetched] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo({ top: 0 });
-  }, []);
-
   // const [paginationData, setPaginationData] = useState({ page: 1, pageSize: 5 });
   useEffect(() => {
+    window.scrollTo({ top: 0 });
     let ignore = false;
     toast.dismiss();
     axios
@@ -171,6 +168,15 @@ export default function Home() {
         />
       </div>
       <Posts posts={fetchedData.posts} isFetched={isFetched} />
+      <Paginator
+        ref={paginatorRef}
+        className="justify-end px-0 pr-1 text-xs w-full bg-white text-black dark:bg-dark-main dark:text-main"
+        first={page * pageSize - pageSize}
+        rows={pageSize}
+        totalRecords={fetchedData.totalItems}
+        onPageChange={onPageChange}
+        template={template1}
+      />
     </div>
   );
 }

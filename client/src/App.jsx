@@ -21,6 +21,7 @@ import Footer from "./components/Footer";
 import Contact from "./pages/Contact";
 import { useUserInfo } from "./contexts/UserContext";
 import Temp from "./components/Temp";
+import NotFoundPage from "./pages/NotFoundPage";
 
 export default function App() {
   return (
@@ -29,12 +30,14 @@ export default function App() {
       <LogoutModal />
       <CategoriesSelection />
       <Navbar />
-      <main className="min-h-screen">
+      <main className="min-h-full">
         <Routes>
           {/* These are the general routes -> for both unauthorized and authorized users */}
           <Route exact path="/" element={<Home />} />
+          <Route path="*" element={<NotFoundPage />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/post/:slug" element={<Post />} />
+          
 
           {/* These routes are only for unauthorized users */}
           <Route element={<AuthRequired />}>

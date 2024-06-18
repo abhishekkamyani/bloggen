@@ -14,17 +14,13 @@ export default function Footer() {
               href="/"
               className="flex items-center space-x-3 rtl:space-x-reverse"
             >
-              {/* <img
-              src="https://flowbite.com/docs/images/logo.svg"
-              className="h-8"
-              alt="Flowbite Logo"
-            /> */}
-              <span className="self-center text-2xl select-none font-semibold whitespace-nowrap text-black dark:text-white">
-                Bloggen
-              </span>
+              <img
+                className="h-6 lg:h-7 hover:scale-110 transition-all ease-linear"
+                src="/images/logo.png"
+              />
             </a>
             {/* Social Icons */}
-            <ul className="flex gap-x-4">
+            <ul className="flex gap-x-4 sm:mx-auto">
               {socialLinks.map((link) => (
                 <SocialIcon key={link.url} icon={link.icon} url={link.url} />
               ))}
@@ -67,18 +63,12 @@ export default function Footer() {
             ) : (
               <>
                 <li>
-                  <Link
-                    to="/login"
-                    className="hover:underline me-4 md:me-6"
-                  >
+                  <Link to="/login" className="hover:underline me-4 md:me-6">
                     Login
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/register"
-                    className="hover:underline"
-                  >
+                  <Link to="/register" className="hover:underline">
                     Sign up
                   </Link>
                 </li>
