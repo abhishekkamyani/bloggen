@@ -2,12 +2,12 @@ const multer = require("multer");
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb("multer-error-1", "./uploads")
+        cb(null, "./uploads")
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         const extension = file.originalname.split('.').pop(); // Get the file extension
-        cb("multer-error-2", file.originalname + '-' + uniqueSuffix + "." + extension);
+        cb(null, file.originalname + '-' + uniqueSuffix + "." + extension);
     }
 });
 

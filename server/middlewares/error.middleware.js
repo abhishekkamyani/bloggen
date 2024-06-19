@@ -6,6 +6,8 @@ errorMiddleware = (err, req, res, next) => {
         `Error-Middleware: [${req.method}]  ${req.path} >> StatusCode:: ${status}, Error:: ${error} `
     );
 
+    console.log(err);
+
     return res.status(status).json({error});
 };
 
