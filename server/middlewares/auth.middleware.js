@@ -1,10 +1,5 @@
 const jwt = require("jsonwebtoken");
-const fs = require("fs");
-const path = require("path");
-const publicKey = fs.readFileSync(
-  path.join(__dirname, "../keys/public.key"),
-  "utf8"
-);
+const publicKey = process.env.PUBLIC_KEY;
 
 const authMiddleware = (req, res, next) => {
   try {
