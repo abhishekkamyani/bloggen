@@ -78,8 +78,8 @@ exports.login = async (req, res, next) => {
         categories: user.categories,
       });
   } catch (error) {
-    next({});
     console.log(error);
+    next({});
   }
 };
 
