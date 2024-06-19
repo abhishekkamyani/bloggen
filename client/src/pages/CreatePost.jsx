@@ -21,11 +21,12 @@ const initialPost = {
 
 export default function CreatePost() {
   initTWE({ Ripple, Input, Modal });
-  
+
   const [content, setContent] = useState("");
   const [post, setPost] = useState(initialPost);
   const [image, setImage] = useState("");
   const [categories, setCategories] = useState([]);
+  const [isUploading, setIsUploading] = useState(false);
   const primeToast = useRef(null);
 
   useEffect(() => {
@@ -34,8 +35,6 @@ export default function CreatePost() {
       .get(`${SERVER_URL}/api/categories`)
       .then((response) => {
         if (response.status === 200 && !ignore) {
-          //console.log(categories);
-          // //console.log(response.data.categories.map(category => category.name));
           setCategories(response.data.categories);
         }
       })
@@ -67,8 +66,10 @@ export default function CreatePost() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsUploading(true);
     toast.dismiss();
     if (post.categories_names.length <= 0) {
+      setIsUploading(false);
       return primeToast.current.show({
         severity: "info",
         summary: "",
@@ -77,6 +78,7 @@ export default function CreatePost() {
       });
     }
     if (content.length <= 0) {
+      setIsUploading(false);
       return primeToast.current.show({
         severity: "info",
         summary: "",
@@ -84,10 +86,6 @@ export default function CreatePost() {
         life: 3000,
       });
     }
-
-    // const data = { ...post, content };
-    // const categories_names = post.categories_names.map(name => categories.find(category => category.name === name)).map(category => category._id);
-    // //console.log(categories_names);
 
     const formData = new FormData();
     formData.append("data", JSON.stringify(post));
@@ -100,19 +98,21 @@ export default function CreatePost() {
       })
       .then((response) => {
         if (response.status === 201) {
-          // setPost(initialPost);
-          // setContent('');
-          // setImage('');
+          setPost(initialPost);
+          setContent("");
+          setImage("");
           primeToast.current.show({
             severity: "success",
             summary: "Hurray 🥳",
             detail: "Your blog has been successfully created.",
             life: 5000,
           });
+          setIsUploading(false);
         }
       })
       .catch((e) => {
         console.log(e);
+        setIsUploading(false);
         toast.error(
           e.response?.data?.error ||
             "Something went wrong, please try again later."
@@ -227,6 +227,7 @@ export default function CreatePost() {
             content={content}
             post={post}
             imageSrc={image}
+            isUploading={isUploading}
             form="create-post"
           />
         </form>

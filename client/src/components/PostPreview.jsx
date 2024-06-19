@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function PostPreview({ content, post, imageSrc, form }) {
+export default function PostPreview({ content, post, imageSrc, form, isUploading }) {
   return (
     <>
       {/* Button trigger modal */}
       <button
         type="button"
-        className="inline-block font-bold btn mt-10 w-full rounded px-6 py-4 text-xs uppercase leading-normal  transition duration-150 ease-in-out"
+        className={`inline-block bg-gray-500 text-white font-bold mt-10 w-full rounded px-6 py-4 text-xs uppercase leading-normal  transition duration-150 ease-in-out ${isUploading ? "cursor-wait" : "btn"} `}
+        disabled={isUploading}
         data-twe-toggle="modal"
         data-twe-target="#exampleModalFullscreen"
         data-twe-ripple-init=""
@@ -79,6 +80,9 @@ export default function PostPreview({ content, post, imageSrc, form }) {
                       className="quill-content"
                       dangerouslySetInnerHTML={{ __html: content }}
                     />
+                    <p className="text-base italic sm:text-lg lg:text-xl font-normal mt-4">
+                      {post.summary}
+                    </p>
                   </div>
 
                   <div className="w-full md:w-4/12 px-4 mb-8">

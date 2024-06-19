@@ -1,15 +1,8 @@
 const model = require("../models/User");
 const User = model.User;
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const fs = require("fs");
-const path = require("path");
-const publicKey = fs.readFileSync(
-  path.join(__dirname, "../keys/public.key"),
-  "utf8"
-);
-// const uploadFileOnAzure = require("../utils/uploadFileOnAzure");
 const { uploadOnCloudinary } = require("../utils/cloudinary");
+
 exports.profile = async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -41,10 +34,8 @@ exports.updateProfile = async (req, res, next) => {
       return next({ status: 401, error: "Incorrect Password 😥" });
     }
     delete user.password;
-    // const serverUrl = req.protocol + "://" + req.get("host");
 
     if (req.files.avatar) {
-      console.log(req.files.avatar[0].path);
       const response = await uploadOnCloudinary(req.files.avatar[0].path, user.avatar);
       userData.avatar = response.url;
     }
@@ -57,19 +48,11 @@ exports.updateProfile = async (req, res, next) => {
     delete userData.email;
     delete userData.dateJoined;
 
-    // console.log();
-
     const result = await user.updateOne(userData);
 
-    // console.log(user);
-
-    // console.log(result);
 
     res.json({ message: "Profile updated successfully." });
 
-    // if (req.files.avatar) {
-    //     deleteFile(user.avatar);
-    // }
   } catch (error) {
     console.log(error);
     return next({});

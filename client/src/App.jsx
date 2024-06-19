@@ -30,7 +30,7 @@ export default function App() {
       <LogoutModal />
       <CategoriesSelection />
       <Navbar />
-      <main className="min-h-full">
+      <main className="min-h-screen">
         <Routes>
           {/* These are the general routes -> for both unauthorized and authorized users */}
           <Route exact path="/" element={<Home />} />

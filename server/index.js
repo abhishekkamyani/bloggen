@@ -12,7 +12,7 @@ const categoryRouter = require('./routers/category');
 const postRouter = require('./routers/post');
 
 const app = express();
-mongoose.connect(process.env.DB)
+mongoose.connect(process.env.DB_URL)
     .then(() => console.log("DB connected"))
     .catch((e) => console.log(e.message));
 

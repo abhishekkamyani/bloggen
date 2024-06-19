@@ -48,7 +48,7 @@ export default function Home() {
       })
       .catch((e) => {
         setFetchedData(initialFetched);
-        toast.error("Posts not found");
+        !ignore && toast.error("Posts not found");
         setIsFetched(true);
       });
 
@@ -168,15 +168,18 @@ export default function Home() {
         />
       </div>
       <Posts posts={fetchedData.posts} isFetched={isFetched} />
-      <Paginator
-        ref={paginatorRef}
-        className="justify-end theme-switch-transition px-0 pr-1 text-xs w-full bg-inherit text-black dark:text-main"
-        first={page * pageSize - pageSize}
-        rows={pageSize}
-        totalRecords={fetchedData.totalItems}
-        onPageChange={onPageChange}
-        template={template1}
-      />
+
+      {fetchedData.totalItems > 0 && (
+        <Paginator
+          ref={paginatorRef}
+          className="justify-end theme-switch-transition px-0 pr-1 text-xs w-full bg-inherit text-black dark:text-main"
+          first={page * pageSize - pageSize}
+          rows={pageSize}
+          totalRecords={fetchedData.totalItems}
+          onPageChange={onPageChange}
+          template={template1}
+        />
+      )}
     </div>
   );
 }

@@ -99,7 +99,7 @@ export default function AccountSettings() {
                     className="absolute -z-10 rounded-full h-full w-full object-cover object-center"
                     alt="avatar"
                   />
-                  <div className="bg-white/90 rounded-full w-6 h-6 text-center ml-28 mt-4">
+                  <div className="bg-gray-800 rounded-full w-6 h-6 text-center ml-28 mt-4">
                     <input
                       type="file"
                       name="avatar"
@@ -135,7 +135,6 @@ export default function AccountSettings() {
                   </div>
                 </div>
                 <div className="flex justify-end">
-                  {/*  */}
                   <input
                     type="file"
                     id="cover"
@@ -145,7 +144,7 @@ export default function AccountSettings() {
                     accept="image/*"
                     pattern="^(?=.*\.(jpg|jpeg|png)$)"
                   />
-                  <div className="bg-white absolute bottom-0 flex items-center gap-1 rounded-tl-md px-2 text-center font-semibold">
+                  <div className="bg-gray-800 text-white absolute bottom-0 flex items-center gap-1 rounded-tl-md px-2 text-center font-semibold">
                     <label
                       htmlFor="cover"
                       className="inline-flex items-center gap-1 cursor-pointer"

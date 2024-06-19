@@ -41,16 +41,21 @@ exports.uploadOnCloudinary = (localFilePath, prevUrl) => {
         } else {
           fs.unlinkSync(localFilePath);
           resolve(result);
-          const publicId = prevUrl.substring(prevUrl.lastIndexOf("/") + 1, prevUrl.lastIndexOf("."));
-          console.log(prevUrl);
-          console.log(publicId);
-          cloudinary.uploader.destroy(publicId, (error, result) => {
-            if (error) {
-              console.log(error);
-            } else {
-              console.log(result);
-            }
-          });
+
+          // delete the old Image if exists, actually this code is necessary for updating user profile. This code is not for uploading the blog post.
+          if (prevUrl) {
+            const publicId = prevUrl.substring(
+              prevUrl.lastIndexOf("/") + 1,
+              prevUrl.lastIndexOf(".")
+            );
+            cloudinary.uploader.destroy(publicId, (error, result) => {
+              if (error) {
+                console.log(error);
+              } else {
+                console.log(result);
+              }
+            });
+          }
         }
       }
     );

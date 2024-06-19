@@ -2,7 +2,7 @@ const Post = require("../models/Post");
 const { User } = require("../models/User");
 const Category = require("../models/Category");
 const slugify = require("slugify");
-const uploadFileOnAzure = require("../utils/uploadFileOnAzure");
+const { uploadOnCloudinary } = require("../utils/cloudinary");
 
 exports.createPost = async (req, res, next) => {
   try {
@@ -22,15 +22,8 @@ exports.createPost = async (req, res, next) => {
     post.content = content;
 
     if (blogCover) {
-      // const url = await uploadFileOnAzure(blogCover);
-      const serverUrl = req.protocol + "://" + req.get("host");
-      const localUrl = serverUrl + "/" + blogCover.path;
-      post.blogCover = localUrl;
-
-      // setTimeout(async () => {
-      //   post.blogCover = url;
-      //   await post.save();
-      // }, 5 * 60 * 1000);
+      const response = await uploadOnCloudinary(blogCover.path);
+      post.blogCover = response.url;
     }
 
     categories = categories.map((category) => {
@@ -43,7 +36,6 @@ exports.createPost = async (req, res, next) => {
     post.author = userId;
 
     await post.save();
-    // await Category.bulkSave(categories);
 
     res.status(201).json(post);
   } catch (error) {
@@ -96,8 +88,6 @@ exports.getAllPosts = async (req, res, next) => {
   try {
     const slug = req.query.category;
     const category = await Category.findOne({ slug }, { _id: 1 });
-    // console.log(category);
-    // const totalItems = await Post.estimatedDocumentCount({slug: "title-hai-yeh-humhara-1712947002032"});
 
     let totalItems = 0;
 
