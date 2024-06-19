@@ -37,6 +37,7 @@ exports.uploadOnCloudinary = (localFilePath, prevUrl) => {
       (error, result) => {
         if (error) {
           fs.unlinkSync(localFilePath); // remove the locally saved temporary file as the upload operation got failed
+          console.log("Error file uploading: " + error);
           reject(error);
         } else {
           fs.unlinkSync(localFilePath);
@@ -50,7 +51,8 @@ exports.uploadOnCloudinary = (localFilePath, prevUrl) => {
             );
             cloudinary.uploader.destroy(publicId, (error, result) => {
               if (error) {
-                console.log(error);
+                console.log("Error file deleting: " + error);
+
               } else {
                 console.log(result);
               }
