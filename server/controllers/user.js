@@ -36,11 +36,12 @@ exports.updateProfile = async (req, res, next) => {
     delete user.password;
 
     if (req.files.avatar) {
-      const response = await uploadOnCloudinary(
-        req.files.avatar[0].path,
-        user.avatar
-      );
-      userData.avatar = response.url;
+      // const response = await uploadOnCloudinary(
+      //   req.files.avatar[0].path,
+      //   user.avatar
+      // );
+      // userData.avatar = response.url;
+      userData.avatar = req.files.avatar[0].path;
     }
 
     if (req.files.cover) {
@@ -59,7 +60,7 @@ exports.updateProfile = async (req, res, next) => {
     res.json({ message: "Profile updated successfully." });
   } catch (error) {
     console.log("update-profile-error" + error);
-    return next({error: error});
+    return next({ error: error });
   }
 };
 
