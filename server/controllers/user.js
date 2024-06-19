@@ -36,12 +36,18 @@ exports.updateProfile = async (req, res, next) => {
     delete user.password;
 
     if (req.files.avatar) {
-      const response = await uploadOnCloudinary(req.files.avatar[0].path, user.avatar);
+      const response = await uploadOnCloudinary(
+        req.files.avatar[0].path,
+        user.avatar
+      );
       userData.avatar = response.url;
     }
 
     if (req.files.cover) {
-      const response = await uploadOnCloudinary(req.files.cover[0].path, user.cover);
+      const response = await uploadOnCloudinary(
+        req.files.cover[0].path,
+        user.cover
+      );
       userData.cover = response.url;
     }
 
@@ -50,9 +56,7 @@ exports.updateProfile = async (req, res, next) => {
 
     const result = await user.updateOne(userData);
 
-
     res.json({ message: "Profile updated successfully." });
-
   } catch (error) {
     console.log(error);
     return next({});
@@ -71,7 +75,7 @@ exports.addCategories = async (req, res, next) => {
     // const updatedUserData = await user.save();
 
     // const updatedUserData = await User.findByIdAndUpdate(
-    //     id,
+    //     userId,
     //     { $addToSet: { categories: {$each : categories}}},
     //     { new: true, select: 'categories' }
     // );
@@ -81,6 +85,10 @@ exports.addCategories = async (req, res, next) => {
       { categories: categories },
       { new: true, select: "categories" }
     );
+
+    // const user = await User.findById(userId);
+    // user.categories = existingCategories; // Set existing categories for the example
+    // await user.updateCategories(categories);
 
     res.json(updatedUserData);
   } catch (error) {
