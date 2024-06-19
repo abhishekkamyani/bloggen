@@ -58,8 +58,8 @@ export default function CategoriesNavbar({ page, pageSize, selectedCategory }) {
             axios.get(`${SERVER_URL}/api/categories/${categoryIds}`)
                 .then(response => {
                     if (response.status === 200 && !ignore) {
-                        //console.log(response.data);
-                        setCategories(response.data);
+                        console.log(response.data);
+                        // setCategories(response.data);
                     }
                 })
                 .catch(e => {
@@ -122,7 +122,7 @@ export default function CategoriesNavbar({ page, pageSize, selectedCategory }) {
                         For You
                     </Link>
                 </li>
-                {categories?.map(category => (
+                {categories.map(category => (
                     <li key={category._id} className='mr-10'>
                         <Link
                             to={`?page=${page}&pageSize=${pageSize}&category=${category.slug}`}

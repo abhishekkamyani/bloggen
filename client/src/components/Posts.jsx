@@ -21,7 +21,7 @@ export default function Posts({ posts, isFetched }) {
                 </div> */}
         <div className="mx-auto grid max-w-lg gap-10 lg:max-w-none lg:grid-cols-3 2xl:grid-cols-4">
           {isFetched
-            ? posts.map((post) => <Post key={post._id} post={post} />)
+            ? posts?.map((post) => <Post key={post._id} post={post} />)
             : Array(10)
                 .fill(null)
                 .map((_, index) => <PostLoader key={index} />)}
