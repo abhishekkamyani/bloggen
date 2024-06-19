@@ -86,10 +86,6 @@ exports.addCategories = async (req, res, next) => {
       { new: true, select: "categories" }
     );
 
-    // const user = await User.findById(userId);
-    // user.categories = existingCategories; // Set existing categories for the example
-    // await user.updateCategories(categories);
-
     res.json(updatedUserData);
   } catch (error) {
     console.log(error);

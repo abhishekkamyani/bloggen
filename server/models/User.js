@@ -93,24 +93,5 @@ userSchema.pre("save", function (next) {
   }
 });
 
-// Define a custom update function for the categories array
-userSchema.methods.updateCategories = async function (newCategories) {
-  // 1. Get the current categories array
-  const currentCategories = this.categories;
-  console.log(currentCategories);
-
-  // 2. Filter newCategories to keep only the new IDs
-  const newCategoryIds = newCategories.filter(
-    (newId) => !currentCategories.includes(newId)
-  );
-
-  console.log(newCategoryIds);
-
-  // 3. Update the categories array by adding new IDs
-  this.categories = [...currentCategories, ...newCategoryIds];
-
-  // 4. Save the updated user document
-  await this.save();
-};
 
 exports.User = model("User", userSchema);
