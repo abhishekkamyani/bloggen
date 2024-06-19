@@ -1,5 +1,8 @@
 const jwt = require("jsonwebtoken");
-const publicKey = process.env.PUBLIC_KEY;
+// const publicKey = process.env.PUBLIC_KEY;
+
+const { publicKey } = JSON.parse(process.env.PUBLIC_KEY)
+
 
 const authMiddleware = (req, res, next) => {
   try {

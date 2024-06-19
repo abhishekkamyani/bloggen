@@ -3,14 +3,14 @@ const User = model.User;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const secret = process.env.PRIVATE_KEY;
+const { privateKey } = JSON.parse(process.env.PRIVATE_KEY);
 const expiresInMinutes = 60 * 24;
 exports.registration = async (req, res, next) => {
   try {
     const user = new User(req.body);
     await user.save();
 
-    const token = jwt.sign({ email: user.email, id: user._id }, secret, {
+    const token = jwt.sign({ email: user.email, id: user._id }, privateKey, {
       algorithm: "RS256",
       expiresIn: expiresInMinutes * 60,
     });
@@ -57,7 +57,7 @@ exports.login = async (req, res, next) => {
       return next({ status: 404, error: "Invalid email or password" });
     }
 
-    const token = jwt.sign({ email: user.email, id: user._id }, secret, {
+    const token = jwt.sign({ email: user.email, id: user._id }, privateKey, {
       algorithm: "RS256",
       expiresIn: expiresInMinutes * 60,
     });
@@ -104,7 +104,7 @@ exports.identity = async (req, res, next) => {
       categories: 1,
     });
 
-    const token = jwt.sign({ email: user.email, id: user._id }, secret, {
+    const token = jwt.sign({ email: user.email, id: user._id }, privateKey, {
       algorithm: "RS256",
       expiresIn: expiresInMinutes * 60,
     });
