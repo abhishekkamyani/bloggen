@@ -59,7 +59,7 @@ exports.updateProfile = async (req, res, next) => {
     res.json({ message: "Profile updated successfully." });
   } catch (error) {
     console.log("update-profile-error" + error);
-    return next({});
+    return next({error: error});
   }
 };
 
