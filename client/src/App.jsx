@@ -22,6 +22,7 @@ import Contact from "./pages/Contact";
 import { useUserInfo } from "./contexts/UserContext";
 import Temp from "./components/Temp";
 import NotFoundPage from "./pages/NotFoundPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 export default function App() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/post/:slug" element={<Post />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           
 
           {/* These routes are only for unauthorized users */}
