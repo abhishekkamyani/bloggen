@@ -12,6 +12,7 @@ export default function CategoriesNavbar({ page, pageSize, selectedCategory }) {
     const categoryIds = useUserInfo()?.userInfo?.categories;
     const [categories, setCategories] = useState([]);
 
+
     const handleScroll = (e) => {
         const container = e.target;
 
@@ -58,8 +59,8 @@ export default function CategoriesNavbar({ page, pageSize, selectedCategory }) {
             axios.get(`${SERVER_URL}/api/categories/${categoryIds}`)
                 .then(response => {
                     if (response.status === 200 && !ignore) {
-                        console.log(response.data);
-                        // setCategories(response.data);
+                        // console.log(response.data);
+                        setCategories(response.data);
                     }
                 })
                 .catch(e => {
