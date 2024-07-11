@@ -2,7 +2,6 @@ const Post = require("../models/Post");
 const { User } = require("../models/User");
 const Category = require("../models/Category");
 const slugify = require("slugify");
-const { uploadOnCloudinary } = require("../utils/cloudinary");
 
 exports.createPost = async (req, res, next) => {
   try {
@@ -22,8 +21,7 @@ exports.createPost = async (req, res, next) => {
     post.content = content;
 
     if (blogCover) {
-      const response = await uploadOnCloudinary(blogCover.path);
-      post.blogCover = response.url;
+      post.blogCover = blogCover.location;
     }
 
     categories = categories.map((category) => {

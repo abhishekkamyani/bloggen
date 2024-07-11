@@ -1,7 +1,6 @@
 const model = require("../models/User");
 const User = model.User;
 const bcrypt = require("bcryptjs");
-const { uploadOnCloudinary } = require("../utils/cloudinary");
 
 exports.profile = async (req, res, next) => {
   try {
@@ -35,21 +34,13 @@ exports.updateProfile = async (req, res, next) => {
     }
     delete user.password;
 
+    console.log(req.files);
     if (req.files.avatar) {
-      // const response = await uploadOnCloudinary(
-      //   req.files.avatar[0].path,
-      //   user.avatar
-      // );
-      // userData.avatar = response.url;
-      userData.avatar = req.files.avatar[0].path;
+      userData.avatar = req.files.avatar[0].location;
     }
 
     if (req.files.cover) {
-      const response = await uploadOnCloudinary(
-        req.files.cover[0].path,
-        user.cover
-      );
-      userData.cover = response.url;
+      userData.cover = req.files.cover[0].location;
     }
 
     delete userData.email;
