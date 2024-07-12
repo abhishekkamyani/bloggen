@@ -45,7 +45,6 @@ export default function Home() {
     refetchOnWindowFocus: false,
   });
 
-  console.log(!fetchedResult.isLoading);
 
   // const [paginationData, setPaginationData] = useState({ page: 1, pageSize: 5 });
   useEffect(() => {

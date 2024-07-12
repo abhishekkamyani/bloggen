@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { SERVER_URL, capitalizeFirstChar, removeHTTP } from "../utils";
+import { SERVER_URL, removeHTTP } from "../utils";
 import { capitalizeEveryFirstChar } from "../utils";
 import { FaFacebook, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
 import ImageLoader from "../components/loaders/ImageLoader";
@@ -49,7 +49,9 @@ export default function Profile() {
   return (
     <section className="w-full overflow-hidden bg-main dark:bg-dark-main">
       <CustomHelmet
-        title={`Meet ${capitalizeEveryFirstChar(user.firstName + " " + user.lastName)} on Bloggen`}
+        title={`Meet ${capitalizeEveryFirstChar(
+          user.firstName + " " + user.lastName
+        )} on Bloggen`}
         description={user.bio}
         author={`${user.firstName} ${user.lastName}`}
         image={user.avatar}
@@ -73,12 +75,18 @@ export default function Profile() {
           {/* FullName */}
           <div className="w-full my-4 sm:mx-4 xs:pl-4 text-gray-800 dark:text-white ">
             <h1 className="text-left lg:text-4xl md:text-3xl sm:text-3xl xs:text-xl">
-              {(user.firstName + " " + user.lastName).toUpperCase()}
+              {(
+                (user.firstName || " ") +
+                " " +
+                (user.lastName || " ")
+              ).toUpperCase()}
             </h1>
-            <p className="my-3 text-sm">
-              Member Since:{" "}
-              {format(new Date(user?.dateJoined || 0), "MMM d, y")}
-            </p>
+            {user.dateJoined && (
+              <p className="my-3 text-sm">
+                Member Since:{" "}
+                {format(new Date(user?.dateJoined), "MMM d, y")}
+              </p>
+            )}
           </div>
         </div>
         <div className="xl:w-[80%] lg:w-[90%] md:w-[90%] sm:w-[92%] xs:w-[90%] mx-auto flex flex-col gap-4 items-center relative lg:-top-8 md:-top-6 sm:-top-4 xs:-top-4">
@@ -95,10 +103,8 @@ export default function Profile() {
                     <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
                       Name
                     </dt>
-                    <dd className="text-lg font-semibold">
-                      {capitalizeEveryFirstChar(
-                        user.firstName + " " + user.lastName
-                      )}
+                    <dd className="text-lg font-semibold capitalize">
+                        {(user.firstName || " ") + " " + (user.lastName || " ")}
                     </dd>
                   </div>
                   <div className="flex flex-col py-3">
@@ -115,8 +121,7 @@ export default function Profile() {
                     <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
                       Country
                     </dt>
-                    <dd className="text-lg font-semibold">
-                      {capitalizeFirstChar(user.country)}
+                    <dd className="text-lg font-semibold capitalize">{user.country}
                     </dd>
                   </div>
                   {user.website && (
