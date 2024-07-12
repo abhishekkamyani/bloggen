@@ -10,55 +10,55 @@ import { classNames } from "primereact/utils";
 import CategoriesNavbar from "../components/CategoriesNavbar";
 import { useUserInfo } from "../contexts/UserContext";
 import { toast } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
 
-const initialFetched = {
-  posts: [],
-  totalItems: 0,
-  totalPages: 0,
-};
+// const initialFetched = {
+//   posts: [],
+//   totalItems: 0,
+//   totalPages: 0,
+// };
 export default function Home() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const page = queryParams.get("page") || 1;
   const pageSize = parseInt(queryParams.get("pageSize")) || 10;
-  const category = queryParams.get("category") || "all";
+  const category = queryParams.get("category") || "";
   const { isAuthenticated } = useUserInfo();
   const navigate = useNavigate();
-
   const paginatorRef = useRef(null);
 
-  const [fetchedData, setFetchedData] = useState(initialFetched);
-  const [isFetched, setIsFetched] = useState(false);
+  const fetchPosts = async () => {
+    toast.dismiss();
+    const response = await axios.get(
+      `${SERVER_URL}/api/post/all?pageSize=${pageSize}&page=${page}&category=${category}`
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+  };
+
+  const fetchedResult = useQuery({
+    queryKey: ["posts", page, pageSize, category],
+    queryFn: fetchPosts,
+    staleTime: 1000 * 60 * 10, // 10 minutes
+    refetchInterval: 1000 * 60 * 10,
+    refetchOnWindowFocus: false,
+  });
+
+  console.log(!fetchedResult.isLoading);
 
   // const [paginationData, setPaginationData] = useState({ page: 1, pageSize: 5 });
   useEffect(() => {
     window.scrollTo({ top: 0 });
-    let ignore = false;
     toast.dismiss();
-    axios
-      .get(
-        `${SERVER_URL}/api/post/all?pageSize=${pageSize}&page=${page}&category=${category}`
-      )
-      .then((response) => {
-        if (response.status === 200 && !ignore) {
-          console.log(response.data);
-          setFetchedData(response.data);
-        }
-        setIsFetched(true);
-      })
-      .catch((e) => {
-        setFetchedData(initialFetched);
-        !ignore && toast.error("Posts not found");
-        setIsFetched(true);
-      });
+    if (fetchedResult.error) {
+      toast.error("Posts not found");
+    }
+  }, [page, pageSize, category, fetchedResult.error]);
 
-    return () => {
-      ignore = true;
-    };
-  }, [page, pageSize, category]);
+
 
   const onPageChange = (event) => {
-    // setFetchedData({...fetchedData, posts:[]});
     navigate(
       `?page=${event.page + 1}&pageSize=${event.rows}&category=${category}`
     );
@@ -156,26 +156,25 @@ export default function Home() {
             selectedCategory={category}
           />
         )}
-        {/* <Paginator className='bg-white text-black dark:bg-dark-main dark:text-main' first={first} totalPages={fetchedData.totalPages} totalRecords={fetchedData.totalItems} rowsPerPageOptions={[5, 10, 20, 30, 40]} onPageChange={onPageChange} /> */}
         <Paginator
           ref={paginatorRef}
           className="justify-end theme-switch-transition px-0 pr-1 text-xs w-full bg-inherit text-black dark:text-main"
           first={page * pageSize - pageSize}
           rows={pageSize}
-          totalRecords={fetchedData.totalItems}
+          totalRecords={fetchedResult.data?.totalItems}
           onPageChange={onPageChange}
           template={template1}
         />
       </div>
-      <Posts posts={fetchedData.posts} isFetched={isFetched} />
+      <Posts posts={fetchedResult.data?.posts} isFetched={!fetchedResult.isLoading} />
 
-      {fetchedData.totalItems > 0 && (
+      {fetchedResult.data?.totalItems > 0 && (
         <Paginator
           ref={paginatorRef}
           className="justify-end theme-switch-transition px-0 pr-1 text-xs w-full bg-inherit text-black dark:text-main"
           first={page * pageSize - pageSize}
           rows={pageSize}
-          totalRecords={fetchedData.totalItems}
+          totalRecords={fetchedResult.data?.totalItems}
           onPageChange={onPageChange}
           template={template1}
         />
