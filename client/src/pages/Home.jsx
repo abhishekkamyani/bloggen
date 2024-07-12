@@ -170,7 +170,7 @@ export default function Home() {
       {fetchedResult.data?.totalItems > 0 && (
         <Paginator
           ref={paginatorRef}
-          className="justify-end theme-switch-transition px-0 pr-1 text-xs w-full bg-inherit text-black dark:text-main"
+          className="justify-end mt-10 theme-switch-transition px-0 pr-1 text-xs w-full bg-inherit text-black dark:text-main"
           first={page * pageSize - pageSize}
           rows={pageSize}
           totalRecords={fetchedResult.data?.totalItems}

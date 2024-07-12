@@ -10,50 +10,45 @@ import Posts from "../components/Posts";
 import { toast } from "react-toastify";
 import { useLoadingBarProgress } from "../contexts/LoadingBarContext";
 import CustomHelmet from "../SEO/CustomHelmet";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function Post() {
-  const [post, setPost] = useState("");
-  const [relatedPosts, setRelatedPosts] = useState([]);
   const { slug } = useParams();
   const { userInfo } = useUserInfo();
   const [liked, setLiked] = useState(false);
-  const [isFetched, setIsFetched] = useState(false);
   const { setProgress } = useLoadingBarProgress();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    window.scroll({ top: 0 });
+  const fetchPost = async () => {
+    const response = await axios.get(`${SERVER_URL}/api/post/${slug}`);
+    setProgress(60);
+    if (response.status === 200) {
+      setLiked(response.data.post.likers?.includes(userInfo._id));
+      setProgress(100);
+      return response.data;
+    }
+  };
+
+  const fetchedResult = useQuery({
+    queryKey: ["post", slug],
+    queryFn: fetchPost,
+    staleTime: 1000 * 60 * 10, // 10 minutes
+    refetchInterval: 1000 * 60 * 10,
+    refetchOnWindowFocus: false,
+  });
+
+  const post = fetchedResult.data?.post || {};
+  const relatedPosts = fetchedResult.data?.relatedPosts || [];
+
+  // useEffect(() => {
+  //   setProgress(30);
+  // }, [fetchedResult.isLoading]);
+
+  if (fetchedResult.isLoading) {
     setProgress(30);
-    console.log();
+  }
 
-    let ignore = false;
-    axios
-      .get(`${SERVER_URL}/api/post/${slug}`)
-      .then((response) => {
-        setProgress(60);
-        if (response.status === 200 && !ignore) {
-          console.log(response.data);
-          console.log(response.data.relatedPosts);
-
-          setPost(response.data?.post);
-          setLiked(response.data.post.likers?.includes(userInfo._id));
-          setRelatedPosts(response.data?.relatedPosts);
-          setProgress(100);
-        }
-        setIsFetched(true);
-      })
-      .catch((e) => {
-        setProgress(100);
-        setIsFetched(true);
-        console.log(e.response?.data?.error);
-        e.response?.status === 404 && navigate("../notfound");
-      });
-
-    return () => {
-      ignore = true;
-    };
-  }, [slug]);
-
+  const queryClient = useQueryClient();
   const handleLike = () => {
     if (!liked) {
       axios
@@ -63,9 +58,8 @@ export default function Post() {
           { withCredentials: true }
         )
         .then((response) => {
-          console.log(response.status);
-          setPost({ ...post, likers: response.data.likers });
           setLiked(true);
+          return queryClient.invalidateQueries("todos");
         })
         .catch((e) => {
           if (e.response?.status) {
@@ -81,9 +75,8 @@ export default function Post() {
           { withCredentials: true }
         )
         .then((response) => {
-          console.log(response.data);
-          setPost({ ...post, likers: response.data.likers });
           setLiked(false);
+          return queryClient.invalidateQueries("todos");
         })
         .catch((e) => {
           console.log(e);
@@ -315,7 +308,10 @@ export default function Post() {
             <h2 className="mb-8 text-2xl font-bold text-gray-900 dark:text-white">
               Related Posts
             </h2>
-            <Posts posts={relatedPosts || []} isFetched={isFetched} />
+            <Posts
+              posts={relatedPosts || []}
+              isFetched={!fetchedResult.isLoading}
+            />
           </div>
         </aside>
       )}

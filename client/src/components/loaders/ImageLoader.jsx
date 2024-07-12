@@ -17,7 +17,7 @@ const ImageLoader = ({ src, alt, className }) => {
     if (!imageSrc) {
         return (
             <h5
-                className={`${className} mb-2 animate-pulse text-xl font-medium text-neutral-900 dark:text-white`}>
+                className={`${className} animate-pulse text-xl font-medium text-neutral-900 dark:text-white`}>
                 <span className="inline-block h-full w-full flex-auto cursor-wait bg-current align-middle opacity-50"></span>
             </h5>
         );

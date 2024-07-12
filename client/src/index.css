@@ -83,7 +83,7 @@ body {
 
 /* ########## Login Section ########## */
 #login-section {
-  background: url("/images/login.jpg") repeat;
+  background: url("/images/login.jpg") no-repeat;
   background-size: cover;
   background-position: center;
   position: relative;

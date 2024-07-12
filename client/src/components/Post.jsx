@@ -9,11 +9,6 @@ function Post({ post }) {
   return (
     <div className="flex flex-col overflow-hidden rounded-lg shadow-lg outline outline-1">
       <div className="flex-shrink-0 relative">
-        {/* <img
-          className="h-48 w-full object-cover object-center"
-          src={post.blogCover}
-          alt="Blog cover"
-        /> */}
         <ImageLoader
           src={post.blogCover}
           alt="Blog cover"
