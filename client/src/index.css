@@ -83,7 +83,7 @@ body {
 
 /* ########## Login Section ########## */
 #login-section {
-  background: url("/images/login.webp") no-repeat;
+  background: url("/images/login.jpg") no-repeat;
   background-size: cover;
   background-position: center;
   position: relative;
@@ -105,7 +105,7 @@ body {
 
 /* ########## Registration Section ########## */
 #registration-section .side-image {
-  background: url("/images/registration.webp") no-repeat;
+  background: url("/images/registration.jpg") no-repeat;
   background-size: cover;
   background-position: center;
 }
