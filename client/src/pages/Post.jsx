@@ -85,6 +85,10 @@ export default function Post() {
     }
   };
 
+  if(fetchedResult.isLoading){
+    return <div></div>
+  }
+
   return (
     <>
       <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 antialiased">

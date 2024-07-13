@@ -1,4 +1,4 @@
-export const SERVER_URL = "";
+export const SERVER_URL = "http://localhost:5500";
 
 
 export function capitalizeFirstChar(str = '') {

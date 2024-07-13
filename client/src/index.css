@@ -19,7 +19,7 @@
   }
 
   .btn {
-    @apply text-white bg-primary hover:bg-primary-dark dark:bg-primary-dark hover:dark:bg-primary focus:outline-none;
+    @apply text-white bg-primary select-none hover:bg-primary-dark dark:bg-primary-dark hover:dark:bg-primary focus:outline-none;
   }
 
   .profile-menu-item {

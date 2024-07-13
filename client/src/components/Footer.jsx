@@ -51,14 +51,6 @@ export default function Footer() {
                     Contact
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to={`/profile/${userInfo._id}`}
-                    className="hover:underline"
-                  >
-                    Profile
-                  </Link>
-                </li>
               </>
             ) : (
               <>
@@ -68,12 +60,17 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/register" className="hover:underline">
+                  <Link to="/register" className="hover:underline me-4 md:me-6">
                     Sign up
                   </Link>
                 </li>
               </>
             )}
+            <li>
+              <Link to="/privacy-policy" className="hover:underline">
+                Privacy Policy
+              </Link>
+            </li>
           </ul>
         </div>
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-500 lg:my-8" />

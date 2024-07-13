@@ -1,6 +1,11 @@
-import React from 'react';
+import { useEffect } from "react";
 
 const PrivacyPolicy = () => {
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">Bloggen Privacy Policy</h1>
@@ -99,7 +104,7 @@ const PrivacyPolicy = () => {
       <h2 className="text-2xl font-bold mb-2">3. Sharing Your Information</h2>
 
       <p className="mb-4">
-        We do not share your personal information with any third parties. 
+        We do not share your personal information with any third parties.
       </p>
 
       <h2 className="text-2xl font-bold mb-2">4. Your Privacy Choices</h2>
@@ -168,7 +173,7 @@ const PrivacyPolicy = () => {
       <h2 className="text-2xl font-bold mb-2">9. Effective Date</h2>
 
       <p className="mb-4">
-        This Privacy Policy is effective as of [Date].
+        This Privacy Policy is effective as of July 12, 2024.
       </p>
     </div>
   );

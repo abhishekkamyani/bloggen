@@ -126,13 +126,13 @@ function Login() {
                       type="checkbox"
                       value={showPassword}
                       onChange={() => setShowPassword(!showPassword)}
-                      className="w-4 h-4 cursor-pointer"
+                      className="w-4 h-4 cursor-pointer accent-primary"
                     />
                   </div>
                   <div className="ml-3 text-sm">
                     <label
                       htmlFor="passwordToggle"
-                      className="text-gray-500 dark:text-gray-300 cursor-pointer"
+                      className="text-gray-500 dark:text-gray-300 cursor-pointer select-none"
                     >
                       Show password
                     </label>

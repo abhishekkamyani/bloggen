@@ -46,6 +46,10 @@ export default function MyBlogs() {
     };
   }, [user]);
 
+  if(!author.firstName){
+    return <div></div>
+  }
+
   return (
     <section className="py-10">
       <CustomHelmet
