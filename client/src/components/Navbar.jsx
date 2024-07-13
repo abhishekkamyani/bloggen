@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import { Collapse, initTWE, Dropdown } from "tw-elements";
 import { useUserInfo } from "../contexts/UserContext";
 import { useDarkMode } from "../contexts/DarkModeContext";
+import ImageLoader from "./loaders/ImageLoader";
 function Navbar() {
   const { userInfo, isAuthenticated } = useUserInfo();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
     initTWE({ Collapse, Dropdown });
-  });
+  }, []);
 
   return (
     <>
@@ -48,7 +49,10 @@ function Navbar() {
           >
             {/* Logo */}
             <a href="/">
-              <img className="h-7 hover:scale-110 transition-all ease-linear max-lg:my-5 mx-auto" src="/images/logo.png" />
+              <img
+                className="h-7 hover:scale-110 transition-all ease-linear max-lg:my-5 mx-auto"
+                src="/images/logo.png"
+              />
             </a>
             {/* Left navigation links */}
             <ul
@@ -115,11 +119,7 @@ function Navbar() {
             {/* Dark Mode */}
             <button onClick={toggleDarkMode}>
               <img
-                src={
-                  isDarkMode
-                    ? "https://img.icons8.com/color/32/moon-satellite.png"
-                    : "https://img.icons8.com/fluency/32/sun.png"
-                }
+                src={isDarkMode ? "/images/moon.png" : "/images/sun.png"}
                 alt="theme mode"
                 className="select-none"
               />
@@ -142,12 +142,11 @@ function Navbar() {
                     aria-expanded="false"
                   >
                     {/* User avatar */}
-                    <img
+
+                    <ImageLoader
                       src={`${userInfo.avatar}`}
-                      className="rounded-full object-cover object-center"
-                      style={{ height: 32, width: 32 }}
-                      alt=""
-                      loading="lazy"
+                      className="rounded-full object-cover object-center w-8 h-8"
+                      loaderClassName="rounded-full"
                     />
                   </button>
                   {/* Second dropdown menu */}

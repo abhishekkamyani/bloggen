@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const ImageLoader = ({ src, alt, className }) => {
+const ImageLoader = ({ src, alt, className, loaderClassName }) => {
     const [imageSrc, setImageSrc] = useState(null);
 
     useEffect(() => {
@@ -18,7 +18,7 @@ const ImageLoader = ({ src, alt, className }) => {
         return (
             <h5
                 className={`${className} animate-pulse text-xl font-medium text-neutral-900 dark:text-white`}>
-                <span className="inline-block h-full w-full flex-auto cursor-wait bg-current align-middle opacity-50"></span>
+                <span className={`${loaderClassName} inline-block h-full w-full flex-auto cursor-wait bg-current align-middle opacity-50`}></span>
             </h5>
         );
     }

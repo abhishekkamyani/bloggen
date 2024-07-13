@@ -31,10 +31,16 @@ function Post({ post }) {
           {author && (
             <div className="flex-shrink-0">
               <Link to={`/profile/${author._id}`}>
-                <img
+                {/* <img
                   className="h-10 w-10 object-cover object-center rounded-full"
                   src={author.avatar}
                   alt="Author avatar"
+                /> */}
+                <ImageLoader
+                  className="h-10 w-10 object-cover object-center rounded-full"
+                  src={author.avatar}
+                  alt="Author avatar"
+                  loaderClassName="rounded-full"
                 />
               </Link>
             </div>
