@@ -39,6 +39,7 @@ export default function App() {
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/post/:slug" element={<Post />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/contact-us" element={<Contact />} />
           
 
           {/* These routes are only for unauthorized users */}
@@ -47,7 +48,6 @@ export default function App() {
             <Route path="/new-story" element={<CreatePost />} />
             <Route path="/blogs" element={<MyBlogs />} />
             <Route path="/my-favorite-blogs" element={<FavoritesPosts />} />
-            <Route path="/contact-us" element={<Contact />} />
           </Route>
 
           {/* These routes only accessible when user is not login/registered */}

@@ -8,10 +8,14 @@ export default function Contact() {
   const { userInfo } = useUserInfo();
 
   const [data, setData] = useState({
-    name: (userInfo.firstName || "") + " " + (userInfo.lastName || ""),
+    name:
+      (userInfo.firstName ? userInfo.firstName + " " : "") +
+      (userInfo.lastName || ""),
     email: userInfo.email || "",
     message: "",
   });
+
+  console.log(data.name);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -22,7 +26,9 @@ export default function Contact() {
         top: 0,
       });
       setData({
-        name: (userInfo.firstName || "") + " " + (userInfo.lastName || ""),
+        name:
+          (userInfo.firstName ? userInfo.firstName + " " : "") +
+          (userInfo.lastName || ""),
         email: userInfo.email || "",
         message: "",
       });
@@ -126,10 +132,16 @@ export default function Contact() {
                     <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-white">
                       Contact
                     </h3>
-                    <a href="tel:+923337303712" className="text-gray-600 block dark:text-slate-400">
+                    <a
+                      href="tel:+923337303712"
+                      className="text-gray-600 block dark:text-slate-400"
+                    >
                       Mobile: +92 (333) 730-3712
                     </a>
-                    <a href="mailto:abhishekkamyani@gmail.com" className="text-gray-600 block dark:text-slate-400">
+                    <a
+                      href="mailto:abhishekkamyani@gmail.com"
+                      className="text-gray-600 block dark:text-slate-400"
+                    >
                       Mail: abhishekkamyani@gmail.com
                     </a>
                   </div>
@@ -180,11 +192,11 @@ export default function Contact() {
                         id="name"
                         autoComplete="given-name"
                         placeholder="Your name"
-                        className="mb-2 capitalize w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"
+                        className="mb-2 capitalize bg-main dark:bg-dark-main w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"
                         name="name"
                         value={data.name}
                         onChange={handleChange}
-                        disabled
+                        disabled={userInfo.email}
                       />
                     </div>
                     <div className="mx-0 mb-1 sm:mb-4">
@@ -197,11 +209,11 @@ export default function Contact() {
                         id="email"
                         autoComplete="email"
                         placeholder="Your email address"
-                        className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"
+                        className="mb-2 w-full rounded-md border bg-main dark:bg-dark-main border-gray-400 py-2 pl-2 pr-4 shadow-md dark:text-gray-300 sm:mb-0"
                         name="email"
                         value={data.email}
                         onChange={handleChange}
-                        disabled
+                        disabled={userInfo.email}
                       />
                     </div>
                   </div>

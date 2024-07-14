@@ -60,13 +60,13 @@ export default function MyBlogs() {
         image={author.avatar}
         url={window.location.href}
       />
-      <h2 className="text-center mb-7 text-2xl text-black dark:text-main capitalize">
+      <h2 className="text-center mb-7 text-2xl text-black dark:text-main capitalize border-b-2 border-primary rounded-md w-fit mx-auto">
         Read the blogs of <span> </span>
         <Link
           to={`/profile/${author._id}`}
-          className="underline font-merriWeather"
+          className="font-merriWeather font-extrabold"
         >
-          {author.firstName + "-" + author.lastName}
+          {author.firstName + "-" + author.lastName }
         </Link>
       </h2>
       <Posts posts={author.posts} isFetched={isFetched} />

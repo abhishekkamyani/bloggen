@@ -41,18 +41,17 @@ export default function Footer() {
                 About
               </a>
             </li>
-            {isAuthenticated ? (
-              <>
-                <li>
-                  <Link
-                    to="/contact-us"
-                    className="hover:underline me-4 md:me-6"
-                  >
-                    Contact
-                  </Link>
-                </li>
-              </>
-            ) : (
+            <li>
+            <Link to="/contact-us" className="hover:underline me-4 md:me-6">
+                Contact
+              </Link>
+            </li>
+            <li>
+              <Link to="/privacy-policy" className="hover:underline me-4 md:me-6">
+                Privacy Policy
+              </Link>
+            </li>
+            {!isAuthenticated && (
               <>
                 <li>
                   <Link to="/login" className="hover:underline me-4 md:me-6">
@@ -66,11 +65,6 @@ export default function Footer() {
                 </li>
               </>
             )}
-            <li>
-              <Link to="/privacy-policy" className="hover:underline">
-                Privacy Policy
-              </Link>
-            </li>
           </ul>
         </div>
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-500 lg:my-8" />
