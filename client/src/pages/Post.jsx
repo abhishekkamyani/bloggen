@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { formatDistance } from "date-fns";
 import axios from "axios";
-import { SERVER_URL, capitalizeFirstChar } from "../utils";
+import { SERVER_URL } from "../utils";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "../css/like-button.css";
 import "../css/quill-custom.css";
@@ -40,9 +40,9 @@ export default function Post() {
   const post = fetchedResult.data?.post || {};
   const relatedPosts = fetchedResult.data?.relatedPosts || [];
 
-  // useEffect(() => {
-  //   setProgress(30);
-  // }, [fetchedResult.isLoading]);
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
 
   if (fetchedResult.isLoading) {
     setProgress(30);
@@ -85,8 +85,8 @@ export default function Post() {
     }
   };
 
-  if(fetchedResult.isLoading){
-    return <div></div>
+  if (fetchedResult.isLoading) {
+    return <div></div>;
   }
 
   return (
@@ -120,11 +120,9 @@ export default function Post() {
                     <Link
                       to={`/profile/${post.author?._id}`}
                       rel="author"
-                      className="text-xl font-bold text-gray-900 dark:text-white"
+                      className="text-xl font-bold capitalize text-gray-900 dark:text-white"
                     >
-                      {capitalizeFirstChar(post.author?.firstName) +
-                        " " +
-                        capitalizeFirstChar(post.author?.lastName)}
+                      {`${post.author?.firstName} ${post.author?.lastName}`}
                     </Link>
 
                     <p className="text-base text-gray-500 dark:text-gray-400">

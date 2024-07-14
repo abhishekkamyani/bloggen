@@ -20,7 +20,7 @@ const initialPost = {
 };
 
 export default function CreatePost() {
-  initTWE({ Ripple, Input, Modal });
+      initTWE({ Ripple, Input, Modal });
 
   const [content, setContent] = useState("");
   const [post, setPost] = useState(initialPost);
@@ -214,15 +214,6 @@ export default function CreatePost() {
           </div>
 
           <PostEditor content={content} setContent={setContent} />
-          {/*Submit button*/}
-          {/* <button
-            type="submit"
-            className=""
-            data-twe-ripple-init=""
-            data-twe-ripple-color="light"
-          >
-            Preview
-          </button> */}
           <PostPreview
             content={content}
             post={post}

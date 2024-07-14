@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import { UserProvider } from "./contexts/UserContext.jsx";
-// import { PrimeReactProvider, PrimeReactContext } from "primereact/api";
 import { DarkModeProvider } from "./contexts/DarkModeContext.jsx";
 import ReactToastistyContainer from "./components/loaders/ReactToastistyContainer.jsx";
 import LoadingBarProvider from "./contexts/LoadingBarContext.jsx";

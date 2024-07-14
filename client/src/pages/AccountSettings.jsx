@@ -2,13 +2,9 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserInfo } from "../contexts/UserContext";
 import axios from "axios";
-import {
-  SERVER_URL,
-  capitalizeEveryFirstChar,
-  capitalizeFirstChar,
-} from "../utils";
 import { toast } from "react-toastify";
 import CustomHelmet from "../SEO/CustomHelmet";
+import { SERVER_URL } from "../utils";
 
 export default function AccountSettings() {
   const [user, setUser] = useState({});
@@ -183,7 +179,7 @@ export default function AccountSettings() {
                   <Input
                     label="First Name"
                     ph="First Name"
-                    value={capitalizeEveryFirstChar(user.firstName)}
+                    value={user.firstName}
                     name="firstName"
                     required={true}
                     handleChange={handleChangeUser}
@@ -193,7 +189,7 @@ export default function AccountSettings() {
                   <Input
                     label="Last Name"
                     ph="Last Name"
-                    value={capitalizeEveryFirstChar(user.lastName)}
+                    value={user.lastName}
                     name="lastName"
                     required={true}
                     handleChange={handleChangeUser}
@@ -220,7 +216,7 @@ export default function AccountSettings() {
                     className="w-full mt-2 text-grey border-2 rounded-lg p-4 pl-2 pr-2 bg-white dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
                     id="country"
                     name="country"
-                    value={capitalizeFirstChar(user.country)}
+                    value={user.country}
                     // ref={selectedCountryRef}
                     onChange={handleChangeUser}
                     // defaultValue={user.country}
@@ -357,7 +353,7 @@ const Input = ({
 const ConfirmModal = forwardRef((props, ref) => {
   const { user } = props;
   const closeButtonRef = useRef();
-  const [password, setPassword] = useState("Test123!");
+  const [password, setPassword] = useState("");
   const { resetUserInfo } = useUserInfo();
   const navigate = useNavigate();
   const [isUpdating, setIsUpdating] = useState(false);

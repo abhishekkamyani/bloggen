@@ -1,5 +1,4 @@
 import React from "react";
-import { capitalizeEveryFirstChar, capitalizeFirstChar } from "../utils";
 import { format, formatDistance } from "date-fns";
 import { Link } from "react-router-dom";
 import ImageLoader from "./loaders/ImageLoader";
@@ -48,11 +47,9 @@ function Post({ post }) {
 
           <div className="ml-3 w-full">
             {author && (
-              <p className="text-sm font-medium text-gray-900 dark:text-main">
+              <p className="text-sm font-medium text-gray-900 dark:text-main capitalize">
                 <Link to={`/profile/${author._id}`} className="hover:underline">
-                  {capitalizeEveryFirstChar(author.firstName) +
-                    " " +
-                    capitalizeFirstChar(author.lastName)}
+                  {`${author.firstName}  ${author.lastName}`}
                 </Link>
               </p>
             )}

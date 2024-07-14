@@ -1,5 +1,4 @@
-export const SERVER_URL = "";
-
+export const SERVER_URL = "http://localhost:5000";
 
 export function capitalizeFirstChar(str = '') {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -14,6 +13,3 @@ export function capitalizeEveryFirstChar(str = '') {
 export const removeHTTP = (str) => {
     return str.replace("https://", "").replace("http://", "");
 }
-
-export const avatarDefault = "https://rb.gy/skvlkw";
-export const coverDefault = "https://rb.gy/l5ute6";

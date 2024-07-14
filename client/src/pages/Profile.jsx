@@ -155,7 +155,7 @@ export default function Profile() {
                     to={`/blogs/?user=${id}`}
                     className="btn px-3 py-1 md:px-6 md:py-2 text-sm md:text-md rounded-lg"
                   >
-                    All Post
+                    All Posts
                   </Link>
                 </div>
                 <Posts posts={user?.posts || []} isFetched={isFetched} />

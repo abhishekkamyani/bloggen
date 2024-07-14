@@ -52,7 +52,7 @@ function Login() {
         toast.current.show({
           severity: "error",
           summary: "Uff! 🙊",
-          detail: e.response?.data?.error,
+          detail: e.response?.data?.error || "Server error",
           life: 3000,
         });
       } else {
