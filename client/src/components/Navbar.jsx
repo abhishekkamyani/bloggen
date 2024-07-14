@@ -10,7 +10,7 @@ function Navbar() {
 
   useEffect(() => {
     initTWE({ Collapse, Dropdown });
-  }, []);
+  });
 
   return (
     <>

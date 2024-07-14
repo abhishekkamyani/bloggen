@@ -5,7 +5,7 @@
       "use": "@vercel/node"
     },
     {
-      "src": "dist/**/*",
+      "src": "public/**/*",
       "use": "@vercel/static"
     }
   ],
@@ -15,12 +15,12 @@
       "dest": "index.js"
     },
     {
-      "src": "/(.*).(js|css|json|ico|png|jpg)",
-      "dest": "/dist/$1.$2"
+      "src": "/(.*).(js|css|json|ico|png|jpg|svg)",
+      "dest": "/public/$1.$2"
     },
     {
       "src": "/(.*)",
-      "dest": "/dist/index.html"
+      "dest": "/public/index.html"
     }
   ]
 }
