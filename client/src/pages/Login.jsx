@@ -26,13 +26,11 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    //console.log(user);
 
     try {
       const response = await axios.post(`${SERVER_URL}/api/auth/login`, user, {
         withCredentials: true,
       });
-      //console.log(response.status);
       if (response?.status === 200) {
         toast.current.show({
           severity: "success",
@@ -47,7 +45,6 @@ function Login() {
         }, 1000);
       }
     } catch (e) {
-      console.log(e.response?.status);
       if (e.response?.status === 404) {
         toast.current.show({
           severity: "error",

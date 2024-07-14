@@ -9,10 +9,8 @@ export function UserProvider({ children }) {
   const isAuthenticated = userInfo.email ? true : false;
 
   const [isFetched, setIsFetched] = useState(false);
-  //console.log(userInfo);
 
   useEffect(() => {
-    console.log("identity");
     let ignore = false;
     axios
       .get(`${SERVER_URL}/api/auth/identity`, { withCredentials: true })

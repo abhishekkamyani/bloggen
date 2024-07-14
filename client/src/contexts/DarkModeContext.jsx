@@ -8,7 +8,7 @@ function DarkModeProvider({ children }) {
 
   useEffect(() => {
     if (isDarkMode) {
-      // documentElement == html element
+      // documentElement == the 'html' tag
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");

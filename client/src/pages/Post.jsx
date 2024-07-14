@@ -65,7 +65,7 @@ export default function Post() {
           if (e.response?.status) {
             toast.error("Please Register or Login first");
           }
-          console.log(e.response?.data?.error);
+          // console.log(e.response?.data?.error);
         });
     } else {
       axios
@@ -79,8 +79,8 @@ export default function Post() {
           return queryClient.invalidateQueries("todos");
         })
         .catch((e) => {
-          console.log(e);
-          console.log(e.response?.data?.error);
+          // console.log(e);
+          // console.log(e.response?.data?.error);
         });
     }
   };

@@ -32,7 +32,7 @@ export default function AccountSettings() {
         }
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
       });
 
     return () => {
@@ -75,10 +75,8 @@ export default function AccountSettings() {
             </h2>
             <form onSubmit={handleSubmit} encType="multipart/form-data">
               {/* Cover Image */}
-              {/* <div className="w-full rounded-sm bg-cover bg-center bg-no-repeat items-center" style={{ background: `url('${user.cover}')` }}> */}
               <div
                 className="w-full h-[312px] xl:h-[20rem] lg:h-[18rem] md:h-[16rem] sm:h-[14rem] xs:h-[11rem] relative rounded-sm z-0 items-center"
-                // style={{ backgroundImage: `url(${SERVER_URL}/${user.cover})` }}
               >
                 <img
                   src={`${user.cover}`}

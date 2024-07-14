@@ -27,7 +27,6 @@ export default function MyBlogs() {
         setProgress(60);
         if (response.status === 200 && !ignore) {
           setAuthor(response.data);
-          console.log(response.data);
 
           !response.data.posts.length &&
             toast.error("You haven't uploaded any blog post yet.");

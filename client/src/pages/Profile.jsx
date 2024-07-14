@@ -28,7 +28,7 @@ export default function Profile() {
       .then((response) => {
         setProgress(60);
         if (!ignore && response.status === 200) {
-          console.log(response.data);
+          // console.log(response.data);
           setUser(response.data);
           setProgress(100);
         }

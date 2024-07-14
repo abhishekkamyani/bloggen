@@ -111,7 +111,7 @@ export default function CreatePost() {
         }
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
         setIsUploading(false);
         toast.error(
           e.response?.data?.error ||
@@ -161,7 +161,6 @@ export default function CreatePost() {
               accept="image/*"
               id="blogCover"
               name="blogCover"
-              // value={post.blogCover}
               onChange={handleChangeFile}
             />
           </div>

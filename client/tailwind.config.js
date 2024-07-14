@@ -10,13 +10,8 @@ export default {
       colors: {
         primary: {
           DEFAULT: "peru",
-          // DEFAULT: '#6859b3',
-          // DEFAULT: '#0078D4',
           dark: "#d9893b",
-          // dark: '#584a9e',
-          // dark: '#004578',
           light: "#c48547",
-          // light: '#7c6ccc',
         },
         secondary: "#562B08",
         main: "#FAF5FF",

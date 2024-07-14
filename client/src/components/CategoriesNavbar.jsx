@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useUserInfo } from '../contexts/UserContext';
 import axios from 'axios';
 import { SERVER_URL } from '../utils';
@@ -20,7 +20,6 @@ export default function CategoriesNavbar({ page, pageSize, selectedCategory }) {
             setIsRight(false);
         }
         else {
-            console.log("Scroll");
             setIsRight(true);
         }
 
@@ -59,7 +58,6 @@ export default function CategoriesNavbar({ page, pageSize, selectedCategory }) {
             axios.get(`${SERVER_URL}/api/categories/${categoryIds}`)
                 .then(response => {
                     if (response.status === 200 && !ignore) {
-                        // console.log(response.data);
                         setCategories(response.data);
                     }
                 })
@@ -82,14 +80,10 @@ export default function CategoriesNavbar({ page, pageSize, selectedCategory }) {
         else {
             !ignore && setIsRight(true);
         }
-
-        console.log("useEffect");
-
         return () => {
             ignore = true;
         }
     }, [categories])
-
 
     return (
         <div className='relative theme-switch-transition mx-auto categories-nav dark:text-white w-100 md:w-[90%]'>

@@ -20,7 +20,7 @@ export default function FavoritesPosts() {
       .then((response) => {
         setProgress(60);
         if (response.status === 200 && !ignore) {
-          console.log(response.data);
+          // console.log(response.data);
           setPosts(response.data);
 
           !response.data.length &&
