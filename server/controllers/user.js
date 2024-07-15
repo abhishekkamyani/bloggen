@@ -1,3 +1,4 @@
+const { deleteOldPhoto } = require("../middlewares/multer.middleware");
 const model = require("../models/User");
 const User = model.User;
 const bcrypt = require("bcryptjs");
@@ -15,7 +16,6 @@ exports.profile = async (req, res, next) => {
     });
     res.json(user);
   } catch (error) {
-    // console.log("profile", error);
     next({ status: 404, error: "User not found" });
   }
 };
@@ -34,8 +34,9 @@ exports.updateProfile = async (req, res, next) => {
     }
     delete user.password;
 
-    console.log(req.files);
     if (req.files.avatar) {
+      // console.log(req.files.avatar[0]);
+      deleteOldPhoto(user.avatar);
       userData.avatar = req.files.avatar[0].location;
     }
 
@@ -49,6 +50,14 @@ exports.updateProfile = async (req, res, next) => {
     const result = await user.updateOne(userData);
 
     res.json({ message: "Profile updated successfully." });
+
+    // if (req.files.avatar) {
+      // console.log("deleting");
+    //   deleteOldPhoto("1721061191232-Untitled design (3).png");
+      // console.log(req.files.avatar);
+      // console.log(user);
+    // }
+
   } catch (error) {
     console.log("update-profile-error" + error);
     return next({ error: error });

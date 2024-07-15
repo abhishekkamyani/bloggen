@@ -15,7 +15,7 @@
       "dest": "index.js"
     },
     {
-      "src": "/(.*).(js|css|json|ico|png|jpg|svg|webp)",
+      "src": "/(.*).(js|css|json|ico|png|jpg|jpeg|svg|webp)",
       "dest": "/public/$1.$2"
     },
     {

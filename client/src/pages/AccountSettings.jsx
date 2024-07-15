@@ -101,7 +101,7 @@ export default function AccountSettings() {
                       accept="image/*"
                       hidden
                       onChange={(e) => handleChangeFile(e, "avatarView")}
-                      pattern="^(?=.*\.(jpg|jpeg|png)$)"
+                      pattern="^(?=.*\.(jpg|jpeg|png|svg|webp)$)"
                     />
                     <label htmlFor="avatar">
                       <svg

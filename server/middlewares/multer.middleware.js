@@ -1,30 +1,8 @@
-const path = require("path");
-
-// const destination = path.join(__dirname, "../uploads");
-
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, destination);
-//   },
-//   filename: function (req, file, cb) {
-//     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-//     const extension = file.originalname.split(".").pop(); // Get the file extension
-//     cb(null, file.originalname + "-" + uniqueSuffix + "." + extension);
-//   },
-// });
-
-
-// const upload = multer({
-//   limits: { fieldSize: 100 * 1024 * 1024 }, // Increase the field size limit to 100MB
-//   storage: storage,
-// });
-// module.exports = upload;
-
-
 const multer = require('multer');
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
-const { Upload } = require('@aws-sdk/lib-storage');
+const { S3Client, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const multerS3 = require('multer-s3');
+const { decode } = require('querystring');
+const { parse } = require('url');
 
 // Configure AWS SDK v3
 const s3 = new S3Client({
@@ -36,7 +14,7 @@ const s3 = new S3Client({
 });
 
 // Configure multer to use S3 without ACL
-const upload = multer({
+exports.upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: "bloggen-bucket",
@@ -49,5 +27,26 @@ const upload = multer({
   }),
 });
 
+exports.deleteOldPhoto = async (url = "") => {
+  const key = extractKeyFromUrl(url);
+  const params = {
+    Bucket: "bloggen-bucket",
+    Key: key,
+  };
 
-module.exports = upload;
+  try {
+    const command = new DeleteObjectCommand(params);
+    await s3.send(command);
+    console.log(`Deleted old profile photo: ${key}`);
+  } catch (err) {
+    console.error(`Error deleting old profile photo: ${err}`);
+  }
+};
+
+// Function to extract the key from the URL
+const extractKeyFromUrl = (url) => {
+  const parsedUrl = parse(url);
+  const key = decodeURIComponent(parsedUrl.pathname).substring(1); // Remove the leading '/'
+  return key;
+};
+

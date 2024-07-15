@@ -3,7 +3,7 @@ const router = express.Router();
 
 const postController = require("../controllers/post");
 const authMiddleware = require("../middlewares/auth.middleware");
-const upload = require("../middlewares/multer.middleware");
+const { upload } = require("../middlewares/multer.middleware");
 
 router
   .post(
@@ -18,6 +18,6 @@ router
   .get("/likedPosts", authMiddleware, postController.likedPosts)
   .get("/:slug", postController.getPost)
   .patch("/:id/like", authMiddleware, postController.likePost)
-  .patch("/:id/dislike", authMiddleware, postController.dislikePost)
+  .patch("/:id/dislike", authMiddleware, postController.dislikePost);
 
 module.exports = router;
