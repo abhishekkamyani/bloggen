@@ -57,17 +57,7 @@ This directory contains the frontend code for Bloggen.
 #### Development Tools
 
 1. **vite:** A fast build tool and development server.
-2. **@vitejs/plugin-react:** Vite plugin for React.
-3. **eslint:** For linting JavaScript/TypeScript code.
-4. **eslint-plugin-react:** ESLint plugin for React-specific linting rules.
-5. **eslint-plugin-react-hooks:** ESLint plugin for enforcing React Hooks rules.
-6. **eslint-plugin-react-refresh:** ESLint plugin for React Refresh.
-7. **@tanstack/eslint-plugin-query:** An ESLint plugin for TanStack Query.
-8. **@types/react:** Type definitions for React.
-9. **@types/react-dom:** Type definitions for React DOM.
-10. **postcss:** A tool for transforming CSS.
-11. **autoprefixer:** For adding vendor prefixes to CSS.
-12. **tailwindcss:** A utility-first CSS framework.
+2. **tailwindcss:** A utility-first CSS framework.
 
 ### Server
 
@@ -97,9 +87,9 @@ This directory contains the backend code for Bloggen.
 
 ### Prerequisites
 
-- **Node.js** (version X.X.X)
-- **MongoDB** (version X.X.X)
-- **NPM/Yarn** (version X.X.X)
+- **Node.js**
+- **MongoDB**
+- **NPM/Yarn**
 
 ### Installation
 
@@ -109,28 +99,29 @@ This directory contains the backend code for Bloggen.
    cd bloggen
    ```
 
-2. **Install dependencies:**
+2. **Install dependencies in the both directories:**
    ```bash
    npm install
    ```
 
-3. **Configure environment variables:**
+3. **Configure environment variables in the server directory:**
    Create a `.env` file in the root directory and add the following:
    ```env
-   DATABASE_URL=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret
-   EMAIL_SERVICE=your_email_service
-   EMAIL_USER=your_email_address
-   EMAIL_PASS=your_email_password
+   PORT=5000
+   DB_URL=your_mongodb_connection_string
+   AWS_ACCESS_KEY_ID=your_aws_access_key_id
+   AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
+   AWS_REGION=eu-your_aws_region
+   AWS_BUCKET_NAME=your_aws_bucket_name
    ```
 
-4. **Run the development server:**
+4. **Run the development server of both directories:**
    ```bash
-   npm start
+   npm run dev
    ```
 
 5. **Access the application:**
-   Open your browser and navigate to `http://localhost:3000`
+   Open your browser and navigate to `http://localhost:5173`
 
 ### Deployment
 
