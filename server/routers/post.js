@@ -13,7 +13,6 @@ router
     postController.createPost
   )
   .get("/all", postController.getAllPosts)
-  // .get("/all/:userId", postController.getAllPosts)
   .get("/", postController.userPosts)
   .get("/likedPosts", authMiddleware, postController.likedPosts)
   .get("/:slug", postController.getPost)

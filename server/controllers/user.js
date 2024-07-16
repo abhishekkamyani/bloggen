@@ -35,12 +35,12 @@ exports.updateProfile = async (req, res, next) => {
     delete user.password;
 
     if (req.files.avatar) {
-      // console.log(req.files.avatar[0]);
       deleteOldPhoto(user.avatar);
       userData.avatar = req.files.avatar[0].location;
     }
 
     if (req.files.cover) {
+      deleteOldPhoto(user.cover);
       userData.cover = req.files.cover[0].location;
     }
 
@@ -50,13 +50,6 @@ exports.updateProfile = async (req, res, next) => {
     const result = await user.updateOne(userData);
 
     res.json({ message: "Profile updated successfully." });
-
-    // if (req.files.avatar) {
-      // console.log("deleting");
-    //   deleteOldPhoto("1721061191232-Untitled design (3).png");
-      // console.log(req.files.avatar);
-      // console.log(user);
-    // }
 
   } catch (error) {
     console.log("update-profile-error" + error);

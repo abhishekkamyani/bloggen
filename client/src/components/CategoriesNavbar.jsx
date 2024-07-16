@@ -131,7 +131,6 @@ export default function CategoriesNavbar({ page, pageSize, selectedCategory }) {
             </ul>
             <span className='absolute text-2xl top-0 right-0 pr-2 h-full flex items-center bg-transparent px-5 cursor-pointer' onClick={handleRight}>{isRight && ">"}</span>
             <span className='absolute text-2xl top-0 left-0 pl-2 h-full flex items-center cursor-pointer' onClick={handleLeft}>{isLeft && "<"}</span>
-            {/* <div className='b w-full h-full'></div> */}
         </div>
     )
 }
