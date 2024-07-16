@@ -1,6 +1,6 @@
-# Bloggen
+# [Bloggen](https://bloggen-sigma.vercel.app/)
 
-Bloggen is a modern blogging platform developed by Abhishek Kamyani where users can create accounts, manage their profiles, write and share blogs, and interact with other users' content. All images will be saved in AWS cloud. This README provides an overview of the platform's features, setup instructions, and other relevant details.
+[Bloggen](https://bloggen-sigma.vercel.app/) is a modern blogging platform developed by Abhishek Kamyani where users can create accounts, manage their profiles, write and share blogs, and interact with other users' content. All images will be saved in AWS cloud. This README provides an overview of the platform's features, setup instructions, and other relevant details.
 
 ## Features
 
@@ -95,7 +95,7 @@ This directory contains the backend code for Bloggen.
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/bloggen.git
+   git clone https://github.com/abhishekkamyani/bloggen.git
    cd bloggen
    ```
 
@@ -156,7 +156,7 @@ We welcome contributions from the community. To contribute:
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+This project is licensed under the MIT License.
 
 ## Contact
 
@@ -170,4 +170,4 @@ For any questions or support, please reach out to:
 
 ---
 
-Thank you for using Bloggen! We hope you enjoy creating and sharing your content.
+Thank you for using [Bloggen](https://bloggen-sigma.vercel.app/)! We hope you enjoy creating and sharing your content.
