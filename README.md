@@ -1,6 +1,9 @@
-# [Bloggen](https://bloggen-sigma.vercel.app/)
+# <a href="https://bloggen-sigma.vercel.app/" target="_blank">Bloggen</a>
 
-[Bloggen](https://bloggen-sigma.vercel.app/) is a modern blogging platform developed by Abhishek Kamyani where users can create accounts, manage their profiles, write and share blogs, and interact with other users' content. All images will be saved in AWS cloud. This README provides an overview of the platform's features, setup instructions, and other relevant details.
+<a href="https://bloggen-sigma.vercel.app/" target="_blank">Bloggen</a> is a modern blogging platform developed by Abhishek Kamyani where users can create accounts, manage their profiles, write and share blogs, and interact with other users' content. All images will be saved in AWS cloud. This README provides an overview of the platform's features, setup instructions, and other relevant details.
+
+## Live Preview
+<a href="https://bloggen-sigma.vercel.app/" target="_blank">https://bloggen-sigma.vercel.app/</a>
 
 ## Features
 
@@ -170,4 +173,4 @@ For any questions or support, please reach out to:
 
 ---
 
-Thank you for using [Bloggen](https://bloggen-sigma.vercel.app/)! We hope you enjoy creating and sharing your content.
+Thank you for using <a href="https://bloggen-sigma.vercel.app/" target="_blank">Bloggen</a>! We hope you enjoy creating and sharing your content.
