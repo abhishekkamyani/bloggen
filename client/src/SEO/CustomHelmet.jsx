@@ -5,9 +5,9 @@ const defaultProps = {
   title: 'Bloggen - The Blog Website', 
   description: 'Bloggen - Your go-to source for insightful articles, tips, and stories on various topics ranging from technology to lifestyle. Stay informed and inspired with our daily updates',
   keywords: 'bloggen, blog, vlog, posts, medium, wikipedia, abhishek kamyani, blogs, post, research, paper, page',
-  image: '/images/logo.png', 
+  image: 'bloggen-sigma.vercel.app/images/logo.png', 
   author: 'Abhishek Kamyani',
-  url: 'bloggen.vercel.app', // Add a default URL
+  url: 'bloggen-sigma.vercel.app', // Add a default URL
 };
 
 const CustomHelmet = ({
@@ -22,7 +22,7 @@ const CustomHelmet = ({
 }) => {
   return (
     <HelmetProvider>
-    <Helmet>
+    <Helmet prioritizeSeoTags>
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />

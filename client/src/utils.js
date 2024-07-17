@@ -1,5 +1,4 @@
-export const SERVER_URL = "";
-
+export const SERVER_URL = "
 export function capitalizeFirstChar(str = '') {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
