@@ -91,7 +91,7 @@ export default function Post() {
 
   return (
     <>
-      <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 antialiased">
+      <main className="pt-8 pb-16 lg:pt-16 lg:pb-24 antialiased overflow-hidden break-words">
         <CustomHelmet
           title={post.title}
           description={post.summary}

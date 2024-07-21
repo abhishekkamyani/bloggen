@@ -71,6 +71,7 @@ body {
 
 ::-webkit-scrollbar {
   width: 8px;
+  height: 6px;
 }
 ::-webkit-scrollbar-thumb {
   background: peru;
@@ -114,6 +115,9 @@ body {
 .ql-editor .ql-placeholder {
   color: white;
   /* Replace with your desired color */
+}
+.quill-content .ql-syntax{
+  overflow: auto;
 }
 
 /* ########## PrimeReact ########## */
